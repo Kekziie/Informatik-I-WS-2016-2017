@@ -75,6 +75,13 @@
 
 (: calendar-date-day-ok? (calendar-date -> boolean))
 
+(check-expect (calendar-date-day-ok? birthday) #t)
+(check-expect (calendar-date-day-ok? date1) #t)
+(check-expect (calendar-date-day-ok? false-date1) #f)
+(check-expect (calendar-date-day-ok? false-date2) #t)
+(check-expect (calendar-date-day-ok? false-date3) #t)
+(check-expect (calendar-date-day-ok? false-date4) #f)
+
 (define calendar-date-day-ok?
   (lambda (date)
     (if (>= (calendar-date-day date) 1)
@@ -93,6 +100,13 @@
 ; Schaltjahre ignoriert
 
 (: calendar-date-ok? (calendar-date -> boolean))
+
+(check-expect (calendar-date-ok? birthday) #t)
+(check-expect (calendar-date-ok? date1) #t)
+(check-expect (calendar-date-ok? false-date1) #f)
+(check-expect (calendar-date-ok? false-date2) #t)
+(check-expect (calendar-date-ok? false-date3) #t)
+(check-expect (calendar-date-ok? false-date4) #f)
 
 (define calendar-date-ok?
   (lambda (date)
