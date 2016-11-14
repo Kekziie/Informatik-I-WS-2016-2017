@@ -13,6 +13,12 @@
 
 (heiner-or (> 23 42) (< 5 2))
 
+; Eva-Lu hat Recht
+; am unteren Programm sieht man, dass or, wenn der erste Ausdruck #t wird, der 2. Ausdruck nicht beachtet wird
+; bei heiner-or hingegen, werden beide Ausdrücke angeschaut, d.h. es ensteht im meinem Beispiel eine Dauerschleife
+
+; d.h. heiner-or und or ist nicht das Gleiche
+
 ; Dauerschleife
 (define loop
   (lambda (n)
@@ -23,4 +29,5 @@
 
 ; heiner-or terminiert nicht
 (heiner-or (> 10 9) (loop 1))
+
            
