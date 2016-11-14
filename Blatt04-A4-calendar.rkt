@@ -21,6 +21,8 @@
 ; (b)
 ; stellt fest, ob Monat korrekt ist
 
+(: calendar-date-month-ok? (calendar-date -> boolean))
+
 (define calendar-date-month-ok?
   (lambda (date)
     (if (>= (calendar-date-month date) 1)
@@ -28,6 +30,8 @@
         #f)))
 
 ; stellt fest, ob Tage im Monat korrekt sind
+
+(: calendar-date-day-ok? (calendar-date -> boolean))
 
 (define calendar-date-day-ok?
   (lambda (date)
@@ -46,6 +50,8 @@
 ; stellt fest, ob Kalenderdatum-Record einem tatsächlichen Kalenderdatum entspricht
 ; Schaltjahre ignoriert
 
+(: calendar-date-ok? (calendar-date -> boolean))
+
 (define calendar-date-ok?
   (lambda (date)
     (and (calendar-date-month-ok? date)
@@ -53,6 +59,8 @@
 
 ; (c)
 ; stellt fest, ob Tage im Monat korrekt sind im Schaltjahr
+
+(: calendar-date-day-ok/leap-year? (calendar-date -> boolean))
 
 (define calendar-date-day-ok/leap-year?
   (lambda (date)
@@ -69,7 +77,9 @@
         #f)))
 
 ; stellt fest, ob Kalenderdatum-Record einem tatsächlichen Kalenderdatum entspricht
-; mit Schaltjahre 
+; mit Schaltjahren
+
+(: calendar-date-ok/leap-year? (calendar-date -> boolean))
 
 (define calendar-date-ok/leap-year?
   (lambda (date)
