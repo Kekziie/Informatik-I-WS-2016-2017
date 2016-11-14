@@ -5,7 +5,7 @@
 ;Benzinverbrauch in Liter pro 100km
 ; wie weit kann man mit einer bestimmten Benzinmenge fahren?
 
-(:liters-per-hundred-kilometers (real real ->real))
+(: liters-per-hundred-kilometers (real real -> real))
 
 (check-expect (liters-per-hundred-kilometers 3 30)10)
 (check-expect (liters-per-hundred-kilometers 99 99)100)
@@ -20,21 +20,21 @@
 ;(b.)
 ;Reichweite in Meilen pro Gallone Benzinverbrauch
 
-(:miles-per-gallon (real real->real))
+(: miles-per-gallon (real real -> real))
 
 (check-expect (miles-per-gallon 30 3)10)
 (check-expect (miles-per-gallon 3 3)1)
 (check-within (miles-per-gallon 0.5 10.5) 0.05 0.1)
 
 (define miles-per-gallon
-  (lambda (mi gal) (/mi gal)))
+  (lambda (mi gal) (/ mi gal)))
 
 ;(c.)
 ;umrechnen von Kilometern in Meilen
 ;umrechnen von Meilen in Kilometern
 
-(:kilometers->miles (real->real))
-(:miles->kilometers (real->real))
+(: kilometers->miles (real -> real))
+(: miles->kilometers (real -> real))
 
 (check-within (kilometers->miles 10) 6.2 0.1)
 (check-within (kilometers->miles 2.5) 1.5 0.1)
@@ -42,10 +42,10 @@
 (check-within (miles->kilometers 10) 16.1 0.1)
 (check-within (miles->kilometers 2.5) 4 0.1)
 
-(define kilometers->miles 1.61)
+(define kilometers-per-mile 1.61)
 
 (define kilometers->miles
-  (lambda(km) (/km kilometers-per-mile)))
+  (lambda(km) (/ km kilometers-per-mile)))
 
 (define miles->kilometers
   (lambda (mi) (* mi kilometers-per-mile)))
@@ -54,8 +54,8 @@
 ; umrechnen von Liter (L) in Gallonen (gal)
 ; umrechnen von Gallonen (gal) in Liter (L)
 
-(:liters->gallons (real -> real))
-(:gallons->liters (real -> real))
+(: liters->gallons (real -> real))
+(: gallons->liters (real -> real))
 
 (check-within (liters->gallons 10) 2.64 0.1)
 (check-within (liters->gallons 2.5) 0.7 0.1)
@@ -66,31 +66,32 @@
 (define liters-per-gallons 3.79)
 
 (define liters->gallons
-  (lambda (L) (/L liters-per-gallon)))
+  (lambda (L) (/ L liters-per-gallons)))
 
 (define gallons->liters
-  (lambda (gal) (* gal liters-per-gallon)))
+  (lambda (gal) (* gal liters-per-gallons)))
 
 ;(e.)
 ;umrechnen von Benzinverbrauch (BV)l/100km in Reichweite mi/gal
 
-(:l/100km->mi/gal (real->real))
+;(: l/100km->mi/gal (real->real))
 
-(check-expect (l/100km->mi/gal 10) 23)
+;(check-expect (l/100km->mi/gal 10) 23)
 
-(define l/100km->mi/gal
-  (lambda (BV)) (/(kilometers->miles(/(* l 100)
-                                      BV))
-                  (liters->gallons (/(* BV km)
-                                     100))))
+;(define l/100km->mi/gal
+;  (lambda (BV)) (/(kilometers->miles(/(* l 100)
+;                                      BV))
+;                  (liters->gallons (/(* BV km)
+;                                      100))))
+
 ;(f.)
 ;umrechnen von Reichweite (R) mi/gal in Benzinverbrauch (BV)
 
-(:mi/gal->l/100km (real -> real))
+;(:mi/gal->l/100km (real -> real))
 
-(check-expect (mi/gal->l/100km 50) 4)
+;(check-expect (mi/gal->l/100km 50) 4)
 
-(define mi/gal->l/100km
-  (lambda (R) (/ (* 100
-                    (gallons->liters (/mi R)
-                                     (miles->kilometers (* R gal)))))))
+;(define mi/gal->l/100km
+;  (lambda (R) (/ (* 100
+;                    (gallons->liters (/mi R)
+;                                     (miles->kilometers (* R gal)))))))
