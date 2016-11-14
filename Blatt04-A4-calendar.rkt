@@ -59,6 +59,11 @@
 (: calendar-date-month-ok? (calendar-date -> boolean))
 
 (check-expect (calendar-date-month-ok? birthday) #t)
+(check-expect (calendar-date-month-ok? date1) #t)
+(check-expect (calendar-date-month-ok? false-date1) #f)
+(check-expect (calendar-date-month-ok? false-date2) #t)
+(check-expect (calendar-date-month-ok? false-date3) #t)
+(check-expect (calendar-date-month-ok? false-date4) #f)
 
 (define calendar-date-month-ok?
   (lambda (date)
