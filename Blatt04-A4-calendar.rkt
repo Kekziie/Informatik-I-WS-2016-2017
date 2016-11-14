@@ -24,10 +24,41 @@
 (define birthday
   (make-calendar-date 17 9 1995))
 
-; (b)
+;(b)
+; definiere richtiges Datum im Schaltjahr für Testfälle
+; falsches Datum im normalen Jahr
+
+(: date1 calendar-date)
+
+(define date1
+  (make-calendar-date 29 2 2020))
+
+; definiere falsche Daten für Testfälle
+(: false-date1 calendar-date)
+
+(define false-date1
+  (make-calendar-date 100 100 100))
+
+(: false-date2 calendar-date)
+
+(define false-date2
+  (make-calendar-date 29 2 2001))
+
+(: false-date3 calendar-date)
+
+(define false-date3
+  (make-calendar-date 35 1 1999))
+
+(: false-date4 calendar-date)
+
+(define false-date4
+  (make-calendar-date 12 0 2013))
+
 ; stellt fest, ob Monat korrekt ist
 
 (: calendar-date-month-ok? (calendar-date -> boolean))
+
+(check-expect (calendar-date-month-ok? birthday) #t)
 
 (define calendar-date-month-ok?
   (lambda (date)
