@@ -18,6 +18,12 @@
    calendar-date-month
    calendar-date-year))
 
+; mein Geburtstag
+(: birthday calendar-date)
+
+(define birthday
+  (make-calendar-date 17 9 1995))
+
 ; (b)
 ; stellt fest, ob Monat korrekt ist
 
