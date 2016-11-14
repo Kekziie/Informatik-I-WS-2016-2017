@@ -118,12 +118,12 @@
 
 (: calendar-date-day-ok/leap-year? (calendar-date -> boolean))
 
-(check-expect (calendar-date-ok/leap-year? birthday) #t)
-(check-expect (calendar-date-ok/leap-year? date1) #t)
-(check-expect (calendar-date-ok/leap-year? false-date1) #f)
-(check-expect (calendar-date-ok/leap-year? false-date2) #f)
-(check-expect (calendar-date-ok/leap-year? false-date3) #f)
-(check-expect (calendar-date-ok/leap-year? false-date4) #f)
+(check-expect (calendar-date-day-ok/leap-year? birthday) #t)
+(check-expect (calendar-date-day-ok/leap-year? date1) #t)
+(check-expect (calendar-date-day-ok/leap-year? false-date1) #f)
+(check-expect (calendar-date-day-ok/leap-year? false-date2) #t)
+(check-expect (calendar-date-day-ok/leap-year? false-date3) #f)
+(check-expect (calendar-date-day-ok/leap-year? false-date4) #t)
 
 (define calendar-date-day-ok/leap-year?
   (lambda (date)
@@ -143,6 +143,13 @@
 ; mit Schaltjahren
 
 (: calendar-date-ok/leap-year? (calendar-date -> boolean))
+
+(check-expect (calendar-date-ok/leap-year? birthday) #t)
+(check-expect (calendar-date-ok/leap-year? date1) #t)
+(check-expect (calendar-date-ok/leap-year? false-date1) #f)
+(check-expect (calendar-date-ok/leap-year? false-date2) #f)
+(check-expect (calendar-date-ok/leap-year? false-date3) #f)
+(check-expect (calendar-date-ok/leap-year? false-date4) #f)
 
 (define calendar-date-ok/leap-year?
   (lambda (date)
