@@ -54,6 +54,11 @@
 (define false-date4
   (make-calendar-date 12 0 2013))
 
+(: false-date5 calendar-date)
+
+(define false-date5
+  (make-calendar-date 0 4 1992))
+
 ; stellt fest, ob Monat korrekt ist
 
 (: calendar-date-month-ok? (calendar-date -> boolean))
@@ -64,6 +69,8 @@
 (check-expect (calendar-date-month-ok? false-date2) #t)
 (check-expect (calendar-date-month-ok? false-date3) #t)
 (check-expect (calendar-date-month-ok? false-date4) #f)
+(check-expect (calendar-date-month-ok? false-date5) #t)
+
 
 (define calendar-date-month-ok?
   (lambda (date)
@@ -81,6 +88,7 @@
 (check-expect (calendar-date-day-ok? false-date2) #f)
 (check-expect (calendar-date-day-ok? false-date3) #f)
 (check-expect (calendar-date-day-ok? false-date4) #t)
+(check-expect (calendar-date-day-ok? false-date5) #f)
 
 (define calendar-date-day-ok?
   (lambda (date)
@@ -107,6 +115,7 @@
 (check-expect (calendar-date-ok? false-date2) #f)
 (check-expect (calendar-date-ok? false-date3) #f)
 (check-expect (calendar-date-ok? false-date4) #f)
+(check-expect (calendar-date-ok? false-date5) #f)
 
 (define calendar-date-ok?
   (lambda (date)
@@ -124,6 +133,7 @@
 (check-expect (calendar-date-day-ok/leap-year? false-date2) #t)
 (check-expect (calendar-date-day-ok/leap-year? false-date3) #f)
 (check-expect (calendar-date-day-ok/leap-year? false-date4) #t)
+(check-expect (calendar-date-day-ok/leap-year? false-date5) #f)
 
 (define calendar-date-day-ok/leap-year?
   (lambda (date)
@@ -150,6 +160,7 @@
 (check-expect (calendar-date-ok/leap-year? false-date2) #f)
 (check-expect (calendar-date-ok/leap-year? false-date3) #f)
 (check-expect (calendar-date-ok/leap-year? false-date4) #f)
+(check-expect (calendar-date-ok/leap-year? false-date5) #f)
 
 (define calendar-date-ok/leap-year?
   (lambda (date)
