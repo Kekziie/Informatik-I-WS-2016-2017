@@ -36,25 +36,63 @@
 
 ; definieren der "Figuren"
 ; für jedes Team:
-; - ein König (king)
-; - eine Königin (queen)
-; - zwei Türme (rook)
-; - zwei Läufer (bishop)
-; - zwei Springer (knight)
-; - acht Bauern (pawn)
+; - ein König (king K)
+; - eine Königin (queen Q)
+; - zwei Türme (rook R)
+; - zwei Läufer (bishop B)
+; - zwei Springer (knight Kn)
+; - acht Bauern (pawn P)
 
+; definieren von Größe und Farben der "Figuren"
 (define size2 10)
 (define color3 "red")
 (define color4 "blue")
 
-(define figure-team1 (circle size2 mode color3))
-(define figure-team2 (circle size2 mode color4))
+(define figure1 (circle size2 mode color3))
+(define figure2 (circle size2 mode color4))
 
-(define start-game
-  (place-image/align
-   figure-team1
-   40 0 "left" "top"
-   chessboard))
+; definieren einer Schriftgröße, Farbe und einer Position
 
-start-game
+(define size3 15)
+(define mid "middle")
+(define text-color "black")
+
+; definieren eines "Aufkleber"-Umrisses
+
+(define sticker (circle size2 "outline" text-color))
+
+; definieren eines "Aufkleber"-Sets an verschiedenen Firguren
+
+(define king
+  (overlay/align mid mid
+                 (text "K" size3 text-color)
+                 sticker))
+
+(define queen
+  (overlay/align mid mid
+                 (text "Q" size3 text-color)
+                 sticker))
+
+(define rook
+  (overlay/align mid mid
+                 (text "R" size3 text-color)
+                 sticker))
+
+(define bishop
+  (overlay/align mid mid
+                 (text "B" size3 text-color)
+                 sticker))
+
+(define knight
+  (overlay/align mid mid
+                 (text "Kn" size3 text-color)
+                 sticker))
+
+(define pawn
+  (overlay/align mid mid
+                 (text "P" size3 text-color)
+                 sticker))
+
+
+
 
