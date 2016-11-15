@@ -208,6 +208,10 @@
 ; definieren der Bewegung der Figur in max t=25
 (: move-figure (integer integer natural -> integer))
 
+(check-expect (move-figure -10 10 0) -10)
+(check-expect (move-figure -10 10 25) 10)
+(check-expect (move-figure -10 10 50) 10)
+
 (define move-figure
   (lambda (x0 x1 t)
     (+ x0
