@@ -2,7 +2,7 @@
 ;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
 #reader(lib "DMdA-beginner-reader.ss" "deinprogramm")((modname exercise2-image-chessboard) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
 ; rekonstruieren eines Schachbretts mit Figuren
-; bewegen eines Bauern 2 Felder vorwärts
+; bewegen eines Springers 2 Felder vorwärts ein Feld rechts
 
 ; definieren von Größe, Modus und Farbe eines Feldes
 (define size1 20)
@@ -28,7 +28,7 @@
           field2 field1))
 
 ; zusammensetzen der Reihen zu einem Schachbrett
-(define chessboard
+(define chessboard-field
   (above line1 line2
          line1 line2
          line1 line2
@@ -145,4 +145,46 @@
   (overlay pawn-sticker
            figure2))
 
+; erstellen einer "Bauern"-Reihe
 
+(define pawn1-row
+  (beside pawn1 pawn1 pawn1 pawn1
+          pawn1 pawn1 pawn1 pawn1))
+
+(define pawn2-row
+  (beside pawn2 pawn2 pawn2 pawn2
+          pawn2 pawn2 pawn2 pawn2))
+
+; erstellen der hinteren Figuren Reihe Team 1
+
+(define backrow1
+  (beside rook1 knight1 bishop1 king1
+          queen1 bishop1 knight1 rook1))
+
+; erstellen der hinteren Figuren Reihen Team 2 ohne einen Springer
+
+(define backrow2
+  (beside rook2 field1 bishop2 king2
+          queen2 bishop2 knight2 rook2))
+
+; erstellen eines Schachspiels beim Start
+; da nur der Springer sich bewegen soll, "festsetzen" der anderen Figuren auf Schachbrett
+
+(define chessboard-start
+  (place-image/align
+    backrow1
+    0 0 "left" "top"
+  (place-image/align
+    pawn1-row
+    0 20 "left" "top"
+  (place-image/align
+    pawn2-row
+    0 120 "left" "top"
+  (place-image/align
+    backrow2
+    0 140 "left" "top"
+    chessboard-field)))))
+
+chessboard-start
+                      
+               
