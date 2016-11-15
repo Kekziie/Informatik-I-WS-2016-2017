@@ -4,6 +4,7 @@
 ; rekonstruieren eines Schachbretts mit Figuren
 ; bewegen eines Springers 2 Felder vorwärts ein Feld rechts
 
+
 ; definieren von Größe, Modus und Farbe eines Feldes
 (define size1 20)
 (define mode "solid")
@@ -185,6 +186,44 @@
     0 140 "left" "top"
     chessboard-field)))))
 
-chessboard-start
-                      
-               
+; erstellen des ersten Zuges
+; der knight des unteren team läuft 2 felder vorwärts und eins nach rechts
+(: first-move (natural -> image))
+
+(define first-move
+  (lambda (t)
+    (clear-pinhole
+     (overlay/pinhole (knight t)
+                      (chessboard t)))))
+
+; definieren der Position x0 zur Position x1 vom Springer
+(: knight (natural -> image))
+
+(define knight
+  (lambda (t)
+    (put-pinhole (move-figure 60 40 t)
+                 (move-figure -60 -20 t)
+                 knight2)))
+
+; definieren der Bewegung der Figur in max t=25
+(: move-figure (integer integer natural -> integer))
+
+(define move-figure
+  (lambda (x0 x1 t)
+    (+ x0
+       (floor (* (min t 25)
+                 (/ (- x1 x0)
+                    25))))))
+
+; definieren des Schachbretts
+(define chessboard
+  (lambda (t)
+    chessboard-start))
+
+; Zeigt 2 Bilder
+(first-move 0) ; zeigt Springer an Ursprungsposition bei t=0
+(first-move 25) ; zeigt Springer nach ersten Zug an Position x1 bei t=25
+
+; Animation des ersten Zuges
+
+(animate first-move)
