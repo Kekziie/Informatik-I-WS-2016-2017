@@ -118,3 +118,31 @@
 (define pawn1
   (overlay pawn-sticker
            figure1))
+
+; erstellen der Figuren Team 2
+
+(define king2
+  (overlay king-sticker
+           figure2))
+
+(define queen2
+  (overlay queen-sticker
+           figure2))
+
+(define rook2
+  (overlay rook-sticker
+           figure2))
+
+(define bishop2
+  (overlay bishop-sticker
+           figure2))
+
+(define knight2
+  (overlay knight-sticker
+           figure2))
+
+(define pawn2
+  (overlay pawn-sticker
+           figure2))
+
+
