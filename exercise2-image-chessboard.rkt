@@ -5,13 +5,13 @@
 ; bewegen eines Bauern 2 Felder vorwärts
 
 ; definieren von Größe, Modus und Farbe eines Feldes
-(define size 20)
+(define size1 20)
 (define mode "solid")
 (define color1 "white")
 (define color2 "black")
 
-(define field1 (rectangle size size mode color1))
-(define field2 (rectangle size size mode color2))
+(define field1 (rectangle size1 size1 mode color1))
+(define field2 (rectangle size1 size1 mode color2))
 
 ;definieren von 2 Reihen vom Schachbrett
 
@@ -34,4 +34,27 @@
          line1 line2
          line1 line2))
 
-chessboard
+; definieren der "Figuren"
+; für jedes Team:
+; - ein König (king)
+; - eine Königin (queen)
+; - zwei Türme (rook)
+; - zwei Läufer (bishop)
+; - zwei Springer (knight)
+; - acht Bauern (pawn)
+
+(define size2 10)
+(define color3 "red")
+(define color4 "blue")
+
+(define figure-team1 (circle size2 mode color3))
+(define figure-team2 (circle size2 mode color4))
+
+(define start-game
+  (place-image/align
+   figure-team1
+   40 0 "left" "top"
+   chessboard))
+
+start-game
+
