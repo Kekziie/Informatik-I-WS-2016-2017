@@ -6,7 +6,7 @@
 
 
 ; definieren von Größe, Modus und Farbe eines Feldes
-(define size1 20)
+(define size1 50)
 (define mode "solid")
 (define color1 "white")
 (define color2 "black")
@@ -45,16 +45,16 @@
 ; - acht Bauern (pawn P)
 
 ; definieren von Größe und Farben der "Figuren"
-(define size2 10)
+(define size2 25)
 (define color3 "red")
-(define color4 "blue")
+(define color4 "aqua")
 
 (define figure1 (circle size2 mode color3))
 (define figure2 (circle size2 mode color4))
 
 ; definieren einer Schriftgröße, Farbe und einer Position
 
-(define size3 15)
+(define size3 35)
 (define mid "middle")
 (define text-color "black")
 
@@ -177,13 +177,13 @@
     0 0 "left" "top"
   (place-image/align
     pawn1-row
-    0 20 "left" "top"
+    0 size1 "left" "top"
   (place-image/align
     pawn2-row
-    0 120 "left" "top"
+    0 (* 6 size1) "left" "top"
   (place-image/align
     backrow2
-    0 140 "left" "top"
+    0 (* 7 size1) "left" "top"
     chessboard-field)))))
 
 ; erstellen des ersten Zuges
@@ -201,23 +201,23 @@
 
 (define knight
   (lambda (t)
-    (put-pinhole (move-figure 60 40 t)
-                 (move-figure -60 -20 t)
+    (put-pinhole (move-figure (* 6 size2) (* 4 size2) t)
+                 (move-figure (* -6 size2) (* -2 size2) t)
                  knight2)))
 
 ; definieren der Bewegung der Figur in max t=25
 (: move-figure (integer integer natural -> integer))
 
 (check-expect (move-figure -10 10 0) -10)
-(check-expect (move-figure -10 10 25) 10)
+(check-expect (move-figure -10 10 100) 10)
 (check-expect (move-figure -10 10 50) 10)
 
 (define move-figure
   (lambda (x0 x1 t)
     (+ x0
-       (floor (* (min t 25)
+       (floor (* (min t 50)
                  (/ (- x1 x0)
-                    25))))))
+                    50))))))
 
 ; definieren des Schachbretts
 (define chessboard
@@ -226,7 +226,7 @@
 
 ; Zeigt 2 Bilder
 (first-move 0) ; zeigt Springer an Ursprungsposition bei t=0
-(first-move 25) ; zeigt Springer nach ersten Zug an Position x1 bei t=25
+(first-move 50) ; zeigt Springer nach ersten Zug an Position x1 bei t=50
 
 ; Animation des ersten Zuges
 
