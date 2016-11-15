@@ -183,6 +183,4 @@
         (and (day-ok/leap-year? date)
              (month-ok? date))
         (calendar-date-ok? date)))) 
-
-
      
