@@ -1,98 +1,804 @@
-;; Die ersten drei Zeilen dieser Datei wurden von DrRacket eingefügt. Sie enthalten Metadaten
-;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
-#reader(lib "DMdA-beginner-reader.ss" "deinprogramm")((modname exercise2-image-chessboard) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
-; rekonstruieren eines Schachbretts mit Figuren
-; bewegen eines Bauern 2 Felder vorwärts
+#reader(lib"read.ss""wxme")WXME0108 ## 
+#|
+   This file uses the GRacket editor format.
+   Open this file in DrRacket version 6.6 or later to read it.
 
-; definieren von Größe, Modus und Farbe eines Feldes
-(define size1 20)
-(define mode "solid")
-(define color1 "white")
-(define color2 "black")
+   Most likely, it was created by saving a program in DrRacket,
+   and it probably contains a program with non-text elements
+   (such as images or comment boxes).
 
-(define field1 (rectangle size1 size1 mode color1))
-(define field2 (rectangle size1 size1 mode color2))
-
-;definieren von 2 Reihen vom Schachbrett
-
-(define line1
-  (beside field1 field2
-          field1 field2
-          field1 field2
-          field1 field2))
-
-(define line2
-  (beside field2 field1
-          field2 field1
-          field2 field1
-          field2 field1))
-
-; zusammensetzen der Reihen zu einem Schachbrett
-(define chessboard
-  (above line1 line2
-         line1 line2
-         line1 line2
-         line1 line2))
-
-; definieren der "Figuren"
-; für jedes Team:
-; - ein König (king K)
-; - eine Königin (queen Q)
-; - zwei Türme (rook R)
-; - zwei Läufer (bishop B)
-; - zwei Springer (knight Kn)
-; - acht Bauern (pawn P)
-
-; definieren von Größe und Farben der "Figuren"
-(define size2 10)
-(define color3 "red")
-(define color4 "blue")
-
-(define figure1 (circle size2 mode color3))
-(define figure2 (circle size2 mode color4))
-
-; definieren einer Schriftgröße, Farbe und einer Position
-
-(define size3 15)
-(define mid "middle")
-(define text-color "black")
-
-; definieren eines "Aufkleber"-Umrisses
-
-(define sticker (circle size2 "outline" text-color))
-
-; definieren eines "Aufkleber"-Sets an verschiedenen Firguren
-
-(define king
-  (overlay/align mid mid
-                 (text "K" size3 text-color)
-                 sticker))
-
-(define queen
-  (overlay/align mid mid
-                 (text "Q" size3 text-color)
-                 sticker))
-
-(define rook
-  (overlay/align mid mid
-                 (text "R" size3 text-color)
-                 sticker))
-
-(define bishop
-  (overlay/align mid mid
-                 (text "B" size3 text-color)
-                 sticker))
-
-(define knight
-  (overlay/align mid mid
-                 (text "Kn" size3 text-color)
-                 sticker))
-
-(define pawn
-  (overlay/align mid mid
-                 (text "P" size3 text-color)
-                 sticker))
-
-
-
-
+            http://racket-lang.org/
+|#
+ 32 7 #"wxtext\0"
+3 1 6 #"wxtab\0"
+1 1 8 #"wximage\0"
+2 0 8 #"wxmedia\0"
+4 1 34 #"(lib \"syntax-browser.ss\" \"mrlib\")\0"
+1 0 36 #"(lib \"cache-image-snip.ss\" \"mrlib\")\0"
+1 0 68
+(
+ #"((lib \"image-core.ss\" \"mrlib\") (lib \"image-core-wxme.rkt\" \"mr"
+ #"lib\"))\0"
+) 1 0 16 #"drscheme:number\0"
+3 0 44 #"(lib \"number-snip.ss\" \"drscheme\" \"private\")\0"
+1 0 36 #"(lib \"comment-snip.ss\" \"framework\")\0"
+1 0 93
+(
+ #"((lib \"collapsed-snipclass.ss\" \"framework\") (lib \"collapsed-sni"
+ #"pclass-wxme.ss\" \"framework\"))\0"
+) 0 0 43 #"(lib \"collapsed-snipclass.ss\" \"framework\")\0"
+0 0 19 #"drscheme:sexp-snip\0"
+0 0 29 #"drscheme:bindings-snipclass%\0"
+1 0 101
+(
+ #"((lib \"ellipsis-snip.rkt\" \"drracket\" \"private\") (lib \"ellipsi"
+ #"s-snip-wxme.rkt\" \"drracket\" \"private\"))\0"
+) 2 0 88
+(
+ #"((lib \"pict-snip.rkt\" \"drracket\" \"private\") (lib \"pict-snip.r"
+ #"kt\" \"drracket\" \"private\"))\0"
+) 0 0 34 #"(lib \"bullet-snip.rkt\" \"browser\")\0"
+0 0 25 #"(lib \"matrix.ss\" \"htdp\")\0"
+1 0 22 #"drscheme:lambda-snip%\0"
+1 0 29 #"drclickable-string-snipclass\0"
+0 0 26 #"drracket:spacer-snipclass\0"
+0 0 57
+#"(lib \"hrule-snip.rkt\" \"macro-debugger\" \"syntax-browser\")\0"
+1 0 26 #"drscheme:pict-value-snip%\0"
+0 0 45 #"(lib \"image-snipr.ss\" \"slideshow\" \"private\")\0"
+1 0 38 #"(lib \"pict-snipclass.ss\" \"slideshow\")\0"
+2 0 55 #"(lib \"vertical-separator-snip.ss\" \"stepper\" \"private\")\0"
+1 0 18 #"drscheme:xml-snip\0"
+1 0 31 #"(lib \"xml-snipclass.ss\" \"xml\")\0"
+1 0 21 #"drscheme:scheme-snip\0"
+2 0 34 #"(lib \"scheme-snipclass.ss\" \"xml\")\0"
+1 0 10 #"text-box%\0"
+1 0 32 #"(lib \"text-snipclass.ss\" \"xml\")\0"
+1 0 1 6 #"wxloc\0"
+          0 0 57 0 1 #"\0"
+0 75 1 #"\0"
+0 12 90 -1 90 -1 3 -1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 255 255 255 1 -1 0 9
+#"Standard\0"
+0 75 6 #"Menlo\0"
+0 12 90 -1 90 -1 3 -1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 255 255 255 1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 -1 -1 2 24
+#"framework:default-color\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1 2
+1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 150 0 150 0 0 0 -1 -1 2 15
+#"text:ports out\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 150 0 150 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 93 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 255 0 0 0 0 0 -1
+-1 2 15 #"text:ports err\0"
+0 -1 1 #"\0"
+1 0 -1 -1 93 -1 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 175 0 0 0 -1 -1 2 17
+#"text:ports value\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 175 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1.0 0 92 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 34 139 34 0 0 0 -1
+-1 2 27 #"Matching Parenthesis Style\0"
+0 -1 1 #"\0"
+1.0 0 92 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 34 139 34 0 0 0 -1
+-1 2 1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 38 38 128 0 0 0 -1 -1 2 37
+#"framework:syntax-color:scheme:symbol\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 38 38 128 0 0 0 -1 -1 2 38
+#"framework:syntax-color:scheme:keyword\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 38 38 128 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 194 116 31 0 0 0 -1 -1 2
+38 #"framework:syntax-color:scheme:comment\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 194 116 31 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 41 128 38 0 0 0 -1 -1 2 37
+#"framework:syntax-color:scheme:string\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 41 128 38 0 0 0 -1 -1 2 35
+#"framework:syntax-color:scheme:text\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 41 128 38 0 0 0 -1 -1 2 39
+#"framework:syntax-color:scheme:constant\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 41 128 38 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 132 60 36 0 0 0 -1 -1 2 49
+#"framework:syntax-color:scheme:hash-colon-keyword\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 132 60 36 0 0 0 -1 -1 2 42
+#"framework:syntax-color:scheme:parenthesis\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 132 60 36 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 36
+#"framework:syntax-color:scheme:error\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 36
+#"framework:syntax-color:scheme:other\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 16
+#"Misspelled Text\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 81 112 203 0 0 0 -1 -1 2
+38 #"drracket:check-syntax:lexically-bound\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 81 112 203 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 178 34 34 0 0 0 -1 -1 2 28
+#"drracket:check-syntax:set!d\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 178 34 34 0 0 0 -1 -1 2 37
+#"drracket:check-syntax:unused-require\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 36
+#"drracket:check-syntax:free-variable\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 68 0 203 0 0 0 -1 -1 2 31
+#"drracket:check-syntax:imported\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 68 0 203 0 0 0 -1 -1 2 47
+#"drracket:check-syntax:my-obligation-style-pref\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 178 34 34 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 116 0 0 0 0 -1 -1 2 50
+#"drracket:check-syntax:their-obligation-style-pref\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 116 0 0 0 0 -1 -1 2 48
+#"drracket:check-syntax:unk-obligation-style-pref\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 139 142 28 0 0 0 -1 -1 2
+49 #"drracket:check-syntax:both-obligation-style-pref\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 139 142 28 0 0 0 -1 -1 2
+26 #"plt:htdp:test-coverage-on\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 2 27
+#"plt:htdp:test-coverage-off\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 4 1
+#"\0"
+0 70 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 4 4 #"XML\0"
+0 70 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 2 37 #"plt:module-language:test-coverage-on\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 38
+#"plt:module-language:test-coverage-off\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 4 1
+#"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 4 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 0 255 0 0 0 -1
+-1 4 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 0 255 0 0 0 -1
+-1 4 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 100 0 0 0 0 -1
+-1 2 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 2 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 100 0 0 0 0 -1
+-1           0 557 0 4 3 94
+(
+ #";; Die ersten drei Zeilen dieser "
+ #"Datei wurden von DrRacket eingef\303\274gt. Sie enthalten Metadaten"
+) 0 0 4 29 1 #"\n"
+0 0 4 3 83
+(
+ #";; \303\274ber die Sprachebene dieser Datei in einer Form, die DrRac"
+ #"ket verarbeiten kann."
+) 0 0 4 29 1 #"\n"
+0 0 4 3 112
+(
+ #"#reader(lib \"DMdA-beginner-reader.ss\" \"deinprogramm\")((modname |"
+ #"#exercise2-image-chessboard|) (read-case-sensiti"
+) 0 0 4 3 289
+(
+ #"ve #f) (teachpacks ((lib \"image2.rkt\" \"teachpack\" \"deinprogramm"
+ #"\") (lib \"universe.rkt\" \"teachpack\" \"deinprogramm\"))) (deinpro"
+ #"gramm-settings #(#f write repeating-decimal #f #t none explicit #f ("
+ #"(lib \"image2.rkt\" \"teachpack\" \"deinprogramm\") (lib \"universe."
+ #"rkt\" \"teachpack\" \"deinprogramm\")))))"
+) 0 0 4 29 1 #"\n"
+0 0 17 3 47 #"; rekonstruieren eines Schachbretts mit Figuren"
+0 0 24 29 1 #"\n"
+0 0 17 3 41 #"; bewegen eines Bauern 2 Felder vorw\303\244rts"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 54
+#"; definieren von Gr\303\266\303\237e, Modus und Farbe eines Feldes"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size1"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"20"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"mode"
+0 0 24 3 1 #" "
+0 0 19 3 7 #"\"solid\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"color1"
+0 0 24 3 1 #" "
+0 0 19 3 7 #"\"white\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"color2"
+0 0 24 3 1 #" "
+0 0 19 3 7 #"\"black\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field1"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"rectangle"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size1"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size1"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"mode"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"color1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field2"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"rectangle"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size1"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size1"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"mode"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"color2"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 40 #";definieren von 2 Reihen vom Schachbrett"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"line1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 6 #"beside"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field1"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field2"
+0 0 24 29 1 #"\n"
+0 0 24 3 10 #"          "
+0 0 14 3 6 #"field1"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field2"
+0 0 24 29 1 #"\n"
+0 0 24 3 10 #"          "
+0 0 14 3 6 #"field1"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field2"
+0 0 24 29 1 #"\n"
+0 0 24 3 10 #"          "
+0 0 14 3 6 #"field1"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field2"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"line2"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 6 #"beside"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field2"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field1"
+0 0 24 29 1 #"\n"
+0 0 24 3 10 #"          "
+0 0 14 3 6 #"field2"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field1"
+0 0 24 29 1 #"\n"
+0 0 24 3 10 #"          "
+0 0 14 3 6 #"field2"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field1"
+0 0 24 29 1 #"\n"
+0 0 24 3 10 #"          "
+0 0 14 3 6 #"field2"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"field1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 48 #"; zusammensetzen der Reihen zu einem Schachbrett"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"chessboard"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 5 #"above"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"line1"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"line2"
+0 0 24 29 1 #"\n"
+0 0 24 3 9 #"         "
+0 0 14 3 5 #"line1"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"line2"
+0 0 24 29 1 #"\n"
+0 0 24 3 9 #"         "
+0 0 14 3 5 #"line1"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"line2"
+0 0 24 29 1 #"\n"
+0 0 24 3 9 #"         "
+0 0 14 3 5 #"line1"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"line2"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 26 #"; definieren der \"Figuren\""
+0 0 24 29 1 #"\n"
+0 0 17 3 18 #"; f\303\274r jedes Team:"
+0 0 24 29 1 #"\n"
+0 0 17 3 23 #"; - ein K\303\266nig (king K)"
+0 0 24 29 1 #"\n"
+0 0 17 3 27 #"; - eine K\303\266nigin (queen Q)"
+0 0 24 29 1 #"\n"
+0 0 17 3 24 #"; - zwei T\303\274rme (rook R)"
+0 0 24 29 1 #"\n"
+0 0 17 3 27 #"; - zwei L\303\244ufer (bishop B)"
+0 0 24 29 1 #"\n"
+0 0 17 3 29 #"; - zwei Springer (knight Kn)"
+0 0 24 29 1 #"\n"
+0 0 17 3 24 #"; - acht Bauern (pawn P)"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 49
+#"; definieren von Gr\303\266\303\237e und Farben der \"Figuren\""
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size2"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"10"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"color3"
+0 0 24 3 1 #" "
+0 0 19 3 5 #"\"red\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"color4"
+0 0 24 3 1 #" "
+0 0 19 3 6 #"\"blue\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"figure1"
+0 0 24 3 2 #" ("
+0 0 14 3 6 #"circle"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size2"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"mode"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"color3"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"figure2"
+0 0 24 3 2 #" ("
+0 0 14 3 6 #"circle"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size2"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"mode"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"color4"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 59
+(
+ #"; definieren einer Schriftgr\303\266\303\237e, Farbe und einer Posit"
+ #"ion"
+) 0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size3"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"15"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 3 1 #" "
+0 0 19 3 8 #"\"middle\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"text-color"
+0 0 24 3 1 #" "
+0 0 19 3 7 #"\"black\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 39 #"; definieren eines \"Aufkleber\"-Umrisses"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"sticker"
+0 0 24 3 2 #" ("
+0 0 14 3 6 #"circle"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size2"
+0 0 24 3 1 #" "
+0 0 19 3 9 #"\"outline\""
+0 0 24 3 1 #" "
+0 0 14 3 10 #"text-color"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 61
+#"; definieren eines \"Aufkleber\"-Sets an verschiedenen Firguren"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 12 #"king-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"overlay/align"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 29 1 #"\n"
+0 0 24 3 18 #"                 ("
+0 0 14 3 4 #"text"
+0 0 24 3 1 #" "
+0 0 19 3 2 #"\"K"
+0 0 19 3 1 #"\""
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size3"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"text-color"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 17 #"                 "
+0 0 14 3 7 #"sticker"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 13 #"queen-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"overlay/align"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 29 1 #"\n"
+0 0 24 3 18 #"                 ("
+0 0 14 3 4 #"text"
+0 0 24 3 1 #" "
+0 0 19 3 2 #"\"Q"
+0 0 19 3 1 #"\""
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size3"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"text-color"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 17 #"                 "
+0 0 14 3 7 #"sticker"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 12 #"rook-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"overlay/align"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 29 1 #"\n"
+0 0 24 3 18 #"                 ("
+0 0 14 3 4 #"text"
+0 0 24 3 1 #" "
+0 0 19 3 1 #"\""
+0 0 19 3 2 #"R\""
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size3"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"text-color"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 17 #"                 "
+0 0 14 3 7 #"sticker"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 14 #"bishop-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"overlay/align"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 29 1 #"\n"
+0 0 24 3 18 #"                 ("
+0 0 14 3 4 #"text"
+0 0 24 3 1 #" "
+0 0 19 3 3 #"\"B\""
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size3"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"text-color"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 17 #"                 "
+0 0 14 3 7 #"sticker"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 14 #"knight-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"overlay/align"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 29 1 #"\n"
+0 0 24 3 18 #"                 ("
+0 0 14 3 4 #"text"
+0 0 24 3 1 #" "
+0 0 19 3 4 #"\"Kn\""
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size3"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"text-color"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 17 #"                 "
+0 0 14 3 7 #"sticker"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 12 #"pawn-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"overlay/align"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 3 1 #" "
+0 0 14 3 3 #"mid"
+0 0 24 29 1 #"\n"
+0 0 24 3 18 #"                 ("
+0 0 14 3 4 #"text"
+0 0 24 3 1 #" "
+0 0 19 3 3 #"\"P\""
+0 0 24 3 1 #" "
+0 0 14 3 5 #"size3"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"text-color"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 17 #"                 "
+0 0 14 3 7 #"sticker"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 30 #"; erstellen der Figuren Team 1"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"king1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 7 #"overlay"
+0 0 24 3 1 #" "
+0 0 14 3 12 #"king-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 11 #"           "
+0 0 14 3 7 #"figure1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"queen1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 7 #"overlay"
+0 0 24 3 1 #" "
+0 0 14 3 13 #"queen-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 11 #"           "
+0 0 14 3 7 #"figure1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"rook1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 7 #"overlay"
+0 0 24 3 1 #" "
+0 0 14 3 12 #"rook-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 11 #"           "
+0 0 14 3 7 #"figure1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"bishop1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 7 #"overlay"
+0 0 24 3 1 #" "
+0 0 14 3 14 #"bishop-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 11 #"           "
+0 0 14 3 7 #"figure1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"knight1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 7 #"overlay"
+0 0 24 3 1 #" "
+0 0 14 3 14 #"knight-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 11 #"           "
+0 0 14 3 7 #"figure1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"pawn1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 7 #"overlay"
+0 0 24 3 1 #" "
+0 0 14 3 12 #"pawn-sticker"
+0 0 24 29 1 #"\n"
+0 0 24 3 11 #"           "
+0 0 14 3 7 #"figure1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0           0
