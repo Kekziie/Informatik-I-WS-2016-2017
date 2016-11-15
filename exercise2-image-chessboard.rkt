@@ -3,3 +3,38 @@
 #reader(lib "DMdA-beginner-reader.ss" "deinprogramm")((modname exercise2-image-chessboard) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
 ; rekonstruieren eines Schachbretts mit Figuren
 ; bewegen eines Bauern 2 Felder vorwärts
+
+(define white-field (rectangle 20 20 "solid" "white"))
+(define black-field (rectangle 20 20 "solid" "black"))
+
+(define line1
+  (beside white-field
+          black-field
+          white-field
+          black-field
+          white-field
+          black-field
+          white-field
+          black-field))
+
+(define line2
+  (beside black-field
+          white-field
+          black-field
+          white-field
+          black-field
+          white-field
+          black-field
+          white-field))
+
+(define chessboard
+  (above line1
+         line2
+         line1
+         line2
+         line1
+         line2
+         line1
+         line2))
+
+chessboard
