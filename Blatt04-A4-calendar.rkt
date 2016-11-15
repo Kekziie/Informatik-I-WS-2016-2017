@@ -76,18 +76,18 @@
 
 ; stellt fest, ob Monat korrekt ist
 
-(: calendar-date-month-ok? (calendar-date -> boolean))
+(: month-ok? (calendar-date -> boolean))
 
-(check-expect (calendar-date-month-ok? birthday) #t)
-(check-expect (calendar-date-month-ok? date1) #t)
-(check-expect (calendar-date-month-ok? false-date1) #f)
-(check-expect (calendar-date-month-ok? false-date2) #t)
-(check-expect (calendar-date-month-ok? false-date3) #t)
-(check-expect (calendar-date-month-ok? false-date4) #f)
-(check-expect (calendar-date-month-ok? false-date5) #t)
+(check-expect (month-ok? birthday) #t)
+(check-expect (month-ok? date1) #t)
+(check-expect (month-ok? false-date1) #f)
+(check-expect (month-ok? false-date2) #t)
+(check-expect (month-ok? false-date3) #t)
+(check-expect (month-ok? false-date4) #f)
+(check-expect (month-ok? false-date5) #t)
 
 
-(define calendar-date-month-ok?
+(define month-ok?
   (lambda (date)
     (if (>= (calendar-date-month date) 1)
         (<= (calendar-date-month date) 12)
@@ -95,17 +95,17 @@
 
 ; stellt fest, ob Tage im Monat korrekt sind
 
-(: calendar-date-day-ok? (calendar-date -> boolean))
+(: day-ok? (calendar-date -> boolean))
 
-(check-expect (calendar-date-day-ok? birthday) #t)
-(check-expect (calendar-date-day-ok? date1) #f)
-(check-expect (calendar-date-day-ok? false-date1) #f)
-(check-expect (calendar-date-day-ok? false-date2) #f)
-(check-expect (calendar-date-day-ok? false-date3) #f)
-(check-expect (calendar-date-day-ok? false-date4) #t)
-(check-expect (calendar-date-day-ok? false-date5) #f)
+(check-expect (day-ok? birthday) #t)
+(check-expect (day-ok? date1) #f)
+(check-expect (day-ok? false-date1) #f)
+(check-expect (day-ok? false-date2) #f)
+(check-expect (day-ok? false-date3) #f)
+(check-expect (day-ok? false-date4) #t)
+(check-expect (day-ok? false-date5) #f)
 
-(define calendar-date-day-ok?
+(define day-ok?
   (lambda (date)
     (if (>= (calendar-date-day date) 1)
         (if (<= (calendar-date-month date) 7)
@@ -134,23 +134,23 @@
 
 (define calendar-date-ok?
   (lambda (date)
-    (and (calendar-date-month-ok? date)
-         (calendar-date-day-ok? date))))
+    (and (month-ok? date)
+         (day-ok? date))))
 
 ; (c)
 ; stellt fest, ob Tage im Monat korrekt sind im Schaltjahr
 
-(: calendar-date-day-ok/leap-year? (calendar-date -> boolean))
+(: day-ok/leap-year? (calendar-date -> boolean))
 
-(check-expect (calendar-date-day-ok/leap-year? birthday) #t)
-(check-expect (calendar-date-day-ok/leap-year? date1) #t)
-(check-expect (calendar-date-day-ok/leap-year? false-date1) #f)
-(check-expect (calendar-date-day-ok/leap-year? false-date2) #t)
-(check-expect (calendar-date-day-ok/leap-year? false-date3) #f)
-(check-expect (calendar-date-day-ok/leap-year? false-date4) #t)
-(check-expect (calendar-date-day-ok/leap-year? false-date5) #f)
+(check-expect (day-ok/leap-year? birthday) #t)
+(check-expect (day-ok/leap-year? date1) #t)
+(check-expect (day-ok/leap-year? false-date1) #f)
+(check-expect (day-ok/leap-year? false-date2) #t)
+(check-expect (day-ok/leap-year? false-date3) #f)
+(check-expect (day-ok/leap-year? false-date4) #t)
+(check-expect (day-ok/leap-year? false-date5) #f)
 
-(define calendar-date-day-ok/leap-year?
+(define day-ok/leap-year?
   (lambda (date)
     (if (>= (calendar-date-day date) 1)
         (if (<= (calendar-date-month date) 7)
@@ -180,8 +180,8 @@
 (define calendar-date-ok/leap-year?
   (lambda (date)
     (if (= (modulo (calendar-date-year date) 4) 0)
-        (and (calendar-date-day-ok/leap-year? date)
-             (calendar-date-month-ok? date))
+        (and (day-ok/leap-year? date)
+             (month-ok? date))
         (calendar-date-ok? date)))) 
 
 
