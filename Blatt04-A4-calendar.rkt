@@ -17,6 +17,14 @@
 (check-expect (calendar-date-day birthday) 17)
 (check-expect (calendar-date-month birthday) 9)
 (check-expect (calendar-date-year birthday) 1995)
+(check-property
+ (for-all ((day natural)
+           (month natural)
+           (year natural))
+   (and (= (calendar-date-day (make-calendar-date day month year)) day)
+        (= (calendar-date-month (make-calendar-date day month year)) month)
+        (= (calendar-date-year (make-calendar-date day month year)) year))))
+           
 
 (define-record-procedures calendar-date
   make-calendar-date
