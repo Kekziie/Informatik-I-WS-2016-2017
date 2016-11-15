@@ -22,4 +22,14 @@
 (check-expect (Bewertung 52) "mangelhaft")
 (check-expect (Bewertung 0) "ungenügend")
 
+(define Bewertung
+  (lambda (Punkte)
+    (cond
+      ((>= Punkte 90) "sehr gut")
+      ((>= Punkte 80) "gut")
+      ((>= Punkte 70) "befriedigend")
+      ((>= Punkte 60) "ausreichend")
+      ((>= Punkte 50) "mangelhaft")
+      (else "ungenügend"))))
+
               
