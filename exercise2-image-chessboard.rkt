@@ -4,37 +4,34 @@
 ; rekonstruieren eines Schachbretts mit Figuren
 ; bewegen eines Bauern 2 Felder vorwärts
 
-(define white-field (rectangle 20 20 "solid" "white"))
-(define black-field (rectangle 20 20 "solid" "black"))
+; definieren von Größe, Modus und Farbe eines Feldes
+(define size 20)
+(define mode "solid")
+(define color1 "white")
+(define color2 "black")
+
+(define field1 (rectangle size size mode color1))
+(define field2 (rectangle size size mode color2))
+
+;definieren von 2 Reihen vom Schachbrett
 
 (define line1
-  (beside white-field
-          black-field
-          white-field
-          black-field
-          white-field
-          black-field
-          white-field
-          black-field))
+  (beside field1 field2
+          field1 field2
+          field1 field2
+          field1 field2))
 
 (define line2
-  (beside black-field
-          white-field
-          black-field
-          white-field
-          black-field
-          white-field
-          black-field
-          white-field))
+  (beside field2 field1
+          field2 field1
+          field2 field1
+          field2 field1))
 
+; zusammensetzen der Reihen zu einem Schachbrett
 (define chessboard
-  (above line1
-         line2
-         line1
-         line2
-         line1
-         line2
-         line1
-         line2))
+  (above line1 line2
+         line1 line2
+         line1 line2
+         line1 line2))
 
 chessboard
