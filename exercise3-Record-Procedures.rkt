@@ -11,9 +11,12 @@
 ; - class1
 ; - class2
 ; - rarity
-; - special
+; - special-level-current
+; - special-level-max
 ; - evolve-to
 ; - powers
+
+(: make-character (natural string string string string natural natural natural natural natural -> character))
 
 (define-record-procedures character
   make-character
@@ -24,6 +27,7 @@
    character-class1
    character-class2
    character-rarity
-   character-special
+   character-special-lvl
+   character-special-lvl-max
    character-evolve-to
    character-powers))
