@@ -31,3 +31,8 @@
    character-special-lvl-max
    character-evolve-to
    character-powers))
+
+; Record-Procedure über character-powers
+; eine character-power besteht aus
+; - count
+; - type
