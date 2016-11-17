@@ -5,7 +5,6 @@
 
 ; Record-Procedure über die Charaktere im Spiel
 ; Ein Charakter (character) besteht aus:
-; - ID
 ; - name
 ; - type
 ; - class1
@@ -16,13 +15,12 @@
 ; - evolve-to
 ; - powers
 
-(: make-character (natural string string string string natural natural natural natural natural -> character))
+(: make-character (string string string string natural natural natural string natural -> character))
 
 (define-record-procedures character
   make-character
   character?
-  (character-ID
-   character-name
+  (character-name
    character-type
    character-class1
    character-class2
@@ -32,8 +30,14 @@
    character-evolve-to
    character-powers))
 
+; ein Charakter soll durch seiner IDxxxx definiert sein
+
+(define ID1
+  (make-character "Luffy" "STR" "Fighter" "none" 2 0 1 "ID2" 0))
+
 ; Record-Procedure über character-powers
 ; eine character-power besteht aus
+; - ID
 ; - count
 ; - type
 
@@ -42,5 +46,7 @@
 (define-record-procedures powers
   make-powers
   powers?
-  (powers-count
-   powers-tye))
+   (powers-count
+    powers-tye))
+
+
