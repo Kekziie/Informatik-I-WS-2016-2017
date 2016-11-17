@@ -36,3 +36,11 @@
 ; eine character-power besteht aus
 ; - count
 ; - type
+
+(: make-powers (natural string -> powers))
+
+(define-record-procedures powers
+  make-powers
+  powers?
+  (powers-count
+   powers-tye))
