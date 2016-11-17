@@ -74,7 +74,12 @@
 (define false-date5
   (make-calendar-date 0 4 1992))
 
-; stellt fest, ob Monat korrekt ist
+(: false-date6 calendar-date)
+
+(define false-date6
+  (make-calendar-date 31 11 2000))
+
+; stellt fest, ob Monat korrekt ist, also zwischen 1 und 12
 
 (: month-ok? (calendar-date -> boolean))
 
@@ -84,6 +89,7 @@
 (check-expect (month-ok? false-date2) #t)
 (check-expect (month-ok? false-date3) #t)
 (check-expect (month-ok? false-date4) #f)
+(check-expect (month-ok? false-date5) #t)
 (check-expect (month-ok? false-date5) #t)
 
 
@@ -104,16 +110,27 @@
 (check-expect (day-ok? false-date3) #f)
 (check-expect (day-ok? false-date4) #t)
 (check-expect (day-ok? false-date5) #f)
+(check-expect (day-ok? false-date6) #f)
 
 (define day-ok?
   (lambda (date)
+         ; kontolliert, dass Tag nicht 0 sein darf 
     (if (>= (calendar-date-day date) 1)
+            ; schaut, ob man sich in der Hälfte des Jahres befindet,
+            ; da Juli + August beide 31 Tage besitzen
         (if (<= (calendar-date-month date) 7)
+            ; 1.Monathälfte
+                ; gibt jedem "ungeraden" Monat (1 3 5 7) 31 Tage
             (if (= (modulo (calendar-date-month date) 2) 1)
                 (<= (calendar-date-day date) 31)
+                    ; gibt dem 2.Monat 28 Tage
+                    ; gibt jedem "geraden" Monat (4 6) 30 Tage
                 (if (= (calendar-date-month date) 2)
                     (<= (calendar-date-day date) 28)
                     (<= (calendar-date-day date) 30)))
+             ; 2.Monathälfte
+                 ; gibt jedem geraden Monat (8 10 12) 31 Tage
+                 ; gibt jedem ungeraden Monat (9 11) 30 Tage
             (if (= (modulo (calendar-date-month date) 2) 0)
                 (<= (calendar-date-day date) 31)
                 (<= (calendar-date-day date) 30)))
@@ -131,6 +148,7 @@
 (check-expect (calendar-date-ok? false-date3) #f)
 (check-expect (calendar-date-ok? false-date4) #f)
 (check-expect (calendar-date-ok? false-date5) #f)
+(check-expect (calendar-date-ok? false-date6) #f)
 
 (define calendar-date-ok?
   (lambda (date)
