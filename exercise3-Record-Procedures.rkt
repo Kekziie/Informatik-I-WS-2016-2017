@@ -42,14 +42,24 @@
 (define rarity
   (signature (one-of 1 2 3 4 5 6)))
 
+; definieren der Signatur des Special levels
+; bei #f besitzt der Charakter keine Special
+
+(define special-lvl
+  (signature (mixed natural (one-of #f))))
+
 ; evolve-to soll auf die ID des Charakters hinweisen, zu dem er sich entwickeln kann
 
 ; definiere power-type für signature
 
 (define pow-type
-  (signature (one-of "Charge Special"
+  (signature (one-of "Charge Specials"
+                     "Damage Reduction"
                      "Bind Resistance"
                      "Poison Resistance"
+                     "Despair Resistance"
+                     "Auto Heal"
+                     "Slot Rate Boost"
                      "Map Damage Resistance"
                      "Resilience"
                      "RCV Boost"
@@ -58,10 +68,10 @@
 ; Record-Procedure über character-powers
 ; eine character-power besteht aus
 ; - count
-;   -> count=0 means character have no powers
+;   bei #f keine power vorhanden
 ; - type
 
-(: make-powers (natural pow-type -> powers))
+(: make-powers ((mixed natural (one-of #f)) pow-type -> powers))
 
 (define-record-procedures powers
   make-powers
@@ -88,7 +98,7 @@
 ; - powers
 ; - unlock
 
-(: make-character (string char-type classes classes level natural rarity natural natural string natural boolean -> character))
+(: make-character (string char-type classes classes level natural rarity special-lvl special-lvl string natural boolean -> character))
 
 (define-record-procedures character
   make-character
@@ -109,5 +119,5 @@
 ; ein Charakter soll durch seiner IDxxxx definiert sein
 
 (define ID1
-  (make-character "Luffy" "STR" "Fighter" "none" 0 5 2 0 1 "ID2" 0 #t))
+  (make-character "Monkey D. Luffy" "STR" "Fighter" "none" #f 5 2 0 1 "ID2" 0 #t))
 
