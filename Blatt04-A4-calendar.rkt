@@ -167,6 +167,10 @@
 (check-expect (day-ok/leap-year? false-date3) #f)
 (check-expect (day-ok/leap-year? false-date4) #t)
 (check-expect (day-ok/leap-year? false-date5) #f)
+(check-expect (day-ok/leap-year? false-date6) #f)
+
+; funktioniert genau gleich wie day-ok?
+; Unterschied im Schaltjahr besitzt der Februar 29 Tage
 
 (define day-ok/leap-year?
   (lambda (date)
@@ -183,7 +187,7 @@
         #f)))
 
 ; stellt fest, ob Kalenderdatum-Record einem tatsächlichen Kalenderdatum entspricht
-; mit Schaltjahren
+; mit Schaltjahren, d.h. jedes 4.Jar hat der Ferbruar 29 Tage
 
 (: calendar-date-ok/leap-year? (calendar-date -> boolean))
 
@@ -194,11 +198,13 @@
 (check-expect (calendar-date-ok/leap-year? false-date3) #f)
 (check-expect (calendar-date-ok/leap-year? false-date4) #f)
 (check-expect (calendar-date-ok/leap-year? false-date5) #f)
+(check-expect (calendar-date-ok/leap-year? false-date6) #f)
 
 (define calendar-date-ok/leap-year?
   (lambda (date)
+           ; schaut, ob Jahr, Vielfaches von 4 ist
     (if (= (modulo (calendar-date-year date) 4) 0)
-        (and (day-ok/leap-year? date)
-             (month-ok? date))
+        (and (month-ok? date)
+             (day-ok/leap-year? date))
         (calendar-date-ok? date)))) 
      
