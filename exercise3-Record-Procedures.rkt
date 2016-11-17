@@ -44,6 +44,7 @@
 
 ; definieren der Signatur des Special levels
 ; bei #f besitzt der Charakter keine Special
+; bei 0 kein Besitz des Charakters
 
 (define special-lvl
   (signature (mixed natural (one-of #f))))
@@ -89,10 +90,6 @@
     powers-type3
     powers-type4
     powers-type5))
-    
-
-(define powers-ID1
-  (make-powers #f #f #f #f #f #f))
 
 ; Record-Procedure über die Charaktere im Spiel
 ; Ein Charakter (character) besteht aus:
@@ -103,14 +100,13 @@
 ; - rarity
 ; - momentanes level
 ; - maximales level
-; - special-level-current 
+; - special-level-current
 ; - special-level-max
-;   -> special-level = 0 means this character doesn't own a special
 ; - evolve-to
 ; - powers
 ; - unlock
 
-(: make-character (string char-type classes classes level natural rarity special-lvl special-lvl string natural boolean -> character))
+(: make-character (string char-type classes classes level natural rarity special-lvl special-lvl string powers boolean -> character))
 
 (: character-name (character -> string))
 (: character-type (character -> char-type))
@@ -122,7 +118,7 @@
 (: character-special-lvl (character -> special-lvl))
 (: character-special-lvl-max (character -> special-lvl))
 (: character-evolve-to (character -> string))
-(: character-powers (character -> natural))
+(: character-powers (character -> powers))
 (: character-unlock (character -> boolean))
 
 (define-record-procedures character
@@ -144,5 +140,8 @@
 ; ein Charakter soll durch seiner IDxxxx definiert sein
 
 (define ID1
-  (make-character "Monkey D. Luffy" "STR" "Fighter" "none" #f 5 2 0 1 "ID2" 0 #t))
+  (make-character "Monkey D. Luffy" "STR" "Fighter" "none" #f 5 2 0 1 "ID2" (make-powers #f #f #f #f #f #f) #t))
+
+(define ID2
+  (make-character "Monkey D. Luffy Gum-Gum Pistol" "STR" "Fighter" "none" #f 20 3 0 1 "ID3" (make-powers #f #f #f #f #f #f) #t))
 
