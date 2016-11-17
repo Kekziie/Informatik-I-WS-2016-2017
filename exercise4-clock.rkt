@@ -29,16 +29,29 @@
 (define hour-hand (put-pinhole 8 65 (rectangle hour-hand-width hour-hand-length mode hour-hand-color))) ; Stundenzeiger
 (define hm (put-pinhole 5 clock-radius (rectangle hour-mark-width hour-mark-length mode hour-mark-color))) ;  "Stundenmarkierungen" (hour-mark hm)
 ; Hintergrund der Uhr mit "Stundenmarkierungen"
-(define hintergrund (overlay/pinhole hm
-                                     (rotate 30 hm)
-                                     (rotate 60 hm)
-                                     (rotate 90 hm)
-                                     (rotate 120 hm)
-                                     (rotate 150 hm)
-                                     (rotate 180 hm)
-                                     (rotate 210 hm)
-                                     (rotate 240 hm)
-                                     (rotate 270 hm)
-                                     (rotate 300 hm)
-                                     (rotate 330 hm)
-                                     (circle clock-radius mode clock-color)))
+(define clock-background (overlay/pinhole hm
+                                          (rotate 30 hm)
+                                          (rotate 60 hm)
+                                          (rotate 90 hm)
+                                          (rotate 120 hm)
+                                          (rotate 150 hm)
+                                          (rotate 180 hm)
+                                          (rotate 210 hm)
+                                          (rotate 240 hm)
+                                          (rotate 270 hm)
+                                          (rotate 300 hm)
+                                          (rotate 330 hm)
+                                          (circle clock-radius mode clock-color)))
+
+; Darstellung der Uhr in Abhängigkeit von der Zeit t
+
+(: clock (natural -> image))
+
+(define clock
+  (lambda (t)
+    (clear-pinhole
+     (overlay/pinhole
+      (seconds t)
+      (minutes t)
+      (hours t)
+      clock-background))))
