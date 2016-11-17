@@ -100,6 +100,19 @@
 
 (: make-character (string char-type classes classes level natural rarity special-lvl special-lvl string natural boolean -> character))
 
+(: character-name (character -> string))
+(: character-type (character -> char-type))
+(: character-class1 (character -> classes))
+(: character-class2 (character -> classes))
+(: character-level (character -> level))
+(: character-level-max (character -> natural))
+(: character-rarity (character -> rarity))
+(: character-special-lvl (character -> special-lvl))
+(: character-special-lvl-max (character -> special-lvl))
+(: character-evolve-to (character -> string))
+(: character-powers (character -> natural))
+(: character-unlock (character -> boolean))
+
 (define-record-procedures character
   make-character
   character?
