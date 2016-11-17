@@ -28,6 +28,12 @@
                      "Powerhouse"
                      "none")))
 
+; definiere Anzahl der "Sterne" für Seltenheitswert
+; wobei 1 Stern nicht selten bis 6 Sterne sehr selten ist
+
+(define rarity
+  (signature (one-of 1 2 3 4 5 6)))
+
 ; Record-Procedure über die Charaktere im Spiel
 ; Ein Charakter (character) besteht aus:
 ; - name
