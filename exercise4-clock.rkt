@@ -1,17 +1,17 @@
 ;; Die ersten drei Zeilen dieser Datei wurden von DrRacket eingefügt. Sie enthalten Metadaten
 ;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
 #reader(lib "DMdA-beginner-reader.ss" "deinprogramm")((modname exercise4-clock) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
-; animieren sie ein Uhr mithilfe der Funktion von "pinhole"
+; animieren sie eine Uhr mithilfe der Funktion von "pinhole"
 
 ; definieren der Größe, des Modus und der Farbe
 
-(define second-hand-width 6)
+(define second-hand-width 3)
 (define second-hand-length 90)
-(define minute-hand-width 10)
+(define minute-hand-width 4)
 (define minute-hand-length 80)
-(define hour-hand-width 16)
-(define hour-hand-length 70)
-(define hour-mark-width 10)
+(define hour-hand-width 8)
+(define hour-hand-length 65)
+(define hour-mark-width 8)
 (define hour-mark-length 20)
 (define clock-radius 100)
 
@@ -24,10 +24,27 @@
 (define clock-color "Lavender")
 
 ; "malen" der Uhr
-(define second-hand (put-pinhole 3 85 (rectangle second-hand-width second-hand-length mode second-hand-color))) ; Sekundenzeiger
-(define minute-hand (put-pinhole 5 75 (rectangle minute-hand-width minute-hand-length mode minute-hand-color))) ; Minutenzeiger
-(define hour-hand (put-pinhole 8 65 (rectangle hour-hand-width hour-hand-length mode hour-hand-color))) ; Stundenzeiger
-(define hm (put-pinhole 5 clock-radius (rectangle hour-mark-width hour-mark-length mode hour-mark-color))) ;  "Stundenmarkierungen" (hour-mark hm)
+
+; Sekundenzeiger der Uhr
+(define second-hand (put-pinhole (/ second-hand-width 2)
+                                 (- second-hand-length (* 1/16 second-hand-length))
+                                 (rectangle second-hand-width second-hand-length mode second-hand-color)))
+
+; Minutenzeiger der Uhr
+(define minute-hand (put-pinhole (/ minute-hand-width 2)
+                                 (- minute-hand-length (* 1/16 minute-hand-length))
+                                 (rectangle minute-hand-width minute-hand-length mode minute-hand-color)))
+
+; Stundenzeiger der Uhr
+(define hour-hand (put-pinhole (/ hour-hand-width 2)
+                               (- hour-hand-length (* 1/16 hour-hand-length))
+                               (rectangle hour-hand-width hour-hand-length mode hour-hand-color)))
+
+; "Stundenmarkierungen" - hour-mark (hm)
+(define hm (put-pinhole (/ hour-mark-width 2)
+                        clock-radius
+                        (rectangle hour-mark-width hour-mark-length mode hour-mark-color)))
+
 ; Hintergrund der Uhr mit "Stundenmarkierungen"
 (define clock-background (overlay/pinhole hm
                                           (rotate 30 hm)
