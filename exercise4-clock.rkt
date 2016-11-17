@@ -55,3 +55,20 @@
       (minutes t)
       (hours t)
       clock-background))))
+
+; rechnet die "echte" Zeit aus Stunden, Minuten und Sekunden nach Ticks um
+; (Funktion "animate" führt 28 Ticks pro Sekunde aus)
+
+(: time->ticks (natural natural natural -> natural))
+
+(check-expect (time->ticks 0 0 0) 0)
+(check-expect (time->ticks 0 0 1) 28)
+(check-expect (time->ticks 1 1 1) 102508)
+(check-expect (time->ticks 2 1 0) 203280)
+
+(define time->ticks
+  (lambda (h m s)
+    (* (+ (* h 3600)
+          (* m 60)
+          s)
+       28)))
