@@ -96,13 +96,14 @@
 ; - name
 ; - type
 ; - class1
-; - class2
-; - rarity
+; - class2, bei "none" besitzt der Charakter keine 2. Klasse
+; - rarity, Seltenheit hat max. 6 Sterne
 ; - momentanes level
 ; - maximales level
 ; - special-level-current
 ; - special-level-max
-; - evolve-to
+; - evolve-to, weist auf die ID eines anderen Charakters
+;              bei "none" keine evolve form
 ; - powers
 ; - unlock
 
@@ -140,8 +141,38 @@
 ; ein Charakter soll durch seiner IDxxxx definiert sein
 
 (define ID1
-  (make-character "Monkey D. Luffy" "STR" "Fighter" "none" #f 5 2 0 1 "ID2" (make-powers #f #f #f #f #f #f) #t))
+  (make-character "Monkey D. Luffy"
+                  "STR" "Fighter" "none"
+                  #f 5
+                  2
+                  0 1
+                  "ID2"
+                  (make-powers #f #f #f #f #f #f) #t))
 
 (define ID2
-  (make-character "Monkey D. Luffy Gum-Gum Pistol" "STR" "Fighter" "none" #f 20 3 0 1 "ID3" (make-powers #f #f #f #f #f #f) #t))
+  (make-character "Monkey D. Luffy Gum-Gum Pistol"
+                  "STR" "Fighter" "none"
+                  #f 20
+                  3
+                  0 1
+                  "ID3"
+                  (make-powers #f #f #f #f #f #f) #t))
+
+(define ID3
+  (make-character "Monkey D. Luffy Gum-Gum Bazooka"
+                  "STR" "Fighter" "none"
+                  #f 35
+                  4
+                  0 1
+                  "ID4"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID4
+  (make-character "Monkey D. Luffy Gear 2"
+                  "STR" "Fighter" "Free Spirit"
+                  60 99
+                  5
+                  0 1
+                  "none"
+                  (make-powers 3 "" "" "" #f #f) #t))
 
