@@ -175,7 +175,7 @@
                   5
                   0 1
                   "none"
-                  (make-powers 3 "" "" "" #f #f) #t))
+                  (make-powers 3 #f #f #f #f #f) #t))
 
 (define ID5
   (make-character "Roronoa Zoro"
@@ -211,7 +211,7 @@
                   5
                   0 1
                   "none"
-                  (make-powers 3 "" "" "" #f #f) #t))
+                  (make-powers 3 #f #f #f #f #f) #t))
 
 (define ID9
   (make-character "Nami"
@@ -234,9 +234,19 @@
 (define ID11
   (make-character "Nami Mirage Tempo"
                   "INT" "Striker" "Cerebral"
-                  #f 50
+                  50 50
                   4
                   0 1
                   "ID12"
                   (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID12
+  (make-character "Nami Thunderbolt Tempo"
+                  "INT" "Striker" "Cerebral"
+                  #f 99
+                  5
+                  0 1
+                  "none"
+                  (make-powers 3 #f #f #f #f #f) #t))
+                  
 
