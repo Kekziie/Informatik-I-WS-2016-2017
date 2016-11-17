@@ -84,7 +84,7 @@
 (check-expect (t->sec 28) 1)
 (check-expect (t->sec 56) 2)
 (check-expect (t->sec 0) 0)
-(check-expect (t->sec 500) 28)
+(check-expect (t->sec 500) 17)
 
 (define t->sec
   (lambda (t)
@@ -107,11 +107,44 @@
 (: t->hour (natural -> natural))
 
 (check-expect (t->hour 5) 0)
-(check-expect (t->hour (time-ticks 5 17 42)) 5)
+(check-expect (t->hour (time->ticks 5 17 42)) 5)
 (check-expect (t->hour 3000) 0)
 
 (define t->hour
   (lambda (t)
     (quotient (t->sec t) 3600)))
 
+; Position des Sekundenzeigers
 
+(: seconds (natural -> image))
+
+(check-expect (seconds (time->ticks 0 0 42)) (rotate -252 second-hand))
+(check-expect (seconds (time->ticks 2 5 0)) (rotate 0 second-hand))
+
+(define seconds
+  (lambda (t)
+    (rotate (* (t->sec t) -6) second-hand)))
+
+; Position des Minutenzeigers
+
+(: minutes (natural -> image))
+
+(check-expect (minutes (time->ticks 0 0 42)) (rotate 0 minute-hand))
+(check-expect (minutes (time->ticks 0 17 42)) (rotate -102 minute-hand))
+
+(define minutes
+  (lambda(t)
+    (rotate (* (t->min t) -6) minute-hand)))
+
+; Position des Stundenzeigers
+
+(: hours (natural -> image))
+
+(check-expect (hours (time->ticks 0 0 42)) (rotate 0 hour-hand))
+(check-expect (hours (time->ticks 6 0 42)) (rotate -180 hour-hand))
+
+(define hours
+  (lambda(t)
+    (rotate (* (t->hour t) -30) hour-hand)))
+
+(animate clock)
