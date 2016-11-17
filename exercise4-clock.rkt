@@ -20,12 +20,14 @@
 (define second-hand-color "violet red")
 (define minute-hand-color "orchid")
 (define hour-hand-color "lightpink")
+(define hour-mark-color "midnight blue")
+(define clock-color "Lavender")
 
 ; "malen" der Uhr
-(define second-hand (put-pinhole 3 85 (rectangle second-hand-width second-hand-length mode "lightblue"))) ; Sekundenzeiger
-(define minute-hand (put-pinhole 5 75 (rectangle minute-hand-width minute-hand-length mode "blue"))) ; Minutenzeiger
-(define hour-hand (put-pinhole 8 65 (rectangle hour-hand-width hour-hand-length mode "red"))) ; Stundenzeiger
-(define hm (put-pinhole 5 clock-radius (rectangle hour-mark-width hour-mark-length mode "white"))) ;  "Stundenmarkierungen" (hour-mark hm)
+(define second-hand (put-pinhole 3 85 (rectangle second-hand-width second-hand-length mode second-hand-color))) ; Sekundenzeiger
+(define minute-hand (put-pinhole 5 75 (rectangle minute-hand-width minute-hand-length mode minute-hand-color))) ; Minutenzeiger
+(define hour-hand (put-pinhole 8 65 (rectangle hour-hand-width hour-hand-length mode hour-hand-color))) ; Stundenzeiger
+(define hm (put-pinhole 5 clock-radius (rectangle hour-mark-width hour-mark-length mode hour-mark-color))) ;  "Stundenmarkierungen" (hour-mark hm)
 ; Hintergrund der Uhr mit "Stundenmarkierungen"
 (define hintergrund (overlay/pinhole hm
                                      (rotate 30 hm)
@@ -39,4 +41,4 @@
                                      (rotate 270 hm)
                                      (rotate 300 hm)
                                      (rotate 330 hm)
-                                     (circle clock-radius mode "black")))
+                                     (circle clock-radius mode clock-color)))
