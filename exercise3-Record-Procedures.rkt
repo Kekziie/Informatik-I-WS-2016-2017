@@ -24,6 +24,7 @@
                      "Slasher"
                      "Striker"
                      "Driven"
+                     "Cerebral"
                      "Free Spirit"
                      "Evolver"
                      "Booster"
@@ -175,4 +176,67 @@
                   0 1
                   "none"
                   (make-powers 3 "" "" "" #f #f) #t))
+
+(define ID5
+  (make-character "Roronoa Zoro"
+                  "DEX" "Slasher" "none"
+                  #f 20
+                  3
+                  0 1
+                  "ID6 ID7"
+                  (make-powers #f #f #f #f #f #f) #t))
+
+(define ID6
+  (make-character "Roronoa Zoro Three Thousand Worlds"
+                  "DEX" "Slasher" "Driven"
+                  #f 35
+                  4
+                  0 1
+                  "ID8"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID7
+  (make-character "Roronoa Zoro Pound Phoenix"
+                  "DEX" "Slasher" "Driven"
+                  #f 50
+                  4
+                  0 1
+                  "ID8"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID8
+  (make-character "Roronoa Zoro Ashura Ichibugin"
+                  "DEX" "Slasher" "Driven"
+                  80 99
+                  5
+                  0 1
+                  "none"
+                  (make-powers 3 "" "" "" #f #f) #t))
+
+(define ID9
+  (make-character "Nami"
+                  "INT" "Striker" "none"
+                  #f 20
+                  3
+                  0 1
+                  "ID10 ID11"
+                  (make-powers #f #f #f #f #f #f) #t))
+
+(define ID10
+  (make-character "Nami Tornado Tempo"
+                  "INT" "Striker" "Cerebral"
+                  #f 35
+                  4
+                  0 1
+                  "ID12"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID11
+  (make-character "Nami Mirage Tempo"
+                  "INT" "Striker" "Cerebral"
+                  #f 50
+                  4
+                  0 1
+                  "ID12"
+                  (make-powers 2 #f #f #f #f #f) #t))
 
