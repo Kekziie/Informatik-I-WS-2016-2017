@@ -51,6 +51,7 @@
 ; evolve-to soll auf die ID des Charakters hinweisen, zu dem er sich entwickeln kann
 
 ; definiere power-type für signature
+; bei #f an der Stelle keine Power enthalten
 
 (define pow-type
   (signature (one-of "Charge Specials"
@@ -63,7 +64,13 @@
                      "Map Damage Resistance"
                      "Resilience"
                      "RCV Boost"
-                     "none")))
+                     "none"
+                     #f)))
+
+; definieren der power-count signature
+
+(define pow-count
+  (signature (one-of #f 1 2 3 4 5)))
 
 ; Record-Procedure über character-powers
 ; eine character-power besteht aus
@@ -71,16 +78,21 @@
 ;   bei #f keine power vorhanden
 ; - type
 
-(: make-powers ((mixed natural (one-of #f)) pow-type -> powers))
+(: make-powers (pow-count pow-type pow-type pow-type pow-type pow-type -> powers))
 
 (define-record-procedures powers
   make-powers
   powers?
    (powers-count
-    powers-tye))
+    powers-type1
+    powers-type2
+    powers-type3
+    powers-type4
+    powers-type5))
+    
 
 (define powers-ID1
-  (make-powers 0 "none"))
+  (make-powers #f #f #f #f #f #f))
 
 ; Record-Procedure über die Charaktere im Spiel
 ; Ein Charakter (character) besteht aus:
