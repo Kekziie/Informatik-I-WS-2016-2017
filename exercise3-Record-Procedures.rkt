@@ -30,6 +30,12 @@
                      "Powerhouse"
                      "none")))
 
+; definiere signatur für character-level
+; bei #f Charakter nicht im Besitz bzw. Evolved
+
+(define level
+  (signature (mixed natural (one-of #f))))
+
 ; definiere Anzahl der "Sterne" für Seltenheitswert
 ; wobei 1 Stern nicht selten bis 6 Sterne sehr selten ist
 
@@ -73,13 +79,16 @@
 ; - class1
 ; - class2
 ; - rarity
+; - momentanes level
+; - maximales level
 ; - special-level-current 
 ; - special-level-max
 ;   -> special-level = 0 means this character doesn't own a special
 ; - evolve-to
 ; - powers
+; - unlock
 
-(: make-character (string char-type classes classes rarity natural natural string natural -> character))
+(: make-character (string char-type classes classes level natural rarity natural natural string natural boolean -> character))
 
 (define-record-procedures character
   make-character
@@ -88,14 +97,17 @@
    character-type
    character-class1
    character-class2
+   character-level
+   character-level-max
    character-rarity
    character-special-lvl
    character-special-lvl-max
    character-evolve-to
-   character-powers))
+   character-powers
+   character-unlock))
 
 ; ein Charakter soll durch seiner IDxxxx definiert sein
 
 (define ID1
-  (make-character "Luffy" "STR" "Fighter" "none" 2 0 1 "ID2" 0))
+  (make-character "Luffy" "STR" "Fighter" "none" 0 5 2 0 1 "ID2" 0 #t))
 
