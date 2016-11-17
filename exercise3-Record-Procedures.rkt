@@ -3,6 +3,31 @@
 #reader(lib "DMdA-beginner-reader.ss" "deinprogramm")((modname exercise3-Record-Procedures) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
 ; Record-Procedure über das Handyspiel "One Piece: Treasure Cruise"
 
+; definiere character-type in signature
+; type "all" includes STR DEX QCK INT and PSY
+
+(define type
+  (signature (one-of "STR"
+                     "DEX"
+                     "QCK"
+                     "INT"
+                     "PSY"
+                     "all"
+                     "Rainbow")))
+
+; definiere character-classes in signature
+
+(define classes
+  (signature (one-of "Fighter"
+                     "Slasher"
+                     "Striker"
+                     "Driven"
+                     "Free Spirit"
+                     "Evolver"
+                     "Booster"
+                     "Powerhouse"
+                     "none")))
+
 ; Record-Procedure über die Charaktere im Spiel
 ; Ein Charakter (character) besteht aus:
 ; - name
@@ -15,7 +40,7 @@
 ; - evolve-to
 ; - powers
 
-(: make-character (string string string string natural natural natural string natural -> character))
+(: make-character (string type classes classes natural natural natural string natural -> character))
 
 (define-record-procedures character
   make-character
