@@ -72,3 +72,46 @@
           (* m 60)
           s)
        28)))
+
+; rechnet den Wert t in "echte" (a) Sekunden (sec)
+;                               (b) Minuten (min)
+;                               (c) Stunden (hour)
+
+; (a)
+(: t->sec (natural -> natural))
+
+(check-expect (t->sec 5) 0)
+(check-expect (t->sec 28) 1)
+(check-expect (t->sec 56) 2)
+(check-expect (t->sec 0) 0)
+(check-expect (t->sec 500) 28)
+
+(define t->sec
+  (lambda (t)
+    (quotient t 28)))
+
+; (b)
+(: t->min (natural -> natural))
+
+(check-expect (t->min 0) 0)
+(check-expect (t->min 1000) 0)
+(check-expect (t->min 2800) 1)
+(check-expect (t->min 10000) 5)
+(check-expect (t->min 900000) 535)
+
+(define t->min
+  (lambda (t)
+    (quotient (t->sec t) 60)))
+
+; (c)
+(: t->hour (natural -> natural))
+
+(check-expect (t->hour 5) 0)
+(check-expect (t->hour (time-ticks 5 17 42)) 5)
+(check-expect (t->hour 3000) 0)
+
+(define t->hour
+  (lambda (t)
+    (quotient (t->sec t) 3600)))
+
+
