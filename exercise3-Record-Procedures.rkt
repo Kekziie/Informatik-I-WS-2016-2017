@@ -82,7 +82,6 @@
 ; - type
 
 (: make-powers (pow-count pow-type pow-type pow-type pow-type pow-type -> powers))
-
 (define-record-procedures powers
   make-powers
   powers?
@@ -92,6 +91,11 @@
     powers-type3
     powers-type4
     powers-type5))
+
+; definieren einer power Signatur
+
+(define power-yes-no
+  (signature (mixed powers (one-of #f))))
 
 ; Record-Procedure über die Charaktere im Spiel
 ; Ein Charakter (character) besteht aus:
@@ -109,7 +113,7 @@
 ; - powers
 ; - unlock
 
-(: make-character (string char-type classes classes level natural rarity special-lvl special-lvl string powers boolean -> character))
+(: make-character (string char-type classes classes level natural rarity special-lvl special-lvl string power-yes-no boolean -> character))
 
 (: character-name (character -> string))
 (: character-type (character -> char-type))
@@ -149,7 +153,7 @@
                   2
                   0 1
                   "ID2"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID2
   (make-character "Monkey D. Luffy Gum-Gum Pistol"
@@ -158,7 +162,7 @@
                   3
                   0 1
                   "ID3"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID3
   (make-character "Monkey D. Luffy Gum-Gum Bazooka"
@@ -189,7 +193,7 @@
                   3
                   0 1
                   "ID6 ID7"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID6
   (make-character "Roronoa Zoro Three Thousand Worlds"
@@ -229,7 +233,7 @@
                   3
                   0 1
                   "ID10 ID11"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID10
   (make-character "Nami Tornado Tempo"
@@ -267,7 +271,7 @@
                   3
                   0 1
                   "ID14 ID15"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID14
   (make-character "Usopp Tabasco Star"
@@ -306,7 +310,7 @@
                   3
                   0 1
                   "ID18 ID19"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID18
   (make-character "Sanji Plastic Surgery Shot"
@@ -342,7 +346,7 @@
                   3
                   0 1
                   "ID22 ID23 ID24 ID25 ID26"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID22
   (make-character "Tony Tony Chopper Heavy Point"
@@ -396,7 +400,7 @@
                   2
                   0 1
                   "none"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID28
   (make-character "Master of the Near Sea"
@@ -405,7 +409,7 @@
                   2
                   0 1
                   "none"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID29
   (make-character "Iron-Mace Alvida"
@@ -414,7 +418,7 @@
                   3
                   0 1
                   "ID30"
-                  (make-powers #f #f #f #f #f #f) #t))
+                  #f #t))
 
 (define ID30
   (make-character "Iron-Mace Alvida Smooth-Smooth Fruit"
@@ -424,3 +428,48 @@
                   0 1
                   "none"
                   (make-powers 1 #f #f #f #f #f) #t))
+
+(define ID78-82
+  (make-character "Robber Penguin"
+                  "all" "Evolver" "none"
+                  1 1
+                  1
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID83
+  (make-character "Rainbow Robber Penguin"
+                  "Rainbow" "Evolver" "none"
+                  1 1
+                  1
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID84-88
+  (make-character "Pirate Penguin"
+                  "all" "Evolver" "none"
+                  1 1
+                  2
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID89-93
+  (make-character "Hermit Crab"
+                  "INT" "Evolver" "none"
+                  1 1
+                  1
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID94
+  (make-character "Rainbow Hermit Crab"
+                  "Rainbow" "Evolver" "none"
+                  1 1
+                  2
+                  0 0
+                  "none"
+                  #f #t))
