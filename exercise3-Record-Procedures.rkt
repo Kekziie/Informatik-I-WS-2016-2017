@@ -406,3 +406,21 @@
                   0 1
                   "none"
                   (make-powers #f #f #f #f #f #f) #t))
+
+(define ID29
+  (make-character "Iron-Mace Alvida"
+                  "STR" "Striker" "Powerhouse"
+                  #f 50
+                  3
+                  0 1
+                  "ID30"
+                  (make-powers #f #f #f #f #f #f) #t))
+
+(define ID30
+  (make-character "Iron-Mace Alvida Smooth-Smooth Fruit"
+                  "STR" "Striker" "Free Spirit"
+                  5 99
+                  4
+                  0 1
+                  "none"
+                  (make-powers 1 #f #f #f #f #f) #t))
