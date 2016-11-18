@@ -473,3 +473,75 @@
                   0 0
                   "none"
                   #f #t))
+
+(define ID95-99
+  (make-character "Armored Crab"
+                  "all" "Evolver" "none"
+                  1 1
+                  1
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID100-104
+  (make-character "Striped Dragon"
+                  "all" "Evolver" "none"
+                  1 1
+                  3
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID105-109
+  (make-character "Treasure Turtle"
+                  "all" "Booster" "none"
+                  1 1
+                  3
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID110-114
+  (make-character "Daimyo Turtle"
+                  "all" "Booster" "none"
+                  1 1
+                  4
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID115
+  (make-character "Sea Pony"
+                  "PSY" "Evolver" "none"
+                  1 1
+                  1
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID116
+  (make-character "Sea Colt"
+                  "PSY" "Evolver" "none"
+                  1 1
+                  2
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID117
+  (make-character "Sea Horse"
+                  "PSY" "Evolver" "none"
+                  1 1
+                  3
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID118
+  (make-character "Sea Stallion"
+                  "PSY" "Evolver" "none"
+                  1 1
+                  4
+                  0 0
+                  "none"
+                  #f #t))
