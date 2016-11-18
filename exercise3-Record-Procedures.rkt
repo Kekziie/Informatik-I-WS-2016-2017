@@ -24,6 +24,7 @@
                      "Slasher"
                      "Striker"
                      "Driven"
+                     "Shooter"
                      "Cerebral"
                      "Free Spirit"
                      "Evolver"
@@ -333,3 +334,75 @@
                   0 1
                   "none"
                   (make-powers 3 #f #f #f #f #f) #t))
+
+(define ID21
+  (make-character "Tony Tony Chopper"
+                  "PSY" "Fighter" "none"
+                  20 20
+                  3
+                  0 1
+                  "ID22 ID23 ID24 ID25 ID26"
+                  (make-powers #f #f #f #f #f #f) #t))
+
+(define ID22
+  (make-character "Tony Tony Chopper Heavy Point"
+                  "PSY" "Fighter" "Free Spirit"
+                  #f 50
+                  4
+                  0 1
+                  "none"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID23
+  (make-character "Tony Tony Chopper Brain Point"
+                  "INT" "Fighter" "Cerebral"
+                  10 50
+                  4
+                  0 1
+                  "none"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID24
+  (make-character "Tony Tony Chopper Arm Point"
+                  "STR" "Fighter" "Powerhouse"
+                  #f 50
+                  4
+                  0 1
+                  "none"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID25
+  (make-character "Tony Tony Chopper Horn Point"
+                  "QCK" "Fighter" "none"
+                  #f 50
+                  4
+                  0 1
+                  "none"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID26
+  (make-character "Tony Tony Chopper Guard Point"
+                  "DEX" "Fighter" "Powerhouse"
+                  #f 50
+                  4
+                  0 1
+                  "none"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID27
+  (make-character "Higuma"
+                  "QCK" "Slasher" "none"
+                  #f 35
+                  2
+                  0 1
+                  "none"
+                  (make-powers #f #f #f #f #f #f) #t))
+
+(define ID28
+  (make-character "Master of the Near Sea"
+                  "STR" "Fighter" "none"
+                  #f 35
+                  2
+                  0 1
+                  "none"
+                  (make-powers #f #f #f #f #f #f) #t))
