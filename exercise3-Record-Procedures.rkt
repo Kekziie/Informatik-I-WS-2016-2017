@@ -545,3 +545,30 @@
                   0 0
                   "none"
                   #f #t))
+
+(define ID189-193
+  (make-character "Elder Turtle"
+                  "all" "Booster" "none"
+                  1 1
+                  5
+                  0 0
+                  "none"
+                  #f #t))
+
+(define ID342-346
+  (make-character "Color Jeweled Porc"
+                  "all" "Booster" "none"
+                  10 10
+                  2
+                  0 0
+                  "ID347-351"
+                  #f #t))
+
+(define ID347-351
+  (make-character "Jewel Jeweled Porc"
+                  "all" "Booster" "none"
+                  1 1
+                  3
+                  0 0
+                  "none"
+                  #f #t))
