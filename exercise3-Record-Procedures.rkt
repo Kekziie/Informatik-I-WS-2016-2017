@@ -61,7 +61,7 @@
                      "Bind Resistance"
                      "Poison Resistance"
                      "Despair Resistance"
-                     "Auto Heal"
+                     "Auto-Heal"
                      "Slot Rate Boost"
                      "Map Damage Resistance"
                      "Resilience"
@@ -175,7 +175,11 @@
                   5
                   0 1
                   "none"
-                  (make-powers 3 #f #f #f #f #f) #t))
+                  (make-powers 3
+                               "Map Damage Resistance"
+                               "Auto-Heal"
+                               "RCV Boost"
+                               #f #f) #t))
 
 (define ID5
   (make-character "Roronoa Zoro"
@@ -211,7 +215,11 @@
                   5
                   0 1
                   "none"
-                  (make-powers 3 #f #f #f #f #f) #t))
+                  (make-powers 3
+                               "Slot Rate Boost"
+                               "Damage Reduction"
+                               "Resilience"
+                               #f #f) #t))
 
 (define ID9
   (make-character "Nami"
@@ -238,7 +246,9 @@
                   4
                   0 1
                   "ID12"
-                  (make-powers 2 #f #f #f #f #f) #t))
+                  (make-powers 2
+                               "Despair Resistance"
+                               #f #f #f #f) #t))
 
 (define ID12
   (make-character "Nami Thunderbolt Tempo"
@@ -249,4 +259,77 @@
                   "none"
                   (make-powers 3 #f #f #f #f #f) #t))
                   
+(define ID13
+  (make-character "Usopp"
+                  "PSY" "Shooter" "none"
+                  #f 20
+                  3
+                  0 1
+                  "ID14 ID15"
+                  (make-powers #f #f #f #f #f #f) #t))
 
+(define ID14
+  (make-character "Usopp Tabasco Star"
+                  "PSY" "Shooter"  "none"
+                  #f 35
+                  4
+                  0 1
+                  "ID15 ID16"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID15
+  (make-character "Usopp Golden Pound"
+                  "PSY" "Shooter" "none"
+                  50 50
+                  4
+                  0 1
+                  "ID16"
+                  (make-powers 2
+                               "Slot Rate Boost"
+                               "Poison Resistance"
+                               #f #f #f) #t))
+
+(define ID16
+  (make-character "Sogeking"
+                  "PSY" "Shooter" "none"
+                  5 99
+                  5
+                  0 1
+                  "none"
+                  (make-powers 3 #f #f #f #f #f) #t))
+
+(define ID17
+  (make-character "Sanji"
+                  "QCK" "Fighter" "none"
+                  #f 20
+                  3
+                  0 1
+                  "ID18 ID19"
+                  (make-powers #f #f #f #f #f #f) #t))
+
+(define ID18
+  (make-character "Sanji Plastic Surgery Shot"
+                  "QCK" "Fighter" "Powerhouse"
+                  #f 35
+                  4
+                  0 1
+                  "ID20"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID19
+  (make-character "Chef Sanji Hot Rock Stew"
+                  "QCK" "Fighter" "Powerhouse"
+                  #f 50
+                  4
+                  0 1
+                  "ID20"
+                  (make-powers 2 #f #f #f #f #f) #t))
+
+(define ID20
+  (make-character "Sanji Diable Jambe Flambe"
+                  "QCK" "Fighter" "Powerhouse"
+                  51 99
+                  5
+                  0 1
+                  "none"
+                  (make-powers 3 #f #f #f #f #f) #t))
