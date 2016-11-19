@@ -208,9 +208,9 @@
 
 ; zeichnen der Waage mit Formen
 
-(: draw-scale (shape shape -> image))
+(: draw-scale1 (shape shape -> image))
 
-(define draw-scale
+(define draw-scale1
   (lambda (form1 form2)
     (above (beside/align "bottom"
                          (draw-shape form1)
@@ -218,7 +218,7 @@
                          (draw-shape form2))
            (scale-form form1 form2))))
 
-(draw-scale Dreieck1 Rechteck1)
+(draw-scale1 Dreieck1 Rechteck1)
 
 ; (g) Funktionalität der Waage
 
@@ -230,8 +230,8 @@
 (: rotation-angle (real real -> real))
 
 (check-expect (rotation-angle 2 1) 45)
-(check-within (rotation-angle 4.5 10.5) 51.4286 0.01)
-(check-expect (rotation-angle 2 1) -45)
+(check-within (rotation-angle 10.5 4.5) 51.4286 0.01)
+(check-expect (rotation-angle 1 2) -45)
 (check-within (rotation-angle 2.5 10.5) -68.5714 0.01)
 
 (define rotation-angle
@@ -243,4 +243,17 @@
         (* 90
            (+ -1
               (/ A1 A2))))))
+
+; zeichnen der Waage mit Funktionalität
+
+(: draw-scale (shape shape -> image))
+
+(define draw-scale
+  (lambda (form1 form2)
+    (rotate (rotation-angle (shape-area form1)
+                            (shape-area form2))
+            (draw-scale1 form1 form2))))
+
+(draw-scale Dreieck1 Rechteck1)
+
   
