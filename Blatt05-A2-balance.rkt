@@ -152,5 +152,8 @@
       ((circle? x) (circle-area x))
       ((rectangle? x) (rectangle-area x))
       ((triangle? x) (triangle-area x)))))
-                   
-    
+
+; (d) für "Zeichnen" einer Waage benötigt man: Länge des Balkens der Waage
+;     Brechnung aus w1 und w3: Breiten der Bilder und w2 als Abstand zwischen w1 und w3
+
+(: scale-length (image image real -> real))
