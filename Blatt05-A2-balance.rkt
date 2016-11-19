@@ -254,6 +254,6 @@
                                (shape-area form2)))
             (draw-scale1 form1 form2))))
 
-(draw-scale Kreis1 Dreieck1)
+(draw-scale Kreis3 Dreieck1)
 
   
