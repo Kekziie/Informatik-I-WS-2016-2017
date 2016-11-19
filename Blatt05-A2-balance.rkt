@@ -11,3 +11,21 @@
 ;      - Rechteck: Breite und Höhe + Farbe
 ;      - Dreieck (gleichseitig): Seitenlänge + Farbe
 
+(define-record-procedures circle
+  make-circle
+  circle?
+  (circle-radius
+   circle-color))
+
+(define-record-procedures rectangle
+  make-rectangle
+  rectangle?
+  (rectangle-width
+   rectangle-length
+   rectangle-color))
+
+(define-record-procedures triangle
+  make-triangle
+  triangle?
+  (triangle-side-length
+   triangle-color))
