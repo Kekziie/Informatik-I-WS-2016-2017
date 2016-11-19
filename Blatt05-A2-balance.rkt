@@ -223,5 +223,24 @@
 ; (g) Funktionalität der Waage
 
 ; Rotationswinkel x berechnet aus Flächeninhalt A1, A2 von Formen
+; A1 und A2 ungleich 0
 ; wenn A1>A2: x=90*(1- A2/A1)
 ; sonst: x=90*(-1+A1/A2)
+
+(: rotation-angle (real real -> real))
+
+(check-expect (rotation-angle 2 1) 45)
+(check-within (rotation-angle 4.5 10.5) 51.4286 0.01)
+(check-expect (rotation-angle 2 1) -45)
+(check-within (rotation-angle 2.5 10.5) -68.5714 0.01)
+
+(define rotation-angle
+  (lambda (A1 A2)
+    (if (> A1 A2)
+        (* 90
+           (- 1
+              (/ A2 A1)))
+        (* 90
+           (+ -1
+              (/ A1 A2))))))
+  
