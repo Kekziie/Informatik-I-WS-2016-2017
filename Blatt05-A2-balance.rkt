@@ -218,7 +218,8 @@
                          (draw-shape form2))
            (scale-form form1 form2))))
 
-(draw-scale1 Dreieck1 Rechteck1)
+; zeichnet Dreieck und Rechteck auf einer "waagrechten" Waage
+;(draw-scale1 Dreieck1 Rechteck1)
 
 ; (g) Funktionalität der Waage
 
@@ -250,10 +251,15 @@
 
 (define draw-scale
   (lambda (form1 form2)
-    (rotate (- (rotation-angle (shape-area form1)
-                               (shape-area form2)))
-            (draw-scale1 form1 form2))))
+    (if (< (shape-area form1) (shape-area form2))
+        (rotate (- (rotation-angle (shape-area form1) (shape-area form2)))
+                (draw-scale1 form1 form2))
+        (rotate (rotation-angle (shape-area form1) (shape-area form2))
+                (draw-scale form1 form2)))))
 
-(draw-scale Kreis3 Dreieck1)
+
+;(draw-scale Kreis1 Dreieck1)
+
+(draw-scale Dreieck1 Dreieck2)
 
   
