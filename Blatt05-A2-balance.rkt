@@ -83,11 +83,20 @@
 (define Kreis1
   (make-circle 100 "solid" "green"))
 
+(define Kreis2
+  (make-circle 5.5 "sold" "Khaki"))
+
 (define Rechteck1
   (make-rectangle 50 50 "solid" "chocolate"))
 
+(define Reckteck2
+  (make-rectangle 2.5 20 "solid" "Coral"))
+
 (define Dreieck1
-  (make-triangle 75 "solid" "orchid"))
+  (make-triangle 75 "solid" "Orchid"))
+
+(define Dreiecke2
+  (make-triangle 3.3 "solid" "MistyRose"))
 
 ; (b) definieren einer Signatur "shape", die alle Formen umfasst
 
