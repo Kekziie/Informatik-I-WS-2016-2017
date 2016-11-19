@@ -97,16 +97,23 @@
 ; (c) Prozedur "shape-area" soll für jede beliebige Fläche Flächeninhalt berechnen
 
 ; Prozeduren die Flächeninhalt ausrechnen
+
 (define pi 3.1415)
+
+(: circle-area (circle -> real))
 
 (define circle-area
   (lambda (x)
     (* 2 pi (circle-radius x))))
 
+(: rectangle-area (rectangle -> real))
+
 (define rectangle-area
   (lambda (x)
     (* (rectangle-width x)
        (rectangle-height x))))
+
+(: triangle-area (triangle -> real))
 
 (define triangle-area
   (lambda (x)
@@ -118,9 +125,14 @@
 (: shape-area (shape -> real))
 
 (check-within (shape-area Kreis1) 628.30 0.01)
+(check-expect (shape-area Rechteck1) 2500)
+(check-within (shape-area Dreieck1) 2435.69 0.01)
 
 (define shape-area
-  (lambda (Form)
+  (lambda (x)
     (cond
-      ((circle? Form) (circle-area Form)))))
+      ((circle? x) (circle-area x))
+      ((rectangle? x) (rectangle-area x))
+      ((triangle? x) (triangle-area x)))))
+                   
     
