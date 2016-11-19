@@ -161,8 +161,6 @@
       ((rectangle? x) (rectangle-width x))
       ((triangle? x) (triangle-side-length x)))))
 
-(define w2 40)
-
 (: scale-length (shape shape real -> real))
 
 (check-expect (scale-length Kreis1 Rechteck1 40) 290)
@@ -193,8 +191,10 @@
 
 ; (f) "zeichnen" der Waage
 
+(define scale-form
+  (lambda (w1 w3 w2)
+    (rectangle (scale-length w1 w3 w2) 10 "solid" "black")))
 
-
-;(: draw-scale (shape shape -> image))
+; (: draw-scale (shape shape -> image))
 
 
