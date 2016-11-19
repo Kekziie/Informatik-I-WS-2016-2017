@@ -129,7 +129,7 @@
 (define triangle-area
   (lambda (x)
     (* (sqrt 3)
-       (/ (expt (triangle-side-length x) 2)
+       (/ (* (triangle-side-length x) (triangle-side-length x))
           4))))
 
 (: shape-area (shape -> real))
@@ -250,10 +250,10 @@
 
 (define draw-scale
   (lambda (form1 form2)
-    (rotate (rotation-angle (shape-area form1)
-                            (shape-area form2))
+    (rotate (- (rotation-angle (shape-area form1)
+                               (shape-area form2)))
             (draw-scale1 form1 form2))))
 
-(draw-scale Dreieck1 Rechteck1)
+(draw-scale Kreis1 Dreieck1)
 
   
