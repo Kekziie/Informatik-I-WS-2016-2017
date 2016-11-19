@@ -191,13 +191,17 @@
 
 ; (f) "zeichnen" der Waage
 
+(define scale-color "black")
+(define scale-height 10)
+
 (: scale-form (shape shape real -> image))
 
-(check-expect (scale-form Kreis1 Rechteck1 40) (rectangle 290 10 "solid" "black"))
+(check-expect (scale-form Kreis1 Rechteck1 40) (rectangle 290 scale-height "solid" scale-color))
+(check-within (scale-form Dreieck2 Rechteck3 20.5) (rectangle 31.8 scale-height "solid" scale-color) 0.01)
 
 (define scale-form
   (lambda (Form1 Form2 Lücke)
-    (rectangle (scale-length Form1 Form2 Lücke) 10 "solid" "black")))
+    (rectangle (scale-length Form1 Form2 Lücke) scale-height "solid" scale-color)))
 
 ; (: draw-scale (shape shape -> image))
 
