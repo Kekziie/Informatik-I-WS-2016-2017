@@ -7,20 +7,23 @@
 ; dabei soll der Flächeninhalt als "Gewicht" dienen
 
 ; (a) Recorddefinitionen für 3 geometrische Formen mit ihrer Beschreibung
-;      - Kreis: Radius Modus Farbe
-;      - Rechteck: Breite Höhe Modus Farbe
-;      - Dreieck (gleichseitig): Seitenlänge Modus Farbe
+;      - Kreis: Radius r, Modus m, Farbe c
+;      - Rechteck: Breite w, Höhe h, Modus m, Farbe c
+;      - Dreieck (gleichseitig): Seitenlänge s, Modus m, Farbe c
 
-(define modus "solid")
-
-(define mode
-  (signature (predicate modus)))
-
-(: make-circle (real mode string -> circle))
+(: make-circle (real string string -> circle))
 
 (: circle-radius (circle -> real))
-(: circle-mode (circle -> mode))
-(: circle-color (circle -> color))
+(: circle-mode (circle -> string))
+(: circle-color (circle -> string))
+
+(check-property
+ (for-all ((r real)
+           (m string)
+           (c string))
+   (and (= (circle-radius (make-circle r m c)) r)
+        (string=? (circle-mode (make-circle r m c)) m)
+        (string=? (circle-color (make-circle r m c)) c))))
 
 (define-record-procedures circle
   make-circle
@@ -29,25 +32,25 @@
    circle-mode
    circle-color))
 
-(: make-rectangle (real real mode string -> rectangle))
+(: make-rectangle (real real string string -> rectangle))
 
 (: rectangle-width (rectangle -> real))
-(: rectangle-length (rectangle -> real))
-(: rectangle-mode (rectangle -> mode))
+(: rectangle-height (rectangle -> real))
+(: rectangle-mode (rectangle -> string))
 (: rectangle-color (rectangle -> string))
 
 (define-record-procedures rectangle
   make-rectangle
   rectangle?
   (rectangle-width
-   rectangle-length
+   rectangle-height
    rectangle-mode
    rectangle-color))
 
-(: make-triangle (real mode string -> triangle))
+(: make-triangle (real string string -> triangle))
 
 (: triangle-side-length (triangle -> real))
-(: triangle-mode (triangle -> mode))
+(: triangle-mode (triangle -> string))
 (: triangle-color (triangle -> string))
 
 (define-record-procedures triangle
@@ -56,3 +59,6 @@
   (triangle-side-length
    triangle-mode
    triangle-color))
+
+
+
