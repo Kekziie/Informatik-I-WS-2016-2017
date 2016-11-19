@@ -192,7 +192,7 @@
 ; (f) "zeichnen" der Waage
 ; der Abstand w2 soll 40 pixel breit sein, d.h. Lücke = 40px
 
-; zeichnen: Waage ohne Formen
+; zeichnen der Waage ohne Formen
 
 (define scale-color "black")
 (define scale-height 10)
@@ -206,5 +206,15 @@
   (lambda (Form1 Form2)
     (rectangle (scale-length Form1 Form2 40) scale-height "solid" scale-color)))
 
-; (: draw-scale (shape shape -> image))
+; zeichnen der Waage mit Formen
+
+(: draw-scale (shape shape -> image))
+
+(define draw-scale
+  (lambda (form1 form2)
+    (above (beside/align "bottom"
+                         (draw-shape form1)
+                         (empty-scene 40 0)
+                         (draw-shape form2))
+           (scale-form form1 form2))))
 
