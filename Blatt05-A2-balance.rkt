@@ -190,18 +190,21 @@
        (triangle (triangle-side-length x) "solid" (triangle-color x))))))
 
 ; (f) "zeichnen" der Waage
+; der Abstand w2 soll 40 pixel breit sein, d.h. Lücke = 40px
+
+; zeichnen: Waage ohne Formen
 
 (define scale-color "black")
 (define scale-height 10)
 
-(: scale-form (shape shape real -> image))
+(: scale-form (shape shape -> image))
 
-(check-expect (scale-form Kreis1 Rechteck1 40) (rectangle 290 scale-height "solid" scale-color))
-(check-within (scale-form Dreieck2 Rechteck3 20.5) (rectangle 31.8 scale-height "solid" scale-color) 0.01)
+(check-expect (scale-form Kreis1 Rechteck1) (rectangle 290 scale-height "solid" scale-color))
+(check-within (scale-form Dreieck2 Rechteck3) (rectangle 51.3 scale-height "solid" scale-color) 0.01)
 
 (define scale-form
-  (lambda (Form1 Form2 Lücke)
-    (rectangle (scale-length Form1 Form2 Lücke) scale-height "solid" scale-color)))
+  (lambda (Form1 Form2)
+    (rectangle (scale-length Form1 Form2 40) scale-height "solid" scale-color)))
 
 ; (: draw-scale (shape shape -> image))
 
