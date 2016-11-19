@@ -13,10 +13,29 @@
 (define Sa "Samstag")
 (define So "Sonntag")
 
+; definieren eienr Wochentags-Signatur
+
+(define wochentag
+  (signature (one-of Mo Di Mi Do Fr Sa So)))
+
+; definieren einer Prozedur die nur Zahlen von 0-6 erlaubt
+(: 0-to-6 (natural -> index))
+
+(check-expect (0-to-6 4) 4)
+
+(define 0-to-6
+  (lambda (x)
+    (if (<= 0 x 6) x #f)))
+
+; definieren einer Index-Signatur
+
+(define index
+  (signature (predicate 0-to-6)))
+
 ; ermittelt die Nummer eines Wochentages innerhalb einer Woche
 ; die Nummerierung beginnt mit 0 und nimmt Montag als ersten Tag der Woche an
 
-(: wochentag-index ((one-of Mo Di Mi Do Fr Sa So) -> (one-of 0 1 2 3 4 5 6)))
+(: wochentag-index (wochentag -> index))
 
 (define wochentag-index
   (lambda (tag)
