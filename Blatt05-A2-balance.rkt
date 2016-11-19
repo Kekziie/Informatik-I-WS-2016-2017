@@ -189,4 +189,7 @@
 
 ;(define scale-length
 ;  (+ w1 w3 w2))
+
+; (e) Prozedur die jeweilige Form zeichnet
+
     
