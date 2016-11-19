@@ -148,26 +148,13 @@
 ; (d) für "Zeichnen" einer Waage benötigt man: Länge des Balkens der Waage
 ;     Brechnung aus w1 und w3: Breiten der Bilder und w2 als Abstand zwischen w1 und w3
 
-(: w1-length (shape -> real))
+(: width1 (shape -> real))
 
-(check-expect (w1-length Kreis1) 200)
-(check-expect (w1-length Rechteck1) 50)
-(check-expect (w1-length Dreieck1) 75)
+(check-expect (width1 Kreis1) 200)
+(check-expect (width1 Rechteck1) 50)
+(check-expect (width1 Dreieck1) 75)
 
-(define w1-length
-  (lambda (x)
-    (cond
-      ((circle? x) (* 2 (circle-radius x)))
-      ((rectangle? x) (rectangle-width x))
-      ((triangle? x) (triangle-side-length x)))))
-
-(: w3-length (shape -> real))
-
-(check-within (w1-length Kreis2) 11.0 0.001)
-(check-within (w1-length Rechteck2) 2.5 0.001)
-(check-within (w1-length Dreieck2) 3.3 0.001)
-
-(define w3-length
+(define width1
   (lambda (x)
     (cond
       ((circle? x) (* 2 (circle-radius x)))
@@ -176,9 +163,15 @@
 
 (define w2 40)
 
-;(: scale-length (image image real -> real))
-;(define scale-length
-;  (+ w1 w3 w2))
+(: scale-length (shape shape real -> real))
+
+(check-expect (scale-length Kreis1 Rechteck1 40) 290)
+(check-expect (scale-length Dreieck1 Kreis1 50) 325)
+(check-expect (scale-length Rechteck1 Dreieck1 0) 125)
+
+(define scale-length
+  (lambda (w1 w3 w2)
+    (+ (width1 w1) (width1 w3) w2)))
 
 ; (e) Prozedur die jeweilige Form zeichnet
 
@@ -202,6 +195,6 @@
 
 
 
-(: draw-scale (shape shape -> image))
+;(: draw-scale (shape shape -> image))
 
 
