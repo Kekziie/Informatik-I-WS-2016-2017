@@ -18,6 +18,10 @@
 
 (: make-circle (real mode string -> circle))
 
+(: circle-radius (circle -> real))
+(: circle-mode (circle -> mode))
+(: circle-color (circle -> color))
+
 (define-record-procedures circle
   make-circle
   circle?
@@ -26,6 +30,11 @@
    circle-color))
 
 (: make-rectangle (real real mode string -> rectangle))
+
+(: rectangle-width (rectangle -> real))
+(: rectangle-length (rectangle -> real))
+(: rectangle-mode (rectangle -> mode))
+(: rectangle-color (rectangle -> string))
 
 (define-record-procedures rectangle
   make-rectangle
@@ -36,6 +45,10 @@
    rectangle-color))
 
 (: make-triangle (real mode string -> triangle))
+
+(: triangle-side-length (triangle -> real))
+(: triangle-mode (triangle -> mode))
+(: triangle-color (triangle -> string))
 
 (define-record-procedures triangle
   make-triangle
