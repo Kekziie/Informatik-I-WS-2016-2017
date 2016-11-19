@@ -182,6 +182,9 @@
       ((rectangle? x) (rectangle-width x))
       ((triangle? x) (triangle-side-length x)))))
 
+;(define w2
+;  (/ (+ w1 w3) w2))
+
 ;(: scale-length (image image real -> real))
 
 ;(define scale-length
