@@ -218,3 +218,10 @@
                          (draw-shape form2))
            (scale-form form1 form2))))
 
+(draw-scale Dreieck1 Rechteck1)
+
+; (g) Funktionalität der Waage
+
+; Rotationswinkel x berechnet aus Flächeninhalt A1, A2 von Formen
+; wenn A1>A2: x=90*(1- A2/A1)
+; sonst: x=90*(-1+A1/A2)
