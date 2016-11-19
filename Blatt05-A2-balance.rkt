@@ -63,6 +63,14 @@
 (: triangle-mode (triangle -> string))
 (: triangle-color (triangle -> string))
 
+(check-property
+ (for-all ((s real)
+           (m string)
+           (c string))
+   (and (= (triangle-side-length (make-triangle s m c)) s)
+        (string=? (triangle-mode (make-triangle s m c)) m)
+        (string=? (triangle-color (make-triangle s m c)) c))))
+
 (define-record-procedures triangle
   make-triangle
   triangle?
