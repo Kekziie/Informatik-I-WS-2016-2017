@@ -286,7 +286,7 @@
 1 #"\0"
 0 -1 1 #"\0"
 1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1
-          0 1193 0 4 3 94
+          0 1191 0 4 3 94
 (
  #";; Die ersten drei Zeilen dieser "
  #"Datei wurden von DrRacket eingef\303\274gt. Sie enthalten Metadaten"
@@ -1411,7 +1411,7 @@
 0 0 24 3 1 #" "
 0 0 14 3 6 #"Kreis3"
 0 0 24 3 2 #") "
-0 6           4 66 99
+0 6           4 4 99
 (
  #"(#(struct:translate 1.5 1.5 #(struct:ellipse 3.0 3.0 0 255 \"Crimson"
  #"\")) #(struct:bb 3.0 3.0 3.0) #f)"
@@ -1424,7 +1424,7 @@
 0 0 24 3 1 #" "
 0 0 14 3 9 #"Rechteck3"
 0 0 24 3 2 #") "
-0 6           4 66 235
+0 6           4 4 235
 (
  #"(#(struct:translate 0 -0.0 #(struct:polygon (#(struct:pulled-point 0"
  #" 0 0 0 0 0) #(struct:pulled-point 0 0 8 0 0 0) #(struct:pulled-point"
@@ -1439,7 +1439,7 @@
 0 0 24 3 1 #" "
 0 0 14 3 8 #"Dreieck3"
 0 0 24 3 2 #") "
-0 6           4 66 276
+0 6           4 4 276
 (
  #"(#(struct:translate -0.0 9.526279441628827 #(struct:polygon (#(struc"
  #"t:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 11 0 0 0) #(st"
@@ -1526,6 +1526,4 @@
 0 0 24 3 1 #" "
 0 0 14 3 1 #"x"
 0 0 24 3 6 #"))))))"
-0 0 24 29 1 #"\n"
-0 0 24 3 3 #"   "
 0           0
