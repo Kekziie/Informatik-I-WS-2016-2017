@@ -174,8 +174,8 @@
       ((rectangle? x) (rectangle-width x))
       ((triangle? x) (triangle-side-length x)))))
 
-;(define w2
-;  (/ (+ w1 w3) w2))
+(define w2 40)
+
 ;(: scale-length (image image real -> real))
 ;(define scale-length
 ;  (+ w1 w3 w2))
@@ -197,3 +197,11 @@
        (rectangle (rectangle-width x) (rectangle-height x) "solid" (rectangle-color x)))
       ((triangle? x)
        (triangle (triangle-side-length x) "solid" (triangle-color x))))))
+
+; (f) "zeichnen" der Waage
+
+
+
+(: draw-scale (shape shape -> image))
+
+
