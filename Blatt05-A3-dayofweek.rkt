@@ -18,19 +18,37 @@
 (define fehler1 "string ist kein Wochentag")
 (define fehler2 "natural befindet sich nicht zwischen 0 und 6")
 
+; definieren einer Prozdur, ob String ein Wochentag entspricht
+
+(: wochentag? (string -> string))
+
+(define wochentag?
+  (lambda (y)
+    (cond
+      ((string=? y Mo) y)
+      ((string=? y Di) y)
+      ((string=? y Mi) y)
+      ((string=? y Do) y)
+      ((string=? y Fr) y)
+      ((string=? y Sa) y)
+      ((string=? y So) y)
+      (violation fehler1))))
+
 ; definieren eienr Wochentags-Signatur
 
 (define wochentag
   (signature (one-of Mo Di Mi Do Fr Sa So)))
 
 ; definieren einer Prozedur die nur Zahlen von 0-6 erlaubt
-(: 0-to-6 (natural -> index))
+(: 0-to-6 (natural -> natural))
 
 (check-expect (0-to-6 4) 4)
 
 (define 0-to-6
   (lambda (x)
-    (if (<= 0 x 6) x #f)))
+    (if (<= 0 x 6)
+        x
+        (violation fehler2))))
 
 ; definieren einer Index-Signatur
 
