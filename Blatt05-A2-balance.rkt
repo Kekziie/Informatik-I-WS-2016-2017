@@ -89,13 +89,13 @@
 (define Rechteck1
   (make-rectangle 50 50 "solid" "chocolate"))
 
-(define Reckteck2
+(define Rechteck2
   (make-rectangle 2.5 20 "solid" "Coral"))
 
 (define Dreieck1
   (make-triangle 75 "solid" "Orchid"))
 
-(define Dreiecke2
+(define Dreieck2
   (make-triangle 3.3 "solid" "MistyRose"))
 
 ; (b) definieren einer Signatur "shape", die alle Formen umfasst
@@ -111,11 +111,17 @@
 
 (: circle-area (circle -> real))
 
+(check-within (circle-area Kreis1) 628.30 0.01)
+(check-within (circle-area Kreis2) 34.5565 0.01)
+
 (define circle-area
   (lambda (x)
     (* 2 pi (circle-radius x))))
 
 (: rectangle-area (rectangle -> real))
+
+(check-expect (rectangle-area Rechteck1) 2500)
+(check-within (rectangle-area Rechteck2) 50.0 0.01)
 
 (define rectangle-area
   (lambda (x)
@@ -123,6 +129,9 @@
        (rectangle-height x))))
 
 (: triangle-area (triangle -> real))
+
+(check-within (triangle-area Dreieck1) 2435.69 0.01)
+(check-within (triangle-area Dreieck2) 4.7155 0.01)
 
 (define triangle-area
   (lambda (x)
