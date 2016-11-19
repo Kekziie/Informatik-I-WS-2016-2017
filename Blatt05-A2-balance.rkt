@@ -157,3 +157,11 @@
 ;     Brechnung aus w1 und w3: Breiten der Bilder und w2 als Abstand zwischen w1 und w3
 
 (: scale-length (image image real -> real))
+
+(define w1
+  (lambda (x)
+    (cond
+      ((circle? x) (* 2 (circle-radius x)))
+      ((rectangle? x) (rectangle-width x))
+      ((triangle? x) (triangle-side-length x)))))
+    
