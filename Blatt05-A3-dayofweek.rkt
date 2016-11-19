@@ -18,7 +18,7 @@
 (define fehler1 "string ist kein Wochentag")
 (define fehler2 "natural befindet sich nicht zwischen 0 und 6")
 
-; definieren einer Prozdur, ob String ein Wochentag entspricht
+; definieren einer Prozdur, die kontrolliert, ob String einen Wochentag entspricht
 
 (: wochentag? (string -> string))
 
@@ -46,9 +46,10 @@
 ; definieren eienr Wochentags-Signatur
 
 (define wochentag
-  (signature (one-of Mo Di Mi Do Fr Sa So)))
+  (signature (predicate wochentag?)))
 
 ; definieren einer Prozedur die nur Zahlen von 0-6 erlaubt
+
 (: 0-to-6 (natural -> natural))
 
 (check-expect (0-to-6 0) 0)
@@ -70,6 +71,14 @@
 ; die Nummerierung beginnt mit 0 und nimmt Montag als ersten Tag der Woche an
 
 (: wochentag-index (wochentag -> index))
+
+(check-expect (wochentag-index "Montag") 0)
+(check-expect (wochentag-index "Dienstag") 1)
+(check-expect (wochentag-index "Mittwoch") 2)
+(check-expect (wochentag-index "Donnerstag") 3)
+(check-expect (wochentag-index "Freitag") 4)
+(check-expect (wochentag-index "Samstag") 5)
+(check-expect (wochentag-index "Sonntag") 6)
 
 (define wochentag-index
   (lambda (tag)
