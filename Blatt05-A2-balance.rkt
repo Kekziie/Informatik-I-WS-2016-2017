@@ -7,46 +7,39 @@
 ; dabei soll der Flächeninhalt als "Gewicht" dienen
 
 ; (a) Recorddefinitionen für 3 geometrische Formen mit ihrer Beschreibung
-;      - Kreis: Radius r, Modus m, Farbe c
-;      - Rechteck: Breite w, Höhe h, Modus m, Farbe c
-;      - Dreieck (gleichseitig): Seitenlänge s, Modus m, Farbe c
+;      - Kreis: Radius r, Farbe c
+;      - Rechteck: Breite w, Höhe h, Farbe c
+;      - Dreieck (gleichseitig): Seitenlänge s, Farbe c
 
-(: make-circle (real string string -> circle))
+(: make-circle (real string -> circle))
 
 (: circle-radius (circle -> real))
-(: circle-mode (circle -> string))
 (: circle-color (circle -> string))
 
 (check-property
  (for-all ((r real)
-           (m string)
            (c string))
    (and (= (circle-radius (make-circle r m c)) r)
-        (string=? (circle-mode (make-circle r m c)) m)
         (string=? (circle-color (make-circle r m c)) c))))
 
 (define-record-procedures circle
   make-circle
   circle?
   (circle-radius
-   circle-mode
    circle-color))
 
-(: make-rectangle (real real string string -> rectangle))
+(: make-rectangle (real real string -> rectangle))
 
 (: rectangle-width (rectangle -> real))
 (: rectangle-height (rectangle -> real))
-(: rectangle-mode (rectangle -> string))
 (: rectangle-color (rectangle -> string))
 
 (check-property
  (for-all ((w real)
            (h real)
-           (m string)
            (c string))
    (and (= (rectangle-width (make-rectangle w h m c)) w)
         (= (rectangle-height (make-rectangle w h m c)) h)
-        (string=? (rectangle-mode (make-rectangle w h m c)) m)
         (string=? (rectangle-color (make-rectangle w h m c)) c))))
 
 (define-record-procedures rectangle
@@ -54,13 +47,11 @@
   rectangle?
   (rectangle-width
    rectangle-height
-   rectangle-mode
    rectangle-color))
 
-(: make-triangle (real string string -> triangle))
+(: make-triangle (real string -> triangle))
 
 (: triangle-side-length (triangle -> real))
-(: triangle-mode (triangle -> string))
 (: triangle-color (triangle -> string))
 
 (check-property
@@ -68,35 +59,33 @@
            (m string)
            (c string))
    (and (= (triangle-side-length (make-triangle s m c)) s)
-        (string=? (triangle-mode (make-triangle s m c)) m)
         (string=? (triangle-color (make-triangle s m c)) c))))
 
 (define-record-procedures triangle
   make-triangle
   triangle?
   (triangle-side-length
-   triangle-mode
    triangle-color))
 
 ; definieren von Testformen
 
 (define Kreis1
-  (make-circle 100 "solid" "green"))
+  (make-circle 100 "green"))
 
 (define Kreis2
-  (make-circle 5.5 "sold" "Khaki"))
+  (make-circle 5.5 "Khaki"))
 
 (define Rechteck1
-  (make-rectangle 50 50 "solid" "chocolate"))
+  (make-rectangle 50 50 "chocolate"))
 
 (define Rechteck2
-  (make-rectangle 2.5 20 "solid" "Coral"))
+  (make-rectangle 2.5 20 "Coral"))
 
 (define Dreieck1
-  (make-triangle 75 "solid" "Orchid"))
+  (make-triangle 75 "Orchid"))
 
 (define Dreieck2
-  (make-triangle 3.3 "solid" "MistyRose"))
+  (make-triangle 3.3 "MistyRose"))
 
 ; (b) definieren einer Signatur "shape", die alle Formen umfasst
 
@@ -192,4 +181,10 @@
 
 ; (e) Prozedur die jeweilige Form zeichnet
 
+(: draw-shape (shape -> image))
+
+(define draw-shape
+  (lambda (x)
+    (cond
+      ((circle? x) (circle (circle
     
