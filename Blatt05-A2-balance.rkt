@@ -39,6 +39,16 @@
 (: rectangle-mode (rectangle -> string))
 (: rectangle-color (rectangle -> string))
 
+(check-property
+ (for-all ((w real)
+           (h real)
+           (m string)
+           (c string))
+   (and (= (rectangle-width (make-rectangle w h m c)) w)
+        (= (rectangle-height (make-rectangle w h m c)) h)
+        (string=? (rectangle-mode (make-rectangle w h m c)) m)
+        (string=? (rectangle-color (make-rectangle w h m c)) c))))
+
 (define-record-procedures rectangle
   make-rectangle
   rectangle?
