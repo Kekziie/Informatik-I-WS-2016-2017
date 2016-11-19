@@ -22,17 +22,26 @@
 
 (: wochentag? (string -> string))
 
+(check-expect (wochentag? "Montag") Mo)
+(check-expect (wochentag? "Dienstag") Di)
+(check-expect (wochentag? "Mittwoch") Mi)
+(check-expect (wochentag? "Donnerstag") Do)
+(check-expect (wochentag? "Freitag") Fr)
+(check-expect (wochentag? "Samstag") Sa)
+(check-expect (wochentag? "Sonntag") So)
+(check-error (wochentag? "Wochenende") fehler1)
+
 (define wochentag?
   (lambda (y)
     (cond
-      ((string=? y Mo) y)
-      ((string=? y Di) y)
-      ((string=? y Mi) y)
-      ((string=? y Do) y)
-      ((string=? y Fr) y)
-      ((string=? y Sa) y)
-      ((string=? y So) y)
-      (violation fehler1))))
+      ((string=? y Mo) Mo)
+      ((string=? y Di) Di)
+      ((string=? y Mi) Mi)
+      ((string=? y Do) Do)
+      ((string=? y Fr) Fr)
+      ((string=? y Sa) Sa)
+      ((string=? y So) So)
+      ((string=? y y) (violation fehler1)))))
 
 ; definieren eienr Wochentags-Signatur
 
@@ -42,7 +51,9 @@
 ; definieren einer Prozedur die nur Zahlen von 0-6 erlaubt
 (: 0-to-6 (natural -> natural))
 
+(check-expect (0-to-6 0) 0)
 (check-expect (0-to-6 4) 4)
+(check-error (0-to-6 7) fehler2)
 
 (define 0-to-6
   (lambda (x)
