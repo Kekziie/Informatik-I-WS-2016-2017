@@ -78,9 +78,49 @@
    triangle-mode
    triangle-color))
 
+; definieren von Testformen
+
+(define Kreis1
+  (make-circle 100 "solid" "green"))
+
+(define Rechteck1
+  (make-rectangle 50 50 "solid" "chocolate"))
+
+(define Dreieck1
+  (make-triangle 75 "solid" "orchid"))
+
 ; (b) definieren einer Signatur "shape", die alle Formen umfasst
 
 (define shape
   (signature (mixed rectangle circle triangle)))
 
 ; (c) Prozedur "shape-area" soll für jede beliebige Fläche Flächeninhalt berechnen
+
+; Prozeduren die Flächeninhalt ausrechnen
+(define pi 3.1415)
+
+(define circle-area
+  (lambda (x)
+    (* 2 pi (circle-radius x))))
+
+(define rectangle-area
+  (lambda (x)
+    (* (rectangle-width x)
+       (rectangle-height x))))
+
+(define triangle-area
+  (lambda (x)
+    (* (sqrt 3)
+       (/ (expt (triangle-side-length x) 2)
+          4))))
+
+
+(: shape-area (shape -> real))
+
+(check-within (shape-area Kreis1) 628.30 0.01)
+
+(define shape-area
+  (lambda (Form)
+    (cond
+      ((circle? Form) (circle-area Form)))))
+    
