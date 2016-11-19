@@ -6,3 +6,8 @@
 ; vergleichen von Flächen unterschiedlicher geometrischer Formen (shapes) mit Hilfe einer "Waage"
 ; dabei soll der Flächeninhalt als "Gewicht" dienen
 
+; (a) Recorddefinitionen für 3 geometrische Formen mit ihrer Beschreibung
+;      - Kreis: Radius + Farbe
+;      - Rechteck: Breite und Höhe + Farbe
+;      - Dreieck (gleichseitig): Seitenlänge + Farbe
+
