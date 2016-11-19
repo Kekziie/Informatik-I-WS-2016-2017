@@ -79,3 +79,8 @@
    triangle-color))
 
 ; (b) definieren einer Signatur "shape", die alle Formen umfasst
+
+(define shape
+  (signature (mixed rectangle circle triangle)))
+
+; (c) Prozedur "shape-area" soll für jede beliebige Fläche Flächeninhalt berechnen
