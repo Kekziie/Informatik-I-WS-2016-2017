@@ -7,25 +7,39 @@
 ; dabei soll der Flächeninhalt als "Gewicht" dienen
 
 ; (a) Recorddefinitionen für 3 geometrische Formen mit ihrer Beschreibung
-;      - Kreis: Radius + Farbe
-;      - Rechteck: Breite und Höhe + Farbe
-;      - Dreieck (gleichseitig): Seitenlänge + Farbe
+;      - Kreis: Radius Modus Farbe
+;      - Rechteck: Breite Höhe Modus Farbe
+;      - Dreieck (gleichseitig): Seitenlänge Modus Farbe
+
+(define modus "solid")
+
+(define mode
+  (signature (predicate modus)))
+
+(: make-circle (real mode string -> circle))
 
 (define-record-procedures circle
   make-circle
   circle?
   (circle-radius
+   circle-mode
    circle-color))
+
+(: make-rectangle (real real mode string -> rectangle))
 
 (define-record-procedures rectangle
   make-rectangle
   rectangle?
   (rectangle-width
    rectangle-length
+   rectangle-mode
    rectangle-color))
+
+(: make-triangle (real mode string -> triangle))
 
 (define-record-procedures triangle
   make-triangle
   triangle?
   (triangle-side-length
+   triangle-mode
    triangle-color))
