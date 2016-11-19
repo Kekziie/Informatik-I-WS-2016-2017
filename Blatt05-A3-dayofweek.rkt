@@ -13,6 +13,11 @@
 (define Sa "Samstag")
 (define So "Sonntag")
 
+; definieren von Fehlermeldungen
+
+(define fehler1 "string ist kein Wochentag")
+(define fehler2 "natural befindet sich nicht zwischen 0 und 6")
+
 ; definieren eienr Wochentags-Signatur
 
 (define wochentag
