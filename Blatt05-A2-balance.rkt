@@ -19,8 +19,8 @@
 (check-property
  (for-all ((r real)
            (c string))
-   (and (= (circle-radius (make-circle r m c)) r)
-        (string=? (circle-color (make-circle r m c)) c))))
+   (and (= (circle-radius (make-circle r c)) r)
+        (string=? (circle-color (make-circle r c)) c))))
 
 (define-record-procedures circle
   make-circle
@@ -38,9 +38,9 @@
  (for-all ((w real)
            (h real)
            (c string))
-   (and (= (rectangle-width (make-rectangle w h m c)) w)
-        (= (rectangle-height (make-rectangle w h m c)) h)
-        (string=? (rectangle-color (make-rectangle w h m c)) c))))
+   (and (= (rectangle-width (make-rectangle w h c)) w)
+        (= (rectangle-height (make-rectangle w h c)) h)
+        (string=? (rectangle-color (make-rectangle w h c)) c))))
 
 (define-record-procedures rectangle
   make-rectangle
@@ -58,8 +58,8 @@
  (for-all ((s real)
            (m string)
            (c string))
-   (and (= (triangle-side-length (make-triangle s m c)) s)
-        (string=? (triangle-color (make-triangle s m c)) c))))
+   (and (= (triangle-side-length (make-triangle s c)) s)
+        (string=? (triangle-color (make-triangle s c)) c))))
 
 (define-record-procedures triangle
   make-triangle
@@ -186,5 +186,11 @@
 (define draw-shape
   (lambda (x)
     (cond
-      ((circle? x) (circle (circle
+      ((circle? x)
+       (circle (circle-radius x) "solid" (circle-color x)))
+      ((rectangle? x)
+       (rectangle (rectangle-width x) (rectangle-height x) "solid" (rectangle-color x)))
+      ((triangle? x)
+       (triangle (triangle-side-length x) "solid" (triangle-color x))))))
+                  
     
