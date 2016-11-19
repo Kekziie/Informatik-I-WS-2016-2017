@@ -78,5 +78,4 @@
    triangle-mode
    triangle-color))
 
-
-
+; (b) definieren einer Signatur "shape", die alle Formen umfasst
