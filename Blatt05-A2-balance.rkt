@@ -257,4 +257,10 @@
         (rotate (- (rotation-angle (shape-area form1) (shape-area form2)))
                 (draw-scale form1 form2)))))
 
+; Flächeninhalt Dreieck1 2435.69 < Rechteck1 2500
+; minimaler Unterschiede, d.h. Waage nur leicht Richtung Rechteck geneigt
 (draw-scale Dreieck1 Rechteck1)
+
+; Flächeninhalt Kreis1 628.3 < Dreieck1 2435.69
+; Waage deutlich schwerer auf Seite des Dreiecks
+(draw-scale Kreis1 Dreieck1)
