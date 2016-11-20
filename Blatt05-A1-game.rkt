@@ -25,6 +25,12 @@
 (: position-x (position -> real))
 (: position-y (position -> real))
 
+(check-property
+ (for-all ((x real)
+           (y real))
+   (and (= (position-x (make-position x y)) x)
+        (= (position-y (make-position x y)) y))))
+
 (define-record-procedures position
   make-position
   position?
@@ -48,6 +54,12 @@
 
 (: bomb-blast-radius (bomb -> real))
 (: bomb-damage (bomb -> real))
+
+(check-property
+ (for-all ((br real)
+           (d real))
+   (and (= (bomb-blast-radius (make-bomb br d)) br)
+        (= (bomb-damage (make-bomb br d)) d))))
 
 (define-record-procedures bomb
   make-bomb
