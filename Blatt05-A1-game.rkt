@@ -27,3 +27,12 @@
   position?
   (position-x
    position-y))
+
+(: make-character (string natural position -> character))
+
+(define-record-procedures character
+  make-character
+  character?
+  (character-name
+   character-health
+   character-position))
