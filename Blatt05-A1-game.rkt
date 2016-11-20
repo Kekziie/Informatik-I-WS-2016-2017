@@ -19,3 +19,11 @@
 ;             Gesundheitszustand darf nicht kleiner als 0 sein
 
 ; (a) Daten- und Recorddefinition für: x/y-Position, Spielfigur, Bomben und Bombenabwürfe
+
+(: make-position (real real -> position))
+
+(define-record-procedures position
+  make-position
+  position?
+  (position-x
+   position-y))
