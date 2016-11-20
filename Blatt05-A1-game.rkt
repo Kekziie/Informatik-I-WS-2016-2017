@@ -137,3 +137,5 @@
 
 (define Angriff2
   (make-attack Position2 Bombe1))
+
+; (b) euklidische Distanz d zwischen zwei Positionen: d= Wurzel aus {(x1-x2)'2 + (y1-y2)'2}
