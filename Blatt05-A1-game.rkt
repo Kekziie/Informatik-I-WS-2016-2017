@@ -22,6 +22,9 @@
 
 (: make-position (real real -> position))
 
+(: position-x (position -> real))
+(: position-y (position -> real))
+
 (define-record-procedures position
   make-position
   position?
@@ -29,6 +32,10 @@
    position-y))
 
 (: make-character (string natural position -> character))
+
+(: character-name (character -> string))
+(: character-health (character -> natural))
+(: character-position (character -> position))
 
 (define-record-procedures character
   make-character
@@ -39,6 +46,9 @@
 
 (: make-bomb (real real -> bomb))
 
+(: bomb-blast-radius (bomb -> real))
+(: bomb-damage (bomb -> real))
+
 (define-record-procedures bomb
   make-bomb
   bomb?
@@ -46,6 +56,9 @@
    bomb-damage))
 
 (: make-attack (position bomb -> attack))
+
+(: attack-position (attack -> position))
+(: attack-bomb (attack -> bomb))
 
 (define-record-procedures attack
   make-attack
