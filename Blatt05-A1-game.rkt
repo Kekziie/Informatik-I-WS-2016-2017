@@ -36,3 +36,11 @@
   (character-name
    character-health
    character-position))
+
+(: make-bomb (real real -> bomb))
+
+(define-record-procedures bomb
+  make-bomb
+  bomb?
+  (bomb-blast-radius
+   bomb-damage))
