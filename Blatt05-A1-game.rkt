@@ -44,3 +44,11 @@
   bomb?
   (bomb-blast-radius
    bomb-damage))
+
+(: make-attack (position bomb -> attack))
+
+(define-record-procedures attack
+  make-attack
+  attack?
+  (attack-position
+   attack-bomb))
