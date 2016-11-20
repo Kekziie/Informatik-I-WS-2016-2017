@@ -63,7 +63,8 @@
   (triangle-side-length
    triangle-color))
 
-; definieren von Testformen
+; definieren von Datendefinitionen
+; für Testfälle später
 
 (define Kreis1
   (make-circle 100 "green"))
