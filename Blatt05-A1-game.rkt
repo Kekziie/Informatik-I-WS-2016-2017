@@ -20,6 +20,8 @@
 
 ; (a) Daten- und Recorddefinition für: x/y-Position, Spielfigur, Bomben und Bombenabwürfe
 
+; Recorddefinition für x/y-Position
+; x/y-Position besteht aus x-Koordinate und y-Koordinate
 (: make-position (real real -> position))
 
 (: position-x (position -> real))
@@ -37,11 +39,33 @@
   (position-x
    position-y))
 
-(: make-character (string natural position -> character))
+; definieren einer Gesundheitsprozedur mit Signatur
+(: healthbar (natural -> natural))
+
+(check-expect (healthbar 0) 0)
+(check-expect (healthbar 100) 100)
+(check-error (healthbar 101) "max health is 100!")
+
+(define healthbar
+  (lambda (x)
+    (if (<= 0 x 100)
+        x
+        (violation "max health is 100!"))))
+
+(define maxhealth
+  (signature (predicate healthbar)))
+
+; Recorddefiniton für Spielfigur
+; Spielfigur besteht aus Name n, Gesundheitszustand h und Position x y
+(: make-character (string maxhealth position -> character))
 
 (: character-name (character -> string))
-(: character-health (character -> natural))
+(: character-health (character -> maxhealth))
 (: character-position (character -> position))
+
+(check-expect (character-name Spielfigur1) "Mario")
+(check-expect (character-health Spielfigur2) 100)
+(check-expect (character-position Spielfigur2) Position1) 
 
 (define-record-procedures character
   make-character
@@ -50,6 +74,8 @@
    character-health
    character-position))
 
+; Recorddefinition für Bombe
+; Bomben bestehen aus Detonationsradius br und Schaden d
 (: make-bomb (real real -> bomb))
 
 (: bomb-blast-radius (bomb -> real))
@@ -67,10 +93,15 @@
   (bomb-blast-radius
    bomb-damage))
 
+; Recorddefinition für Bomben-Angriff
+; Angriff besteht aus Position x y und Bombe br d
 (: make-attack (position bomb -> attack))
 
 (: attack-position (attack -> position))
 (: attack-bomb (attack -> bomb))
+
+(check-expect (attack-position Angriff2) Position2)
+(check-expect (attack-bomb Angriff2) Bombe1)
 
 (define-record-procedures attack
   make-attack
@@ -85,6 +116,9 @@
 
 (define Position2
   (make-position 15 10))
+
+(define Position3
+  (make-position -5 0))
 
 (define Spielfigur1
   (make-character "Mario" 100 (make-position 10 15)))
