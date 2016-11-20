@@ -17,3 +17,5 @@
 
 ; Spielfigur: erleidet keinen Schaden, wenn nicht im Detonationsradius
 ;             Gesundheitszustand darf nicht kleiner als 0 sein
+
+; (a) Daten- und Recorddefinition für: x/y-Position, Spielfigur, Bomben und Bombenabwürfe
