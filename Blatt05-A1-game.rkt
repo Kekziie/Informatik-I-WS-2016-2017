@@ -77,3 +77,29 @@
   attack?
   (attack-position
    attack-bomb))
+
+; definieren von Testfällen
+
+(define Position1
+  (make-position 30 33))
+
+(define Position2
+  (make-position 15 10))
+
+(define Spielfigur1
+  (make-character "Mario" 100 (make-position 10 15)))
+
+(define Spielfigur2
+  (make-character "Max" 100 Position1))
+
+(define Bombe1
+  (make-bomb 50 50))
+
+(define Bombe2
+  (make-bomb 25 25))
+
+(define Angriff1
+  (make-attack (make-position 60 30) (make-bomb 15 15)))
+
+(define Angriff2
+  (make-attack Position2 Bombe1))
