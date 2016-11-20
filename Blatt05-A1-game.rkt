@@ -109,7 +109,7 @@
   (attack-position
    attack-bomb))
 
-; definieren von Testfällen
+; Datendefinition
 
 (define Position1
   (make-position 30 33))
