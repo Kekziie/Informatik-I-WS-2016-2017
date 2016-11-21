@@ -141,6 +141,12 @@
 (define Angriff2
   (make-attack Position2 Bombe1))
 
+(define Angriff3
+  (make-attack Position2 (make-bomb 50 1)))
+
+(define Angriff4
+  (make-attack (make-position 29 31) (make-bomb 100 10000)))
+
 ; (b) euklidische Distanz d zwischen zwei Positionen: d= Wurzel aus {(x1-x2)'2 + (y1-y2)'2}
 
 (: euclidean-distance (position position -> real))
@@ -162,40 +168,41 @@
 
 ; definieren des Schadenwertes, wenn Spielfigur getroffen
 
-(: damage (character bomb attack -> real))
+(: damage (character attack -> real))
 
-(check-within (damage Spielfigur1 Bombe2 Angriff2) 18.0 0.001)
-(check-within (damage Spielfigur1 Bombe1 Angriff2) 21.0 0.001)
+(check-within (damage Spielfigur1 Angriff2) 21.0 0.001)
+(check-within (damage Spielfigur2 Angriff2) 11.0 0.001)
 
 (define damage
-  (lambda (Spielfigur Bombe Angriff)
+  (lambda (Spielfigur Angriff)
      (round (* (- 1 (/ (euclidean-distance (character-position Spielfigur)
                                            (attack-position Angriff))
-                       (bomb-blast-radius Bombe)))
-               (bomb-damage Bombe)))
-    ))
+                       (bomb-blast-radius (attack-bomb Angriff))))
+               (bomb-damage (attack-bomb Angriff))))))
 
 ; Prozedur: drop-bomb, die Schaden an Figur berechnet
 ; bei keinem Treffer: "daneben"
 
-(: drop-bomb (character attack -> character))
+(: drop-bomb (character attack -> any))
 
-(check-within (damage Spielfigur1 Bombe2 Angriff2) 18.0 0.001)
-(check-within (damage Spielfigur1 Bombe1 Angriff2) 21.0 0.001)
-(check-within (damage Spielfigur2 Bombe2 Angriff1) 0 0.001)
-(check-error (damage Spielfigur3 Bombe1 Angriff2) "daneben")
+(check-within (drop-bomb Spielfigur1 Angriff2) 79 0.001)
+(check-within (drop-bomb  Spielfigur2 Angriff2) 89 0.001)
+(check-within (drop-bomb Spielfigur2 Angriff3) 100 0.001)
+(check-within (drop-bomb Spielfigur2 Angriff4) 0 0.001)
+(check-error (drop-bomb  Spielfigur2 Angriff1) "daneben")
+(check-error (drop-bomb  Spielfigur3 Angriff1) "daneben")
 
 (define drop-bomb
   (lambda (Spielfigur Angriff)
     (if (< (euclidean-distance (character-position Spielfigur)
                                (attack-position Angriff))
            (bomb-blast-radius (attack-bomb Angriff)))
-        (if (< (- (character-health Spielfigur)
-                  (damage Spielfigur (attack-bomb Angriff) Angriff))
-               0)
+        (if (>= (- (character-health Spielfigur)
+                  (damage Spielfigur Angriff))
+                 0)
             (- (character-health Spielfigur)
-                  (damage Spielfigur (attack-bomb Angriff) Angriff))
-            0)
+               (damage Spielfigur Angriff))
+            (- (character-health Spielfigur) 100))
         (violation "daneben"))))
         
   
