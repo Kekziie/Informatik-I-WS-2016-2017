@@ -124,7 +124,7 @@
   (make-character "Mario" 100 (make-position 10 15)))
 
 (define Spielfigur2
-  (make-character "Max" 100 Position1))
+  (make-character "Lan" 100 Position1))
 
 (define Bombe1
   (make-bomb 50 50))
@@ -139,3 +139,5 @@
   (make-attack Position2 Bombe1))
 
 ; (b) euklidische Distanz d zwischen zwei Positionen: d= Wurzel aus {(x1-x2)'2 + (y1-y2)'2}
+
+(: euclidean-distance (position position -> real))
