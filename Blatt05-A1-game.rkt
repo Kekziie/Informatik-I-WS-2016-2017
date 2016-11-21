@@ -161,15 +161,19 @@
 
 (: damage (character bomb attack -> real))
 
+(check-error (damage Spielfigur1 Bombe1 Angriff1) "daneben")
+(check-within (damage Spielfigur1 Bombe2 Angriff2) 18.0 0.001)
+(check-within (damage Spielfigur1 Bombe1 Angriff2) 43.0 0.001)
+
 (define damage
   (lambda (Spielfigur Bombe Angriff)
     (if (< (euclidean-distance (character-position Spielfigur)
                                (attack-position Angriff))
            (bomb-blast-radius Bombe))
-        (* (- 1 (/ (euclidean-distance (character-position Spielfigur)
-                                       (attack-position Angriff))
-                   (bomb-blast-radius Bombe)))
-           (bomb-damage Bombe))
+        (round (* (- 1 (/ (euclidean-distance (character-position Spielfigur)
+                                              (attack-position Angriff))
+                          (bomb-blast-radius Bombe)))
+                  (bomb-damage Bombe)))
         (violation "daneben"))))
+
                 
-    
