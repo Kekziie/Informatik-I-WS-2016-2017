@@ -1,179 +1,1317 @@
-;; Die ersten drei Zeilen dieser Datei wurden von DrRacket eingefügt. Sie enthalten Metadaten
-;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
-#reader(lib "DMdA-beginner-reader.ss" "deinprogramm")((modname Blatt05-A1-game) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
-; Aufgabe 1
+#reader(lib"read.ss""wxme")WXME0108 ## 
+#|
+   This file uses the GRacket editor format.
+   Open this file in DrRacket version 6.6 or later to read it.
 
-; Ausschnitt eines Computerspiels mit:
-; - Spielfigur (character) besteht aus: Name, ganzzahliger Gesundheitszustand (0-100) und zweidimensionale Position
-; - Bomben (bomb) bestehen aus: Detonationsradius ("blast radius") und Schadenswert
-; - Bombenangriff (attack) besteht aus: Position und Bombe
+   Most likely, it was created by saving a program in DrRacket,
+   and it probably contains a program with non-text elements
+   (such as images or comment boxes).
 
-; Treffer bei Bombenangriff: Abstand zur Bombe kleiner als Detonationsradius
-;                            Gesundheitszustand verringert
-
-; Schaden der Bombe: verringert bei zunehmender Entfernung des Detonationsradiuses
-;                    Reduzieung des Gesundheitszustand um folgenden Wert: (1 - D/R) * S
-;                    wobei D Distanz, R Detonationsradius (d<r) und S Schadenswert sind
-
-; Spielfigur: erleidet keinen Schaden, wenn nicht im Detonationsradius
-;             Gesundheitszustand darf nicht kleiner als 0 sein
-
-; (a) Daten- und Recorddefinition für: x/y-Position, Spielfigur, Bomben und Bombenabwürfe
-
-; Recorddefinition für x/y-Position
-; x/y-Position besteht aus x-Koordinate und y-Koordinate
-(: make-position (real real -> position))
-
-(: position-x (position -> real))
-(: position-y (position -> real))
-
-(check-property
- (for-all ((x real)
-           (y real))
-   (and (= (position-x (make-position x y)) x)
-        (= (position-y (make-position x y)) y))))
-
-(define-record-procedures position
-  make-position
-  position?
-  (position-x
-   position-y))
-
-; definieren einer Gesundheitsprozedur mit Signatur
-(: healthbar (natural -> natural))
-
-(check-expect (healthbar 0) 0)
-(check-expect (healthbar 100) 100)
-(check-error (healthbar 101) "max health is 100!")
-
-(define healthbar
-  (lambda (x)
-    (if (<= 0 x 100)
-        x
-        (violation "max health is 100!"))))
-
-(define maxhealth
-  (signature (predicate healthbar)))
-
-; Recorddefiniton für Spielfigur
-; Spielfigur besteht aus Name n, Gesundheitszustand h und Position x y
-(: make-character (string maxhealth position -> character))
-
-(: character-name (character -> string))
-(: character-health (character -> maxhealth))
-(: character-position (character -> position))
-
-(check-expect (character-name Spielfigur1) "Mario")
-(check-expect (character-health Spielfigur2) 100)
-(check-expect (character-position Spielfigur2) Position1) 
-
-(define-record-procedures character
-  make-character
-  character?
-  (character-name
-   character-health
-   character-position))
-
-; Recorddefinition für Bombe
-; Bomben bestehen aus Detonationsradius br und Schaden d
-(: make-bomb (real real -> bomb))
-
-(: bomb-blast-radius (bomb -> real))
-(: bomb-damage (bomb -> real))
-
-(check-property
- (for-all ((br real)
-           (d real))
-   (and (= (bomb-blast-radius (make-bomb br d)) br)
-        (= (bomb-damage (make-bomb br d)) d))))
-
-(define-record-procedures bomb
-  make-bomb
-  bomb?
-  (bomb-blast-radius
-   bomb-damage))
-
-; Recorddefinition für Bomben-Angriff
-; Angriff besteht aus Position x y und Bombe br d
-(: make-attack (position bomb -> attack))
-
-(: attack-position (attack -> position))
-(: attack-bomb (attack -> bomb))
-
-(check-expect (attack-position Angriff2) Position2)
-(check-expect (attack-bomb Angriff2) Bombe1)
-
-(define-record-procedures attack
-  make-attack
-  attack?
-  (attack-position
-   attack-bomb))
-
-; Datendefinition
-
-(define Position1
-  (make-position 30 33))
-
-(define Position2
-  (make-position 15 10))
-
-(define Position3
-  (make-position -5 0))
-
-(define Spielfigur1
-  (make-character "Mario" 100 (make-position 10 15)))
-
-(define Spielfigur2
-  (make-character "Lan" 100 Position1))
-
-(define Bombe1
-  (make-bomb 50 50))
-
-(define Bombe2
-  (make-bomb 25 25))
-
-(define Angriff1
-  (make-attack (make-position 60 30) (make-bomb 15 15)))
-
-(define Angriff2
-  (make-attack Position2 Bombe1))
-
-; (b) euklidische Distanz d zwischen zwei Positionen: d= Wurzel aus {(x1-x2)'2 + (y1-y2)'2}
-
-(: euclidean-distance (position position -> real))
-
-(check-within (euclidean-distance position1 position2) 27.46 0.01)
-(check-within (euclidean-distance (character-position Spielfigur1) position1) 26.91 0.01)
-(check-within (euclidean-distance (character-position Spielfigur2) (attack-position Angriff1)) 30.15 0.01)
-
-(define euclidean-distance
-  (lambda (position1 position2)
-    (sqrt (+ (expt (- (position-x position1)
-                   (position-x position2))
-                2)
-             (expt (- (position-y position1)
-                      (position-y position2))
-                   2)))))
-
-; (c) eine Prozedur drop-bomb, die alle Auswirkungen eines Bombenabwurfs auf eine Spielfigur berechnet
-
-; definieren des Schadenwertes, wenn Spielfigur getroffen
-
-(: damage (character bomb attack -> real))
-
-(check-error (damage Spielfigur1 Bombe1 Angriff1) "daneben")
-(check-within (damage Spielfigur1 Bombe2 Angriff2) 18.0 0.001)
-(check-within (damage Spielfigur1 Bombe1 Angriff2) 43.0 0.001)
-
-(define damage
-  (lambda (Spielfigur Bombe Angriff)
-    (if (< (euclidean-distance (character-position Spielfigur)
-                               (attack-position Angriff))
-           (bomb-blast-radius Bombe))
-        (round (* (- 1 (/ (euclidean-distance (character-position Spielfigur)
-                                              (attack-position Angriff))
-                          (bomb-blast-radius Bombe)))
-                  (bomb-damage Bombe)))
-        (violation "daneben"))))
-
-                
+            http://racket-lang.org/
+|#
+ 32 7 #"wxtext\0"
+3 1 6 #"wxtab\0"
+1 1 8 #"wximage\0"
+2 0 8 #"wxmedia\0"
+4 1 34 #"(lib \"syntax-browser.ss\" \"mrlib\")\0"
+1 0 36 #"(lib \"cache-image-snip.ss\" \"mrlib\")\0"
+1 0 68
+(
+ #"((lib \"image-core.ss\" \"mrlib\") (lib \"image-core-wxme.rkt\" \"mr"
+ #"lib\"))\0"
+) 1 0 16 #"drscheme:number\0"
+3 0 44 #"(lib \"number-snip.ss\" \"drscheme\" \"private\")\0"
+1 0 36 #"(lib \"comment-snip.ss\" \"framework\")\0"
+1 0 93
+(
+ #"((lib \"collapsed-snipclass.ss\" \"framework\") (lib \"collapsed-sni"
+ #"pclass-wxme.ss\" \"framework\"))\0"
+) 0 0 43 #"(lib \"collapsed-snipclass.ss\" \"framework\")\0"
+0 0 19 #"drscheme:sexp-snip\0"
+0 0 29 #"drscheme:bindings-snipclass%\0"
+1 0 101
+(
+ #"((lib \"ellipsis-snip.rkt\" \"drracket\" \"private\") (lib \"ellipsi"
+ #"s-snip-wxme.rkt\" \"drracket\" \"private\"))\0"
+) 2 0 88
+(
+ #"((lib \"pict-snip.rkt\" \"drracket\" \"private\") (lib \"pict-snip.r"
+ #"kt\" \"drracket\" \"private\"))\0"
+) 0 0 34 #"(lib \"bullet-snip.rkt\" \"browser\")\0"
+0 0 25 #"(lib \"matrix.ss\" \"htdp\")\0"
+1 0 22 #"drscheme:lambda-snip%\0"
+1 0 29 #"drclickable-string-snipclass\0"
+0 0 26 #"drracket:spacer-snipclass\0"
+0 0 57
+#"(lib \"hrule-snip.rkt\" \"macro-debugger\" \"syntax-browser\")\0"
+1 0 26 #"drscheme:pict-value-snip%\0"
+0 0 45 #"(lib \"image-snipr.ss\" \"slideshow\" \"private\")\0"
+1 0 38 #"(lib \"pict-snipclass.ss\" \"slideshow\")\0"
+2 0 55 #"(lib \"vertical-separator-snip.ss\" \"stepper\" \"private\")\0"
+1 0 18 #"drscheme:xml-snip\0"
+1 0 31 #"(lib \"xml-snipclass.ss\" \"xml\")\0"
+1 0 21 #"drscheme:scheme-snip\0"
+2 0 34 #"(lib \"scheme-snipclass.ss\" \"xml\")\0"
+1 0 10 #"text-box%\0"
+1 0 32 #"(lib \"text-snipclass.ss\" \"xml\")\0"
+1 0 1 6 #"wxloc\0"
+          0 0 73 0 1 #"\0"
+0 75 1 #"\0"
+0 12 90 -1 90 -1 3 -1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 255 255 255 1 -1 0 9
+#"Standard\0"
+0 75 6 #"Menlo\0"
+0 12 90 -1 90 -1 3 -1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 255 255 255 1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 -1 -1 2 24
+#"framework:default-color\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1 2
+1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 150 0 150 0 0 0 -1 -1 2 15
+#"text:ports out\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 150 0 150 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 93 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 255 0 0 0 0 0 -1
+-1 2 15 #"text:ports err\0"
+0 -1 1 #"\0"
+1 0 -1 -1 93 -1 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 175 0 0 0 -1 -1 2 17
+#"text:ports value\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 175 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1.0 0 92 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 34 139 34 0 0 0 -1
+-1 2 27 #"Matching Parenthesis Style\0"
+0 -1 1 #"\0"
+1.0 0 92 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 34 139 34 0 0 0 -1
+-1 2 1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 38 38 128 0 0 0 -1 -1 2 37
+#"framework:syntax-color:scheme:symbol\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 38 38 128 0 0 0 -1 -1 2 38
+#"framework:syntax-color:scheme:keyword\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 38 38 128 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 194 116 31 0 0 0 -1 -1 2
+38 #"framework:syntax-color:scheme:comment\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 194 116 31 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 41 128 38 0 0 0 -1 -1 2 37
+#"framework:syntax-color:scheme:string\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 41 128 38 0 0 0 -1 -1 2 35
+#"framework:syntax-color:scheme:text\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 41 128 38 0 0 0 -1 -1 2 39
+#"framework:syntax-color:scheme:constant\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 41 128 38 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 132 60 36 0 0 0 -1 -1 2 49
+#"framework:syntax-color:scheme:hash-colon-keyword\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 132 60 36 0 0 0 -1 -1 2 42
+#"framework:syntax-color:scheme:parenthesis\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 132 60 36 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 36
+#"framework:syntax-color:scheme:error\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 36
+#"framework:syntax-color:scheme:other\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 16
+#"Misspelled Text\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 81 112 203 0 0 0 -1 -1 2
+38 #"drracket:check-syntax:lexically-bound\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 81 112 203 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 178 34 34 0 0 0 -1 -1 2 28
+#"drracket:check-syntax:set!d\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 178 34 34 0 0 0 -1 -1 2 37
+#"drracket:check-syntax:unused-require\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 36
+#"drracket:check-syntax:free-variable\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 255 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 68 0 203 0 0 0 -1 -1 2 31
+#"drracket:check-syntax:imported\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 68 0 203 0 0 0 -1 -1 2 47
+#"drracket:check-syntax:my-obligation-style-pref\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 178 34 34 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 116 0 0 0 0 -1 -1 2 50
+#"drracket:check-syntax:their-obligation-style-pref\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 116 0 0 0 0 -1 -1 2 48
+#"drracket:check-syntax:unk-obligation-style-pref\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 139 142 28 0 0 0 -1 -1 2
+49 #"drracket:check-syntax:both-obligation-style-pref\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 139 142 28 0 0 0 -1 -1 2
+26 #"plt:htdp:test-coverage-on\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 2 27
+#"plt:htdp:test-coverage-off\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 4 1
+#"\0"
+0 70 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 4 4 #"XML\0"
+0 70 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 2 37 #"plt:module-language:test-coverage-on\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 38
+#"plt:module-language:test-coverage-off\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 4 1
+#"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 4 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 0 255 0 0 0 -1
+-1 4 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 0 255 0 0 0 -1
+-1 4 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 100 0 0 0 0 -1
+-1 2 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 2 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 100 0 0 0 0 -1
+-1 24 1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 15 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 14 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 21 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 24 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 173 216 230 -1 -1 14
+1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 173 216 230 -1 -1 21
+1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 173 216 230 -1 -1 19
+1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 4 1
+#"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1
+17 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1
+24 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1
+14 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1
+15 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1
+21 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1
+19 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 255 255 255 -1 -1
+19 1 #"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 173 216 230 -1 -1
+          0 991 0 4 3 94
+(
+ #";; Die ersten drei Zeilen dieser "
+ #"Datei wurden von DrRacket eingef\303\274gt. Sie enthalten Metadaten"
+) 0 0 4 29 1 #"\n"
+0 0 4 3 83
+(
+ #";; \303\274ber die Sprachebene dieser Datei in einer Form, die DrRac"
+ #"ket verarbeiten kann."
+) 0 0 4 29 1 #"\n"
+0 0 4 3 107
+(
+ #"#reader(lib \"DMdA-beginner-reader.ss\" \"deinprogramm\")((modname |"
+ #"#Blatt05-A1-game|) (read-case-sensitive #f)"
+) 0 0 4 3 283
+(
+ #" (teachpacks ((lib \"image2.rkt\" \"teachpack\" \"deinprogramm\") (l"
+ #"ib \"universe.rkt\" \"teachpack\" \"deinprogramm\"))) (deinprogramm-"
+ #"settings #(#f write repeating-deci"
+ #"mal #f #t none explicit #f ((lib \"image2.rkt\" \"teachpack\" \"dein"
+ #"programm\") (lib \"universe.rkt\" \"teachpack\" \"deinprogramm\"))))"
+ #")"
+) 0 0 4 29 1 #"\n"
+0 0 17 3 11 #"; Aufgabe 1"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 38 #"; Ausschnitt eines Computerspiels mit:"
+0 0 24 29 1 #"\n"
+0 0 17 3 115
+(
+ #"; - Spielfigur (character) besteht aus: Name, ganzzahliger Gesundhei"
+ #"tszustand (0-100) und zweidimensionale Position"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 83
+(
+ #"; - Bomben (bomb) bestehen aus: Detonationsradius (\"blast radius\")"
+ #" und Schadenswert"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 58
+#"; - Bombenangriff (attack) besteht aus: Position und Bombe"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 76
+(
+ #"; Treffer bei Bombenangriff: Abstand zur Bombe kleiner als Detonatio"
+ #"nsradius"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 58
+#";                            Gesundheitszustand verringert"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 82
+(
+ #"; Schaden der Bombe: verringert bei zunehmender Entfernung des Deton"
+ #"ationsradiuses"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 87
+(
+ #";                    Reduzieung des Gesundheitszustand um folgenden "
+ #"Wert: (1 - D/R) * S"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 87
+(
+ #";                    wobei D Distanz, R Detonationsradius (d<r) und "
+ #"S Schadenswert sind"
+) 0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 70
+(
+ #"; Spielfigur: erleidet keinen Schaden, wenn nicht im Detonationsradi"
+ #"us"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 62
+#";             Gesundheitszustand darf nicht kleiner als 0 sein"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 91
+(
+ #"; (a) Daten- und Recorddefinition f\303\274r: x/y-Position, Spielfig"
+ #"ur, Bomben und Bombenabw\303\274rfe"
+) 0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 36 #"; Recorddefinition f\303\274r x/y-Position"
+0 0 24 29 1 #"\n"
+0 0 17 3 56 #"; x/y-Position besteht aus x-Koordinate und y-Koordinate"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 13 #"make-position"
+0 0 24 3 2 #" ("
+0 0 14 3 4 #"real"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"position"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"position-x"
+0 0 24 3 2 #" ("
+0 0 14 3 8 #"position"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"position-y"
+0 0 24 3 2 #" ("
+0 0 14 3 8 #"position"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 14 #"check-property"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #" ("
+0 0 15 3 7 #"for-all"
+0 0 24 3 3 #" (("
+0 0 14 3 1 #"x"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 12 #"           ("
+0 0 14 3 1 #"y"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 4 #"   ("
+0 0 14 3 3 #"and"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"="
+0 0 24 3 2 #" ("
+0 0 14 3 10 #"position-x"
+0 0 24 3 2 #" ("
+0 0 14 3 13 #"make-position"
+0 0 24 3 1 #" "
+0 0 14 3 1 #"x"
+0 0 24 3 1 #" "
+0 0 14 3 1 #"y"
+0 0 24 3 3 #")) "
+0 0 14 3 1 #"x"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 9 #"        ("
+0 0 14 3 1 #"="
+0 0 24 3 2 #" ("
+0 0 14 3 10 #"position-y"
+0 0 24 3 2 #" ("
+0 0 14 3 13 #"make-position"
+0 0 24 3 1 #" "
+0 0 14 3 1 #"x"
+0 0 24 3 1 #" "
+0 0 14 3 1 #"y"
+0 0 24 3 3 #")) "
+0 0 14 3 1 #"y"
+0 0 24 3 4 #"))))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 24 #"define-record-procedures"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"position"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0 0 14 3 13 #"make-position"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0 0 14 3 9 #"position?"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 10 #"position-x"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"   "
+0 0 14 3 10 #"position-y"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 51 #"; definieren einer Gesundheitsprozedur mit Signatur"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"healthbar"
+0 0 24 3 2 #" ("
+0 0 14 3 7 #"natural"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"natural"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-expect"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"healthbar"
+0 0 24 3 1 #" "
+0 0 21 3 1 #"0"
+0 0 24 3 2 #") "
+0 0 21 3 1 #"0"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-expect"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"healthbar"
+0 0 24 3 1 #" "
+0 0 21 3 3 #"100"
+0 0 24 3 2 #") "
+0 0 21 3 3 #"100"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 11 #"check-error"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"healthbar"
+0 0 24 3 1 #" "
+0 0 21 3 3 #"101"
+0 0 24 3 2 #") "
+0 0 19 3 20 #"\"max health is 100!\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"healthbar"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 15 3 6 #"lambda"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"x"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 5 #"    ("
+0 0 14 3 2 #"if"
+0 0 24 3 2 #" ("
+0 0 14 3 2 #"<="
+0 0 24 3 1 #" "
+0 0 21 3 1 #"0"
+0 0 24 3 1 #" "
+0 0 14 3 1 #"x"
+0 0 24 3 1 #" "
+0 0 21 3 3 #"100"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 8 #"        "
+0 0 14 3 1 #"x"
+0 0 24 29 1 #"\n"
+0 0 24 3 9 #"        ("
+0 0 14 3 9 #"violation"
+0 0 24 3 1 #" "
+0 0 19 3 20 #"\"max health is 100!\""
+0 0 24 3 4 #"))))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"maxhealth"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 9 #"signature"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"predicate"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"healthbar"
+0 0 24 3 3 #")))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 33 #"; Recorddefiniton f\303\274r Spielfigur"
+0 0 24 29 1 #"\n"
+0 0 17 3 70
+(
+ #"; Spielfigur besteht aus Name n, Gesundheitszustand h und Position x"
+ #" y"
+) 0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 14 #"make-character"
+0 0 24 3 2 #" ("
+0 0 14 3 6 #"string"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"maxhealth"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"position"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"character"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 14 #"character-name"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"character"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"string"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 16 #"character-health"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"character"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"maxhealth"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 18 #"character-position"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"character"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"position"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-expect"
+0 0 24 3 2 #" ("
+0 0 14 3 14 #"character-name"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur1"
+0 0 24 3 2 #") "
+0 0 19 3 7 #"\"Mario\""
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-expect"
+0 0 24 3 2 #" ("
+0 0 14 3 16 #"character-health"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur2"
+0 0 24 3 2 #") "
+0 0 21 3 3 #"100"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-expect"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"character-position"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur2"
+0 0 24 3 2 #") "
+0 0 14 3 9 #"Position1"
+0 0 24 3 2 #") "
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 24 #"define-record-procedures"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"character"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0 0 14 3 14 #"make-character"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0 0 14 3 10 #"character?"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 14 #"character-name"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"   "
+0 0 14 3 16 #"character-health"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"   "
+0 0 14 3 18 #"character-position"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 29 #"; Recorddefinition f\303\274r Bombe"
+0 0 24 29 1 #"\n"
+0 0 17 3 56 #"; Bomben bestehen aus Detonationsradius br und Schaden d"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"make-bomb"
+0 0 24 3 2 #" ("
+0 0 14 3 4 #"real"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"bomb"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 17 #"bomb-blast-radius"
+0 0 24 3 2 #" ("
+0 0 14 3 4 #"bomb"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"bomb-damage"
+0 0 24 3 2 #" ("
+0 0 14 3 4 #"bomb"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 14 #"check-property"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #" ("
+0 0 15 3 7 #"for-all"
+0 0 24 3 3 #" (("
+0 0 14 3 2 #"br"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 12 #"           ("
+0 0 14 3 1 #"d"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 4 #"   ("
+0 0 14 3 3 #"and"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"="
+0 0 24 3 2 #" ("
+0 0 14 3 17 #"bomb-blast-radius"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"make-bomb"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"br"
+0 0 24 3 1 #" "
+0 0 14 3 1 #"d"
+0 0 24 3 3 #")) "
+0 0 14 3 2 #"br"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 9 #"        ("
+0 0 14 3 1 #"="
+0 0 24 3 2 #" ("
+0 0 14 3 11 #"bomb-damage"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"make-bomb"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"br"
+0 0 24 3 1 #" "
+0 0 14 3 1 #"d"
+0 0 24 3 3 #")) "
+0 0 14 3 1 #"d"
+0 0 24 3 4 #"))))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 24 #"define-record-procedures"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"bomb"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0 0 14 3 9 #"make-bomb"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0 0 14 3 5 #"bomb?"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 17 #"bomb-blast-radius"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"   "
+0 0 14 3 11 #"bomb-damage"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 38 #"; Recorddefinition f\303\274r Bomben-Angriff"
+0 0 24 29 1 #"\n"
+0 0 17 3 49 #"; Angriff besteht aus Position x y und Bombe br d"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"make-attack"
+0 0 24 3 2 #" ("
+0 0 14 3 8 #"position"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"bomb"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"attack"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 15 #"attack-position"
+0 0 24 3 2 #" ("
+0 0 14 3 6 #"attack"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"position"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"attack-bomb"
+0 0 24 3 2 #" ("
+0 0 14 3 6 #"attack"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"bomb"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-expect"
+0 0 24 3 2 #" ("
+0 0 14 3 15 #"attack-position"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"Angriff2"
+0 0 24 3 2 #") "
+0 0 14 3 9 #"Position2"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-expect"
+0 0 24 3 2 #" ("
+0 0 14 3 11 #"attack-bomb"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"Angriff2"
+0 0 24 3 2 #") "
+0 0 14 3 6 #"Bombe1"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 24 #"define-record-procedures"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"attack"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0 0 14 3 11 #"make-attack"
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0 0 14 3 7 #"attack?"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 15 #"attack-position"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"   "
+0 0 14 3 11 #"attack-bomb"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 17 #"; Datendefinition"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"Position1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"make-position"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"30"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"33"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"Position2"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"make-position"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"15"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"10"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"Position3"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 13 #"make-position"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"-5"
+0 0 24 3 1 #" "
+0 0 21 3 1 #"0"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 14 #"make-character"
+0 0 24 3 1 #" "
+0 0 19 3 7 #"\"Mario\""
+0 0 24 3 1 #" "
+0 0 21 3 3 #"100"
+0 0 24 3 2 #" ("
+0 0 14 3 13 #"make-position"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"10"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"15"
+0 0 24 3 3 #")))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur2"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 14 #"make-character"
+0 0 24 3 1 #" "
+0 0 19 3 5 #"\"Lan\""
+0 0 24 3 1 #" "
+0 0 21 3 3 #"100"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"Position1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"Bombe1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 9 #"make-bomb"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"50"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"50"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"Bombe2"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 9 #"make-bomb"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"25"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"25"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"Angriff1"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 11 #"make-attack"
+0 0 24 3 2 #" ("
+0 0 14 3 13 #"make-position"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"60"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"30"
+0 0 24 3 3 #") ("
+0 0 14 3 9 #"make-bomb"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"15"
+0 0 24 3 1 #" "
+0 0 21 3 2 #"15"
+0 0 24 3 3 #")))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"Angriff2"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 14 3 11 #"make-attack"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"Position2"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"Bombe1"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 91
+(
+ #"; (b) euklidische Distanz d zwischen zwei Positionen: d= Wurzel aus "
+ #"{(x1-x2)'2 + (y1-y2)'2}"
+) 0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 18 #"euclidean-distance"
+0 0 24 3 2 #" ("
+0 0 14 3 8 #"position"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"position"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-within"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"euclidean-distance"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"position1"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"position2"
+0 0 24 3 2 #") "
+0 0 21 3 5 #"27.46"
+0 0 24 3 1 #" "
+0 0 21 3 4 #"0.01"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-within"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"euclidean-distance"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"character-position"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur1"
+0 0 24 3 2 #") "
+0 0 14 3 9 #"position1"
+0 0 24 3 2 #") "
+0 0 21 3 5 #"26.91"
+0 0 24 3 1 #" "
+0 0 21 3 4 #"0.01"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-within"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"euclidean-distance"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"character-position"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur2"
+0 0 24 3 3 #") ("
+0 0 14 3 15 #"attack-position"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"Angriff1"
+0 0 24 3 3 #")) "
+0 0 21 3 5 #"30.15"
+0 0 24 3 1 #" "
+0 0 21 3 4 #"0.01"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 18 #"euclidean-distance"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 15 3 6 #"lambda"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"position1"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"position2"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 5 #"    ("
+0 0 14 3 4 #"sqrt"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"+"
+0 0 24 3 2 #" ("
+0 0 14 3 4 #"expt"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"-"
+0 0 24 3 2 #" ("
+0 0 14 3 10 #"position-x"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"position1"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 20 #"                   ("
+0 0 14 3 10 #"position-x"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"position2"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 16 #"                "
+0 0 21 3 1 #"2"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 14 #"             ("
+0 0 14 3 4 #"expt"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"-"
+0 0 24 3 2 #" ("
+0 0 14 3 10 #"position-y"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"position1"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 23 #"                      ("
+0 0 14 3 10 #"position-y"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"position2"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 19 #"                   "
+0 0 21 3 1 #"2"
+0 0 24 3 5 #")))))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 102
+(
+ #"; (c) eine Prozedur drop-bomb, die alle Auswirkungen eines Bombenabw"
+ #"urfs auf eine Spielfigur berechnet"
+) 0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 57 #"; definieren des Schadenwertes, wenn Spielfigur getroffen"
+0 0 24 29 1 #"\n"
+0 0 17 3 31 #"; bei keinem Treffer: \"daneben\""
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"damage"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"character"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"bomb"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"attack"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 4 #"real"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-within"
+0 0 24 3 2 #" ("
+0 0 14 3 6 #"damage"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur1"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"Bombe2"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"Angriff2"
+0 0 24 3 2 #") "
+0 0 21 3 4 #"18.0"
+0 0 24 3 1 #" "
+0 0 21 3 5 #"0.001"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 12 #"check-within"
+0 0 24 3 2 #" ("
+0 0 14 3 6 #"damage"
+0 0 24 3 1 #" "
+0 0 14 3 11 #"Spielfigur1"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"Bombe1"
+0 0 24 3 1 #" "
+0 0 14 3 8 #"Angriff2"
+0 0 24 3 2 #") "
+0 0 21 3 4 #"43.0"
+0 0 24 3 1 #" "
+0 0 21 3 5 #"0.001"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"damage"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 15 3 6 #"lambda"
+0 0 24 3 2 #" ("
+0 0 14 3 10 #"Spielfigur"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"Bombe"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"Angriff"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 6 #"     ("
+0 0 14 3 5 #"round"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"*"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"-"
+0 0 24 3 1 #" "
+0 0 21 3 1 #"1"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"/"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"euclidean-distance"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"character-position"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"Spielfigur"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 44 #"                                           ("
+0 0 14 3 15 #"attack-position"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"Angriff"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 24 #"                       ("
+0 0 14 3 17 #"bomb-blast-radius"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"Bombe"
+0 0 24 3 3 #")))"
+0 0 24 29 1 #"\n"
+0 0 24 3 16 #"               ("
+0 0 14 3 11 #"bomb-damage"
+0 0 24 3 1 #" "
+0 0 14 3 5 #"Bombe"
+0 0 24 3 3 #")))"
+0 0 24 29 1 #"\n"
+0 0 24 3 6 #"    ))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 17 3 53 #"; Prozedur: drop-bomb, die Schaden an Figur berechnet"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 14 3 1 #":"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"drop-bomb"
+0 0 24 3 2 #" ("
+0 0 14 3 9 #"character"
+0 0 24 3 1 #" "
+0 0 14 3 6 #"attack"
+0 0 24 3 1 #" "
+0 0 14 3 2 #"->"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"character"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 29 1 #"\n"
+0 0 24 3 1 #"("
+0 0 15 3 6 #"define"
+0 0 24 3 1 #" "
+0 0 14 3 9 #"drop-bomb"
+0 0 24 29 1 #"\n"
+0 0 24 3 3 #"  ("
+0 0 15 3 6 #"lambda"
+0 0 24 3 2 #" ("
+0 0 14 3 10 #"Spielfigur"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"Angriff"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 5 #"    ("
+0 0 14 3 2 #"if"
+0 0 24 3 2 #" ("
+0 0 14 3 1 #"<"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"euclidean-distance"
+0 0 24 3 2 #" ("
+0 0 14 3 18 #"character-position"
+0 0 24 3 1 #" "
+0 0 14 3 10 #"Spielfigur"
+0 0 24 3 1 #")"
+0 0 24 29 1 #"\n"
+0 0 24 3 32 #"                               ("
+0 0 14 3 15 #"attack-position"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"Angriff"
+0 0 24 3 2 #"))"
+0 0 24 29 1 #"\n"
+0 0 24 3 12 #"           ("
+0 0 14 3 17 #"bomb-blast-radius"
+0 0 24 3 2 #" ("
+0 0 14 3 11 #"attack-bomb"
+0 0 24 3 1 #" "
+0 0 14 3 7 #"Angriff"
+0 0 24 3 3 #")))"
+0 0 24 29 1 #"\n"
+0 0 24 3 8 #"        "
+0 0 24 29 1 #"\n"
+0 0 24 3 2 #"  "
+0           0
