@@ -183,12 +183,12 @@
 ; Prozedur: drop-bomb, die Schaden an Figur berechnet
 ; bei keinem Treffer: "daneben"
 
-(: drop-bomb (character attack -> any))
+(: drop-bomb (character attack -> character))
 
-(check-within (drop-bomb Spielfigur1 Angriff2) 79 0.001)
-(check-within (drop-bomb  Spielfigur2 Angriff2) 89 0.001)
-(check-within (drop-bomb Spielfigur2 Angriff3) 100 0.001)
-(check-within (drop-bomb Spielfigur2 Angriff4) 0 0.001)
+(check-within (drop-bomb Spielfigur1 Angriff2) (make-character "Mario" 79 (make-position 10 15)) 0.001)
+(check-within (drop-bomb  Spielfigur2 Angriff2) (make-character "Lan" 89 Position1) 0.001)
+(check-within (drop-bomb Spielfigur2 Angriff3) (make-character "Lan" 100 Position1) 0.001)
+(check-within (drop-bomb Spielfigur2 Angriff4) (make-character "Lan" 0 Position1) 0.001)
 (check-error (drop-bomb  Spielfigur2 Angriff1) "daneben")
 (check-error (drop-bomb  Spielfigur3 Angriff1) "daneben")
 
@@ -200,9 +200,13 @@
         (if (>= (- (character-health Spielfigur)
                   (damage Spielfigur Angriff))
                  0)
-            (- (character-health Spielfigur)
-               (damage Spielfigur Angriff))
-            (- (character-health Spielfigur) 100))
+            (make-character (character-name Spielfigur)
+                            (- (character-health Spielfigur)
+                               (damage Spielfigur Angriff))
+                            (character-position Spielfigur))
+            (make-character (character-name Spielfigur)
+                            (- (character-health Spielfigur) 100)
+                            (character-position Spielfigur)))
         (violation "daneben"))))
         
   
