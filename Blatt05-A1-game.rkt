@@ -154,3 +154,22 @@
              (expt (- (position-y position1)
                       (position-y position2))
                    2)))))
+
+; (c) eine Prozedur drop-bomb, die alle Auswirkungen eines Bombenabwurfs auf eine Spielfigur berechnet
+
+; definieren des Schadenwertes, wenn Spielfigur getroffen
+
+(: damage (character bomb attack -> real))
+
+(define damage
+  (lambda (Spielfigur Bombe Angriff)
+    (if (< (euclidean-distance (character-position Spielfigur)
+                               (attack-position Angriff))
+           (bomb-blast-radius Bombe))
+        (* (- 1 (/ (euclidean-distance (character-position Spielfigur)
+                                       (attack-position Angriff))
+                   (bomb-blast-radius Bombe)))
+           (bomb-damage Bombe))
+        (violation "daneben"))))
+                
+    
