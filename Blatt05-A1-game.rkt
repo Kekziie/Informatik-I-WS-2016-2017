@@ -142,11 +142,15 @@
 
 (: euclidean-distance (position position -> real))
 
+(check-within (euclidean-distance position1 position2) 27.46 0.01)
+(check-within (euclidean-distance (character-position Spielfigur1) position1) 26.91 0.01)
+(check-within (euclidean-distance (character-position Spielfigur2) (attack-position Angriff1)) 30.15 0.01)
+
 (define euclidean-distance
   (lambda (position1 position2)
-    (sqrt (expt (- (position-x position1)
+    (sqrt (+ (expt (- (position-x position1)
                    (position-x position2))
                 2)
-          (expt (- (position-y position1)
-                   (position-y position2))
-                2))))
+             (expt (- (position-y position1)
+                      (position-y position2))
+                   2)))))
