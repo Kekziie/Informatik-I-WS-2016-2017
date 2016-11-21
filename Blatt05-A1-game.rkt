@@ -126,8 +126,11 @@
 (define Spielfigur2
   (make-character "Lan" 100 Position1))
 
+(define Spielfigur3
+  (make-character "Herbie" 100 (make-position -100 -100)))
+
 (define Bombe1
-  (make-bomb 50 50))
+  (make-bomb 50 25))
 
 (define Bombe2
   (make-bomb 25 25))
@@ -158,12 +161,11 @@
 ; (c) eine Prozedur drop-bomb, die alle Auswirkungen eines Bombenabwurfs auf eine Spielfigur berechnet
 
 ; definieren des Schadenwertes, wenn Spielfigur getroffen
-; bei keinem Treffer: "daneben"
 
 (: damage (character bomb attack -> real))
 
 (check-within (damage Spielfigur1 Bombe2 Angriff2) 18.0 0.001)
-(check-within (damage Spielfigur1 Bombe1 Angriff2) 43.0 0.001)
+(check-within (damage Spielfigur1 Bombe1 Angriff2) 21.0 0.001)
 
 (define damage
   (lambda (Spielfigur Bombe Angriff)
@@ -174,14 +176,26 @@
     ))
 
 ; Prozedur: drop-bomb, die Schaden an Figur berechnet
+; bei keinem Treffer: "daneben"
 
 (: drop-bomb (character attack -> character))
+
+(check-within (damage Spielfigur1 Bombe2 Angriff2) 18.0 0.001)
+(check-within (damage Spielfigur1 Bombe1 Angriff2) 21.0 0.001)
+(check-within (damage Spielfigur2 Bombe2 Angriff1) 0 0.001)
+(check-error (damage Spielfigur3 Bombe1 Angriff2) "daneben")
 
 (define drop-bomb
   (lambda (Spielfigur Angriff)
     (if (< (euclidean-distance (character-position Spielfigur)
                                (attack-position Angriff))
            (bomb-blast-radius (attack-bomb Angriff)))
-        (-
+        (if (< (- (character-health Spielfigur)
+                  (damage Spielfigur (attack-bomb Angriff) Angriff))
+               0)
+            (- (character-health Spielfigur)
+                  (damage Spielfigur (attack-bomb Angriff) Angriff))
+            0)
+        (violation "daneben"))))
         
   
