@@ -141,3 +141,12 @@
 ; (b) euklidische Distanz d zwischen zwei Positionen: d= Wurzel aus {(x1-x2)'2 + (y1-y2)'2}
 
 (: euclidean-distance (position position -> real))
+
+(define euclidean-distance
+  (lambda (position1 position2)
+    (sqrt (expt (- (position-x position1)
+                   (position-x position2))
+                2)
+          (expt (- (position-y position1)
+                   (position-y position2))
+                2))))
