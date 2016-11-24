@@ -23,7 +23,7 @@
 ; Recorddefinition für x/y-Position
 ; x/y-Position besteht aus x-Koordinate und y-Koordinate
 (: make-position (real real -> position))
-
+(: position? (any -> boolean))
 (: position-x (position -> real))
 (: position-y (position -> real))
 
@@ -58,7 +58,7 @@
 ; Recorddefiniton für Spielfigur
 ; Spielfigur besteht aus Name n, Gesundheitszustand h und Position x y
 (: make-character (string maxhealth position -> character))
-
+(: character? (any -> boolean))
 (: character-name (character -> string))
 (: character-health (character -> maxhealth))
 (: character-position (character -> position))
@@ -77,7 +77,7 @@
 ; Recorddefinition für Bombe
 ; Bomben bestehen aus Detonationsradius br und Schaden d
 (: make-bomb (real real -> bomb))
-
+(: bomb? (any -> boolean))
 (: bomb-blast-radius (bomb -> real))
 (: bomb-damage (bomb -> real))
 
@@ -96,7 +96,7 @@
 ; Recorddefinition für Bomben-Angriff
 ; Angriff besteht aus Position x y und Bombe br d
 (: make-attack (position bomb -> attack))
-
+(: attack? (any -> boolean))
 (: attack-position (attack -> position))
 (: attack-bomb (attack -> bomb))
 
