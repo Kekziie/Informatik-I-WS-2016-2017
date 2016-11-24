@@ -27,6 +27,8 @@
 (: position-x (position -> real))
 (: position-y (position -> real))
 
+(check-expect (position? 1) #f)
+(check-expect (position? Position1) #t)
 (check-property
  (for-all ((x real)
            (y real))
@@ -63,6 +65,8 @@
 (: character-health (character -> maxhealth))
 (: character-position (character -> position))
 
+(check-expect (character? "Brot") #f)
+(check-expect (character? Spielfigur1) #t)
 (check-expect (character-name Spielfigur1) "Mario")
 (check-expect (character-health Spielfigur2) 100)
 (check-expect (character-position Spielfigur2) Position1) 
@@ -81,6 +85,8 @@
 (: bomb-blast-radius (bomb -> real))
 (: bomb-damage (bomb -> real))
 
+(check-expect (bomb? 42) #f)
+(check-expect (bomb? Bombe1) #t)
 (check-property
  (for-all ((br real)
            (d real))
@@ -100,6 +106,8 @@
 (: attack-position (attack -> position))
 (: attack-bomb (attack -> bomb))
 
+(check-expect (attack? #t) #f)
+(check-expect (attack? Angriff1) #t)
 (check-expect (attack-position Angriff2) Position2)
 (check-expect (attack-bomb Angriff2) Bombe1)
 
