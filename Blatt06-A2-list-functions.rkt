@@ -136,4 +136,10 @@
       (else (make-pair (first xs)
                        (init (rest xs)))))))
 
+; v.) schreiben einer "all-equal?" Prozedur
+;      - überprüft, ob alle Elemente einer Liste gleich sind
+;      - bei einer leeren Liste soll #t ausgegeben werden
+
+(: all-equal? ((list-of number) -> boolean))
+
 
