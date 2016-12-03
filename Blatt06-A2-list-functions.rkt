@@ -98,3 +98,15 @@
                                   (make-pair 42
                                              (make-pair 5
                                                         empty)))) 42)
+
+(define max-list
+  (lambda (xs)
+    (cond
+      ((empty? xs) (violation "Liste ist leer"))
+      ((empty? (rest xs)) (first xs))
+      ((and (pair? xs)
+            (< (first xs) (first (rest xs)))) (max-list (rest xs)))
+      (else (max-list (make-pair (first xs)
+                                 (rest (rest xs))))))))
+
+
