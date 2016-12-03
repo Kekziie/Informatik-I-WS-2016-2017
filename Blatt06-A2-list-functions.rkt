@@ -128,4 +128,12 @@
                                                                           (make-pair 12
                                                                                      empty)))
 
+(define init
+  (lambda (xs)
+    (cond
+      ((empty? xs) (violation "Liste ist leer"))
+      ((empty? (rest xs)) empty)
+      (else (make-pair (first xs)
+                       (init (rest xs)))))))
+
 
