@@ -39,3 +39,9 @@
     (signature (mixed empty-list
                       (pair-of t (list-of t))
                       ))))
+
+; (b) rekursive Prozeduren
+; i.) schreiben einer Prozedur "last"
+;     - operiert auf einer beliebigen Liste
+;     - soll nur letztes Element der Liste wiedergeben
+;     - bei leerer Liste -> Fehlermeldung "Liste ist leer"
