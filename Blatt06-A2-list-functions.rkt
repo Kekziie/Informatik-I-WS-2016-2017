@@ -183,3 +183,10 @@
                                                                     empty))))
 (check-expect (replicate 1 4) (make-pair 4
                                          empty))
+
+(define replicate
+  (lambda (n v)
+    (cond
+      ((= n 0) empty)
+      ((> n 0) (make-pair v
+                          (replicate (- n 1) v))))))
