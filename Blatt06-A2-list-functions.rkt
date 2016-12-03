@@ -165,8 +165,8 @@
       ((and (pair? xs)
             (= (first xs) (first (rest xs)))
             (empty? (rest (rest xs)))) #t)
-      (else (all-equal? (make-pair (first xs)
-                                   (rest (rest xs)))))
-      )))
-
+      ((and (pair? xs)
+            (= (first xs) (first (rest xs)))) (all-equal? (make-pair (first xs)
+                                                                     (rest (rest xs)))))
+      (else #f))))
 
