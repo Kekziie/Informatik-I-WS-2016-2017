@@ -82,4 +82,10 @@
     (cond
       ((empty? xs) #f)
       ((= n (first xs)) #t)
-      ((pair? xs) (elem? n (rest xs))))))  
+      ((pair? xs) (elem? n (rest xs))))))
+
+; iii.)schreiben einer Prozedur "max-list"
+;      - zurückgeben der größten Zahl in einer übergebenen Liste
+;      - bei leerer Liste -> Fehlermeldung "Liste ist leer"
+
+(: max-list ((list-of natural) -> natural))
