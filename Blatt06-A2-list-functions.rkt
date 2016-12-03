@@ -142,4 +142,19 @@
 
 (: all-equal? ((list-of number) -> boolean))
 
+(check-expect (all-equal? empty) #t)
+(check-expect (all-equal? (make-pair 1
+                                     empty)) #t)
+(check-expect (all-equal? (make-pair 42
+                                     (make-pair 42
+                                                empty))) #t)
+(check-expect (all-equal? (make-pair 3
+                                     (make-pair 3
+                                                (make-pair 3
+                                                           (make-pair 3
+                                                                      (make-pair 3
+                                                                                 empty)))))) #t)
+                           
+(check-expect (all-equal? Liste123) #f)
+
 
