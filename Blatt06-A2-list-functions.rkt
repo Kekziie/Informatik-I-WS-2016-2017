@@ -69,3 +69,10 @@
 ;      überprüft, ob übergebene Zahl (n), Element der Liste ist
 
 (: elem? (number (list-of number) -> boolean))
+
+(check-expect (elem? 0 empty) #f)
+(check-expect (elem? 1 (make-pair 1
+                                 empty))  #t)
+(check-expect (elem? -2 (make-pair 2
+                                   (make-pair 3
+                                              empty))) #f)
