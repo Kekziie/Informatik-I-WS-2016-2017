@@ -48,4 +48,17 @@
 
 (: last ((list-of %a) -> %a))
 
+(check-error (last empty) "Liste ist leer")
+(check-expect (last Liste123) 3)
+(check-expect (last Wochenende) "Sonntag")
+(check-expect (last (make-pair #t
+                               empty)) #t)
+(check-expect (last (make-pair -1
+                               (make-pair 0
+                                          (make-pair 1
+                                                    empty)))) 1)
+
+
+
+
 
