@@ -157,4 +157,16 @@
                            
 (check-expect (all-equal? Liste123) #f)
 
+(define all-equal?
+  (lambda (xs)
+    (cond
+      ((empty? xs) #t)
+      ((empty? (rest xs)) #t)
+      ((and (pair? xs)
+            (= (first xs) (first (rest xs)))
+            (empty? (rest (rest xs)))) #t)
+      (else (all-equal? (make-pair (first xs)
+                                   (rest (rest xs)))))
+      )))
+
 
