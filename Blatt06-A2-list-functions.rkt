@@ -89,3 +89,12 @@
 ;      - bei leerer Liste -> Fehlermeldung "Liste ist leer"
 
 (: max-list ((list-of natural) -> natural))
+
+(check-error (max-list empty) "Liste ist leer")
+(check-expect (max-list (make-pair 1
+                                   (make-pair 0
+                                              empty))) 1)
+(check-expect (max-list (make-pair 2
+                                  (make-pair 42
+                                             (make-pair 5
+                                                        empty)))) 42)
