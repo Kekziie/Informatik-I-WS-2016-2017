@@ -115,4 +115,17 @@
 
 (: init ((list-of %a) -> (list-of %a)))
 
+(check-error (init empty) "Liste ist leer")
+(check-expect (init Liste123) (make-pair 1
+                                         (make-pair 2
+                                                    empty)))
+(check-expect (init (make-pair #f
+                               empty)) empty)
+(check-expect (init (make-pair 0
+                               (make-pair 12
+                                          (make-pair 0
+                                                     empty)))) (make-pair 0
+                                                                          (make-pair 12
+                                                                                     empty)))
+
 
