@@ -109,4 +109,10 @@
       (else (max-list (make-pair (first xs)
                                  (rest (rest xs))))))))
 
+; iv.) schreiben einer Prozedur "init"
+;       - gibt alle Elemnente, außer das letzte ELement, einer Liste an
+;       - bei leerer Liste -> Fehlermeldung "Liste ist leer"
+
+(: init ((list-of %a) -> (list-of %a)))
+
 
