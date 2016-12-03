@@ -34,3 +34,5 @@
 ; da die Prozedur f1 äquivalent zu f2 ist,
 ; d.h. das f1 ein "syntaktischer Zucker" von f2 ist
 
+; (c) Umformung von f mit "let"
+
