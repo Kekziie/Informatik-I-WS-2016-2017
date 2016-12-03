@@ -36,3 +36,14 @@
 
 ; (c) Umformung von f mit "let"
 
+; (define f2
+;   (lambda (x)
+;     (let ((g1 (g x)))
+;       (i g1 (h g1)))))
+
+; Umformung vom Beispiel fBsp in f2Bsp
+(define f2Bsp
+  (lambda (x)
+    (let ((g1 (* 2 x)))
+      (- 1 g1 (+ 1 g1)))))
+
