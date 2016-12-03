@@ -76,3 +76,10 @@
 (check-expect (elem? -2 (make-pair 2
                                    (make-pair 3
                                               empty))) #f)
+
+(define elem?
+  (lambda (n xs)
+    (cond
+      ((empty? xs) #f)
+      ((= n (first xs)) #t)
+      ((pair? xs) (elem? n (rest xs))))))  
