@@ -7,4 +7,9 @@
 
 ;(define f
 ;  (lambda (x)
-;    (i (g x) (h (g x)))))  
+;    (i (g x) (h (g x)))))
+
+;Beispiel einer Funktion fBsp für eingesetze Funktionen g, h un i
+(define fBsp
+  (lambda (x)
+    (- 1 (* 2 x) (+ 1 (* 2 x)))))
