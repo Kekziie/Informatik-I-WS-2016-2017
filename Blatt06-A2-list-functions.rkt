@@ -176,3 +176,10 @@
 
 (: replicate (natural %a -> (list-of %a)))
 
+(check-expect (replicate 0 #f) empty)
+(check-expect (replicate 3 "Baum") (make-pair "Baum"
+                                              (make-pair "Baum"
+                                                         (make-pair "Baum"
+                                                                    empty))))
+(check-expect (replicate 1 4) (make-pair 4
+                                         empty))
