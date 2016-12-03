@@ -47,3 +47,9 @@
     (let ((g1 (* 2 x)))
       (- 1 g1 (+ 1 g1)))))
 
+; anhand der Lösungen der Beispiele erkennt man,
+; dass alle Prozeduren, dass gleiche Ergebnis zeigen 
+(fBsp 2)
+(f1Bsp 2)
+(f2Bsp 2)
+
