@@ -29,3 +29,8 @@
        (* 2 x))))
 
 ; (b) Begrüdung der Umformung und Bedeutung in 1a)
+
+; die Umformung von 1a) ist deshalb zulässig,
+; da die Prozedur f1 äquivalent zu f2 ist,
+; d.h. das f1 ein "syntaktischer Zucker" von f2 ist
+
