@@ -65,7 +65,7 @@
       ((empty? (rest xs)) (first xs))
       ((pair? xs) (last (rest xs))))))
 
+; ii.) schreiben einer Prozedur "elem?"
+;      überprüft, ob übergebene Zahl (n), Element der Liste ist
 
-
-
-
+(: elem? (number (list-of number) -> boolean))
