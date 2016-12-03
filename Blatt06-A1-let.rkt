@@ -27,3 +27,5 @@
   (lambda (x)
     (- 1 x (+ 1 x)
        (* 2 x))))
+
+; (b) Begrüdung der Umformung und Bedeutung in 1a)
