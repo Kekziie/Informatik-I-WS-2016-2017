@@ -170,3 +170,9 @@
                                                                      (rest (rest xs)))))
       (else #f))))
 
+; vi.) schreiben einer Prozedur "replicate"
+;       - Eingabe: eine natürliche Zahl n und ein beliebiger Wert v
+;       - "replicate" soll eine Liste zurückgeben, die den Wert v n-mal wiederholt
+
+(: replicate (natural %a -> (list-of %a)))
+
