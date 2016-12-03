@@ -13,3 +13,6 @@
 (define fBsp
   (lambda (x)
     (- 1 (* 2 x) (+ 1 (* 2 x)))))
+
+; (a) umformen von f, sodass (g x) nur einmal ausgewertet wird
+;     benutzen von "let", nicht erlaubt
