@@ -16,3 +16,14 @@
 
 ; (a) umformen von f, sodass (g x) nur einmal ausgewertet wird
 ;     benutzen von "let", nicht erlaubt
+
+;(define f1
+;  (lambda (x)
+;     (i x (h x)
+;        (g x))))
+
+; Umformung vom Beispiel fBsp in f1Bsp
+(define f1Bsp
+  (lambda (x)
+    (- 1 x (+ 1 x)
+       (* 2 x))))
