@@ -50,5 +50,20 @@
 (check-expect (weave-lists (make-tuple (list 3 5)
                                        (list 2 4))) (list 3 2 5 4))
 
+(define weave-list
+  (lambda (xs ys)
+    (let (t1 (tuple-first xs))
+         (t2 (tuple-rest ys))
+    (cond
+      ((and (empty? t1)
+            (empty? t2) empty-list)
+      ((and (empty? t1)
+            (pair? t2)) t2)
+      ((and (empty? t2)
+            (pair? t1)) t1)
+      (else (make-list t1 t2)))))))
+
+  
+
 
 
