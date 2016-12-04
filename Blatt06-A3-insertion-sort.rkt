@@ -83,3 +83,8 @@
                 (make-pair (first xs)
                            (insert-sorted n (rest xs))))))))
 
+; (b) schreiben einer Prozedur "sort-list"
+;      - sortiert eine Liste von kleinster bis größter Zahl
+
+(: sort-list ((list-of real) -> (list-of real)))
+
