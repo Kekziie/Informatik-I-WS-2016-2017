@@ -9,8 +9,8 @@
 (define-record-procedures-parametric tuple tuple-of
   make-tuple
   tuple?
-  (first
-   rest))
+  (tuple-first
+   tuple-rest))
 
 ; Prozedur "split-list" soll eine Liste in zwei Listen aufspalten
 ; die Elemente sollen abwechselnd auf beide Ergebnislisten aufgeteilt werden
@@ -18,3 +18,7 @@
 
 (: split-list ((list-of %a) -> (tuple-of (list-of %a) (list-of %a))))
 
+(check-expect (split-list (list 1 2 3 4 5)) (make-tuple (list 1 3 5) (list 2 4)))
+(check-expect (split-list empty-list) (make-tuple empty-list empty-list))
+(check-expect (split-list (list 3)) (make-tuple (list 3) empty-list))
+(check-expect (split-list (list "Samstag" "Sonntag") (make-tuple (list "Samstag") (list "Sonntag"))))
