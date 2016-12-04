@@ -14,3 +14,10 @@
 ; Prozedur "sum" soll Summe einer Liste von Zahlen berechnen
 
 (: sum ((list-of number) -> number))
+
+(check-expect (sum empty-list) empty)
+(check-expect (sum (list 1 2 3)) 6)
+(check-expect (sum (list 0)) 0)
+(check-expect (sum (list 2 -2 3)) 3)
+(check-within (sum (list 1.5 2.5 -5 0)) -1 0.01)
+(check-within (sum (list 2 1/2 -1)) 1.5)
