@@ -15,7 +15,7 @@
 
 (: sum ((list-of number) -> number))
 
-(check-expect (sum empty-list) empty)
+(check-expect (sum empty) empty)
 (check-expect (sum (list 1 2 3)) 6)
 (check-expect (sum (list 0)) 0)
 (check-expect (sum (list 2 -2 3)) 3)
@@ -57,4 +57,19 @@
 (check-expect (double-every-other-number (list 5 6)) (list 5 12))
 (check-expect (double-every-other-number (list 1)) (list 1))
 (check-expect (double-every-other-number empty) empty)
+
+; (d)
+; Prozedur "map-digits" soll:
+; - eine Liste von natürlichen Zahlen akzeptieren
+; - jede Zahl in Liste ihrer Ziffern zerlegen (siehe Teilaufgabe 2b)
+; - liefert Liste von Listen
+
+(: map-digits ((list-of natural) -> (list-of (list-of natural))))
+
+(check-expect (map-digits (list 2 13 9)) (list (list 2) (list 3 1) (list 9)))
+(check-expect (map-digits empty) empty)
+(check-expect (map-digits (list 1)) (list (list 1)))
+(check-expect (map-digits (list 1 12)) (list (list 1) (list 2 1)))
+(check-expect (map-digits (list 13)) (list (list 3 1)))
+
 
