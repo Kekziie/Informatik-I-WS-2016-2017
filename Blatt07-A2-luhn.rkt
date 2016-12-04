@@ -86,5 +86,12 @@
 (check-expect (concat (list (list 3 1) (list 4 5 6))) (list 3 1 4 5 6))
 (check-expect (concat (list (list 1 2) (list 3 4) (list 5))) (list 1 2 3 4 5))
 
+; (f)
+; Prozedur "luhn-check" soll:
+; - impletiert nach obigen Verfahren
+; - #t bei bestandenem Check, #f sonst
 
+(: luhn-check (natural -> boolean))
 
+(check-expect (luhn-check 5678) #t)
+(check-expect (luhn-check 6789) #f)
