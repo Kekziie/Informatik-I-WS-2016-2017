@@ -37,7 +37,7 @@
 ; Ergebnisliste enthält Elemente der konsumierten Liste in abwechselnder Reihenfolge
 ; bei ungleicher Länge der Listen -> überschüssige Elemente werden an Ergebnisliste hinten angehängt
 
-(: weave-list ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
+(: weave-lists ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
 
 (check-expect (weave-lists (make-tuple (list 1 3 5 6)
                                        (list 2 4))) (list 1 2 3 4 5 6))
@@ -50,19 +50,18 @@
 (check-expect (weave-lists (make-tuple (list 3 5)
                                        (list 2 4))) (list 3 2 5 4))
 
-(define weave-list
-  (lambda (xs ys)
-    (let (t1 (tuple-first xs))
-         (t2 (tuple-rest ys))
+(define weave-lists
+  (lambda (xs)
+    (let ((t1 (tuple-first xs))
+          (t2 (tuple-rest xs)))
     (cond
       ((and (empty? t1)
-            (empty? t2) empty-list)
+            (empty? t2)) empty-list)
       ((and (empty? t1)
             (pair? t2)) t2)
       ((and (empty? t2)
             (pair? t1)) t1)
-      (else (make-list t1 t2)))))))
-
+      (else (list t1 t2))))))
   
 
 
