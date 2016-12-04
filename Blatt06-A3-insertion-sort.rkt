@@ -88,3 +88,21 @@
 
 (: sort-list ((list-of real) -> (list-of real)))
 
+(check-expect (sort-list empty) empty)
+(check-expect (sort-list (make-pair 1
+                                    empty)) (make-pair 1
+                                                       empty))
+(check-expect (sort-list (make-pair 3
+                                    (make-pair 2
+                                               (make-pair 1
+                                                          empty)))) Liste123)
+(check-expect (sort-list (make-pair -4
+                                    (make-pair 9
+                                               (make-pair 0
+                                                          (make-pair -10
+                                                                     empty))))) (make-pair -10
+                                                                                           (make-pair -4
+                                                                                                      (make-pair 0
+                                                                                                                 (make-pair 9
+                                                                                                                            empty)))))
+
