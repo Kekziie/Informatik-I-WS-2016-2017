@@ -6,8 +6,15 @@
 ; (a)
 ; schreiben einer parametrisch polymorphen Record-Typ für tuple
 
+(define-record-procedures-parametric tuple tuple-of
+  make-tuple
+  tuple?
+  (first
+   rest))
+
 ; Prozedur "split-list" soll eine Liste in zwei Listen aufspalten
 ; die Elemente sollen abwechselnd auf beide Ergebnislisten aufgeteilt werden
 ; bei ungerader Azahl in Eingabeliste -> 1. Ergebnisliste länger
 
 (: split-list ((list-of %a) -> (tuple-of (list-of %a) (list-of %a))))
+
