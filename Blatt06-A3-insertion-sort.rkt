@@ -63,3 +63,23 @@
                                                                          (make-pair 45
                                                                                     (make-pair 113
                                                                                                empty))))))
+
+(define insert-sorted
+  (lambda (n xs)
+    (cond
+      ((empty? xs) (make-pair n
+                              empty))
+      ((empty? (rest xs)) (if (>= n (first xs))
+                              (make-pair (first xs)
+                                         (make-pair n
+                                                    empty))
+                              (make-pair n
+                                         (make-pair (first xs)
+                                                    empty))))
+      (else (if (< n (first xs))
+                (make-pair n
+                           (make-pair (first xs)
+                                      (rest xs)))
+                (make-pair (first xs)
+                           (insert-sorted n (rest xs))))))))
+
