@@ -36,3 +36,8 @@
     (signature (mixed empty-list
                       (pair-of t (list-of t))
                       ))))
+
+; (a) schreiben einer Prozedur "insert-sorted"
+;      - bei Eingabe einer reelen Zahl, soll diese, an die richtige Stelle einer Liste einsortiert werden
+
+(: insert-sorted (real (list-of real) -> (list-of real)))
