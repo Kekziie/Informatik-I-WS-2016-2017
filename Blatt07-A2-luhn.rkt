@@ -36,6 +36,8 @@
 ; (b)
 ; Prozedur "digits" soll eine natürliche Zahl in ihre Ziffern zerlegen und als Liste zurückliefern
 ; Liste soll Ziffern von links nach rechts enthalten
+; Hinweis: - benutzen von Prozeduren "quotient" und "remainder"
+;          - dezimale Stellensystem (1024= 4x1 + 2x10 + 0x100 + 1x1000)
 
 (: digits (natural -> (list-of natural)))
 
@@ -43,3 +45,16 @@
 (check-expect (digits 49) (list 9 4))
 (check-expect (digits 1024) (list 4 2 0 1))
 (check-expect (digits 0) (list 0))
+
+; (c)
+; Prozedur "double-every-other-number" soll:
+; - Liste von Zahlen akzeptieren
+; - jede 2.Zahl verdoppeln
+
+(: double-every-other-number ((list-of number) -> (list-of number)))
+
+(check-expect (double-every-other-number (list 1 2 3 4 5)) (list 1 4 3 8 5))
+(check-expect (double-every-other-number (list 5 6)) (list 5 12))
+(check-expect (double-every-other-number (list 1)) (list 1))
+(check-expect (double-every-other-number empty) empty)
+
