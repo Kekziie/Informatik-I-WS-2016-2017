@@ -39,4 +39,16 @@
 
 (: weave-list ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
 
+(check-expect (weave-lists (make-tuple (list 1 3 5 6)
+                                       (list 2 4))) (list 1 2 3 4 5 6))
+(check-expect (weave-lists (make-tuple empty-list
+                                       empty-list)) empty-list)
+(check-expect (weave-lists (make-tuple empty-list
+                                       (list 1))) (list 1))
+(check-expect (weave-lists (make-tuple (list 2 3)
+                                       empty-list)) (list 2 3))
+(check-expect (weave-lists (make-tuple (list 3 5)
+                                       (list 2 4))) (list 3 2 5 4))
+
+
 
