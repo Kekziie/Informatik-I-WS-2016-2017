@@ -32,3 +32,14 @@
                                          (first (rest xs))))
       (else (+ (first xs)
                (sum (rest xs)))))))
+
+; (b)
+; Prozedur "digits" soll eine natürliche Zahl in ihre Ziffern zerlegen und als Liste zurückliefern
+; Liste soll Ziffern von links nach rechts enthalten
+
+(: digits (natural -> (list-of natural)))
+
+(check-expect (digits 123) (list 3 2 1))
+(check-expect (digits 49) (list 9 4))
+(check-expect (digits 1024) (list 4 2 0 1))
+(check-expect (digits 0) (list 0))
