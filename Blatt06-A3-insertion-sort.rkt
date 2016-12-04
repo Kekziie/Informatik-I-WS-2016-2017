@@ -41,3 +41,25 @@
 ;      - bei Eingabe einer reelen Zahl, soll diese, an die richtige Stelle einer Liste einsortiert werden
 
 (: insert-sorted (real (list-of real) -> (list-of real)))
+
+(check-expect (insert-sorted 1 empty) (make-pair 1
+                                                 empty))
+(check-expect (insert-sorted 0 (make-pair 42
+                                          empty)) (make-pair 0
+                                                             (make-pair 42
+                                                                        empty)))
+(check-expect (insert-sorted 3 (make-pair -3
+                                          empty)) (make-pair -3
+                                                             (make-pair 3
+                                                                        empty)))                                         
+(check-expect (insert-sorted -2 Liste123) (make-pair -2
+                                                     (make-pair 1
+                                                                (make-pair 2
+                                                                           (make-pair 3
+                                                                                      empty)))))
+(check-expect (insert-sorted 23 Liste1) (make-pair 3
+                                                   (make-pair 12
+                                                              (make-pair 23
+                                                                         (make-pair 45
+                                                                                    (make-pair 113
+                                                                                               empty))))))
