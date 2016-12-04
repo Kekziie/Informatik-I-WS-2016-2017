@@ -9,3 +9,8 @@
 ; iv) dividiere durch 10
 ; v) Rest der Division 0 -> gültige Zahl n, Luhn-Check bestanden
 ;    Rest ungleich 0 -> ungültige Zahl n, Luhn-Check nicht bestanden
+
+; (a)
+; Prozedur "sum" soll Summe einer Liste von Zahlen berechnen
+
+(: sum ((list-of number) -> number))
