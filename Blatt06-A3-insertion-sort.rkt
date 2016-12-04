@@ -106,3 +106,11 @@
                                                                                                                  (make-pair 9
                                                                                                                             empty)))))
 
+(define sort-list
+  (lambda (xs)
+    (cond
+      ((empty? xs) empty)
+      ((empty? (rest xs)) (make-pair (first xs)
+                                     empty))
+      (else (sort-list (insert-sorted (first xs) (rest xs)))))))
+
