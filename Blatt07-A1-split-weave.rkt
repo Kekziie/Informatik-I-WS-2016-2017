@@ -37,32 +37,38 @@
 ; Ergebnisliste enthält Elemente der konsumierten Liste in abwechselnder Reihenfolge
 ; bei ungleicher Länge der Listen -> überschüssige Elemente werden an Ergebnisliste hinten angehängt
 
-(: weave-lists ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
+;(: weave-lists ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
 
-(check-expect (weave-lists (make-tuple (list 1 3 5 6)
-                                       (list 2 4))) (list 1 2 3 4 5 6))
-(check-expect (weave-lists (make-tuple empty-list
-                                       empty-list)) empty-list)
-(check-expect (weave-lists (make-tuple empty-list
-                                       (list 1))) (list 1))
-(check-expect (weave-lists (make-tuple (list 2 3)
-                                       empty-list)) (list 2 3))
-(check-expect (weave-lists (make-tuple (list 3 5)
-                                       (list 2 4))) (list 3 2 5 4))
+;(check-expect (weave-lists (make-tuple (list 1 3 5 6)
+;                                       (list 2 4))) (list 1 2 3 4 5 6))
+;(check-expect (weave-lists (make-tuple empty-list
+;                                       empty-list)) empty-list)
+;(check-expect (weave-lists (make-tuple empty-list
+;                                       (list 1))) (list 1))
+;(check-expect (weave-lists (make-tuple (list 2 3)
+;                                       empty-list)) (list 2 3))
+;(check-expect (weave-lists (make-tuple (list 3 5)
+;                                       (list 2 4))) (list 3 2 5 4))
 
-(define weave-lists
-  (lambda (xs)
-    (let ((t1 (tuple-first xs))
-          (t2 (tuple-rest xs)))
-    (cond
-      ((and (empty? t1)
-            (empty? t2)) empty-list)
-      ((and (empty? t1)
-            (pair? t2)) t2)
-      ((and (empty? t2)
-            (pair? t1)) t1)
-      (else (list t1 t2))))))
+;(define weave-lists
+;  (lambda (xs)
+;    (let ((t1 (tuple-first xs))
+;          (t2 (tuple-rest xs)))
+;    (cond
+;      ((and (empty? t1)
+;            (empty? t2)) empty-list)
+;      ((and (empty? t1)
+;            (pair? t2)) t2)
+;      ((and (empty? t2)
+;            (pair? t1)) t1)
+;      (else (list t1 t2))))))
   
+; (c)
+; schreiben eines check-property für:
+; - die Prozeduren "split-list" und "weave-lists"
+; - beliebige Listen xs mit natürlichen Zahlen
+; soll folgende Äquivalenz prüfen: (weave-lists (split-list xs)) <-> xs
+
 
 
 
