@@ -22,4 +22,25 @@
   (vector-x
    vector-y
    vector-z))
+
+; Datendefinitionen
+
+(define Vec1
+  (make-vector 0 0 0))
+
+(define Vec2
+  (make-vector 0 0 1))
+
+(define Vec3
+  (make-vector 1 1 1))
+
+(define Vec4
+  (make-vector -1 0 1))
+
+(define Vec5
+  (make-vector 1 1 2.5))
+
+(define Vec6
+  (make-vector -1/2 1/2 0))
+  
   
