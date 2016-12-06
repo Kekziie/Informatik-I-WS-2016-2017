@@ -3,7 +3,7 @@
 #reader(lib "DMdA-vanilla-reader.ss" "deinprogramm")((modname exercise5-vectors) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
 ; Übung 5 Vektoren
 
-; Record- und Datendefinition
+; 1) Record- und Datendefinition
 
 ; ein Vektor (vector) besteht aus
 ; - x-Koordinate
@@ -42,5 +42,24 @@
 
 (define Vec6
   (make-vector -1/2 1/2 0))
+
+; 2) Betrag (absolute value) eines Vektors berechnen
+
+(: absolute-value (vector -> real))
+
+(check-expect (absolute-value Vec1) 0)
+(check-expect (absolute-value Vec2) 1)
+(check-within (absolute-value Vec3) (sqrt 3)    0.001)
+(check-within (absolute-value Vec4) (sqrt 2)    0.001)
+(check-within (absolute-value Vec5) (sqrt 8.25) 0.001)
+(check-within (absolute-value Vec6) (sqrt 1/2)  0.001)
+
+(define absolute-value
+  (lambda (vector)
+    (sqrt (+ (expt (vector-x vector) 2)
+             (expt (vector-y vector) 2)
+             (expt (vector-z vector) 2)))))
+
+
   
   
