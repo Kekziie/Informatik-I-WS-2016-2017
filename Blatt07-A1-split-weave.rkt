@@ -25,20 +25,20 @@
 ; die Elemente sollen abwechselnd auf beide Ergebnislisten aufgeteilt werden
 ; bei ungerader Azahl in Eingabeliste -> 1. Ergebnisliste länger
 
-;(: split-list ((list-of %a) -> (tuple-of (list-of %a) (list-of %a))))
+(: split-list ((list-of %a) -> (tuple-of (list-of %a) (list-of %a))))
 
-;(check-expect (split-list (list 1 2 3 4 5)) (make-tuple (list 1 3 5) (list 2 4)))
-;(check-expect (split-list empty-list) (make-tuple empty-list empty-list))
-;(check-expect (split-list (list 3)) (make-tuple (list 3) empty-list))
-;(check-expect (split-list (list "Samstag" "Sonntag")) (make-tuple (list "Samstag") (list "Sonntag")))
+(check-expect (split-list (list 1 2 3 4 5)) (make-tuple (list 1 3 5) (list 2 4)))
+(check-expect (split-list empty) (make-tuple empty empty))
+(check-expect (split-list (list 3)) (make-tuple (list 3) empty))
+(check-expect (split-list (list "Samstag" "Sonntag")) (make-tuple (list "Samstag") (list "Sonntag")))
 
-;(define split-list
-;  (lambda (xs)
-;    (cond
-;      ((empty? xs) (make-tuple empty-list empty-list))
-;      ((empty? (rest xs)) (make-tuple (list (first xs)) empty-list))
-;      (else (make-tuple (list (first xs) (first (rest (rest xs))) (split-list (rest (rest xs))))
-;                        (list (first (rest xs)) (split-list (rest xs))))))))
+(define split-list
+  (lambda (xs)
+    (cond
+      ((empty? xs) (make-tuple empty empty))
+      ((empty? (rest xs)) (make-tuple (list (first xs)) empty))
+      (else (make-tuple (list (first xs) (first (rest (rest xs))) (split-list (rest (rest xs))))
+                        (list (first (rest xs)) (split-list (rest xs))))))))
 
 ; (b)
 
