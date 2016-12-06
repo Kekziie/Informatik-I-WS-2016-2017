@@ -81,7 +81,8 @@
             (pair? t2)) t2)
       ((and (empty? t2)
             (pair? t1)) t1)
-      (else (list (first t1) (first t2) (weave-list (rest t1)) (weave-list (rest t2))))))))
+      (else (list (first t1) (first t2)
+                  (weave-lists (rest t1)) (weave-lists (rest t2))))))))
   
 ; (c)
 ; schreiben eines check-property für:
