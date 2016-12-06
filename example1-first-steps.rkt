@@ -11,6 +11,7 @@
 (define minutes-in-a-day (* 24 60))
 (define Uni "Universität")
 (define Quadrat1 (square 25 "solid" "black"))
+(define volljährig 18)
 
 ; ii) schreiben von "kleinen" Prozeduren nach Konstruktionsanleitung
 ; Konstruktionsanleitung: 1) Kurzbeschreibung
@@ -43,7 +44,15 @@
   (lambda (r)
     (* pi (* r r))))
 
+; Ist das Autofahren mit x Jahren erlaubt?
+(: autofahren-erlaubt? (natural -> boolean))
 
+(check-expect (autofahren-erlaubt? volljährig)       #t)
+(check-expect (autofahren-erlaubt? (- volljährig 1)) #f)
+(check-expect (autofahren-erlaubt? (+ volljährig 1)) #t)
+(check-expect (autofahren-erlaubt? 16)               #f)
+(check-expect (autofahren-erlaubt? 42)               #t)
 
-
-
+(define autofahren-erlaubt?
+  (lambda (x)
+    (>= x volljährig)))
