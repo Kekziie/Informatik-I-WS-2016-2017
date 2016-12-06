@@ -43,8 +43,22 @@
 (define Vec6
   (make-vector -1/2 1/2 0))
 
-; 2) Betrag (absolute value) eines Vektors berechnen
+; 2) Vektoraddition
+(: vec-add (vector vector -> vector))
 
+(check-expect (vec-add Vec1 Vec3) Vec3)
+(check-expect (vec-add Vec2 Vec3) (make-vector 1   1   2))
+(check-expect (vec-add Vec3 Vec4) (make-vector 0   1   2))
+(check-within (vec-add Vec6 Vec3) (make-vector 1/2 1.5 1)   0.001)
+(check-within (vec-add Vec5 Vec6) (make-vector 1/2 1.5 2.5) 0.001)
+
+(define vec-add
+  (lambda (vector1 vector2)
+    (make-vector (+ (vector-x vector1) (vector-x vector2))
+                 (+ (vector-y vector1) (vector-y vector2))
+                 (+ (vector-z vector1) (vector-z vector2)))))
+
+; 3) Betrag (absolute value) eines Vektors berechnen
 (: absolute-value (vector -> real))
 
 (check-expect (absolute-value Vec1) 0)
