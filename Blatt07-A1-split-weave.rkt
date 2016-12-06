@@ -37,8 +37,10 @@
     (cond
       ((empty? xs) (make-tuple empty empty))
       ((empty? (rest xs)) (make-tuple (list (first xs)) empty))
-      (else (make-tuple (list (first xs) (first (rest (rest xs))) (split-list (rest (rest xs))))
-                        (list (first (rest xs)) (split-list (rest xs))))))))
+      (else (make-tuple (make-pair (first xs)
+                                   (split-list (rest xs)))
+                        (make-pair (first (rest xs))
+                                   (split-list (rest xs))))))))
 
 ; (b)
 
