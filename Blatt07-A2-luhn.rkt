@@ -136,7 +136,11 @@
 ; - impletiert nach obigen Verfahren
 ; - #t bei bestandenem Check, #f sonst
 
-;(: luhn-check (natural -> boolean))
+(: luhn-check (natural -> boolean))
 
-;(check-expect (luhn-check 5678) #t)
-;(check-expect (luhn-check 6789) #f)
+(check-expect (luhn-check 5678) #t)
+(check-expect (luhn-check 6789) #f)
+
+(define luhn-check
+  (lambda (n)
+    (= (modulo (sum (concat (map-digits (double-every-other-number (digits n))))) 10) 0)))
