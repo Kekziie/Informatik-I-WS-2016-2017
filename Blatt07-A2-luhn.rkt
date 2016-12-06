@@ -39,12 +39,21 @@
 ; Hinweis: - benutzen von Prozeduren "quotient" und "remainder"
 ;          - dezimale Stellensystem (1024= 4x1 + 2x10 + 0x100 + 1x1000)
 
-;(: digits (natural -> (list-of natural)))
+(: digits (natural -> (list-of natural)))
 
-;(check-expect (digits 123) (list 3 2 1))
-;(check-expect (digits 49) (list 9 4))
-;(check-expect (digits 1024) (list 4 2 0 1))
-;(check-expect (digits 0) (list 0))
+(check-expect (digits 123) (list 3 2 1))
+(check-expect (digits 49) (list 9 4))
+(check-expect (digits 1024) (list 4 2 0 1))
+(check-expect (digits 0) (list 0))
+
+(define digits
+  (lambda (n) 
+    (cond
+      ((>= 9 n 0) (list n))
+      ((>= 99 n 10) (list (remainder n 10) (quotient n 10)))
+      ((>= 999 n 100) (list (remainder n 10) (remainder (quotient n 10) 10) (quotient n 100)))
+      ((>= 9999 n 1000) (list (remainder n 10) (remainder (quotient n 10) 10) (remainder (quotient n 100) 10) (quotient n 1000))))))
+    
 
 ; (c)
 ; Prozedur "double-every-other-number" soll:
