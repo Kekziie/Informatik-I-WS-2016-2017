@@ -15,7 +15,7 @@
 
 (: sum ((list-of number) -> number))
 
-(check-expect (sum empty) empty)
+(check-error (sum empty) "Liste ist leer")
 (check-expect (sum (list 1 2 3)) 6)
 (check-expect (sum (list 0)) 0)
 (check-expect (sum (list 2 -2 3)) 3)
@@ -25,11 +25,11 @@
 (define sum
   (lambda (xs)
     (cond
-      ((empty? xs) empty)
+      ((empty? xs) (violation "Liste ist leer"))
       ((empty? (rest xs)) (first xs))
       ((and (pair? xs)
-            (empty) (rest (rest xs))) (+ (first xs)
-                                         (first (rest xs))))
+            (empty? (rest (rest xs)))) (+ (first xs)
+                                          (first (rest xs))))
       (else (+ (first xs)
                (sum (rest xs)))))))
 
@@ -39,24 +39,24 @@
 ; Hinweis: - benutzen von Prozeduren "quotient" und "remainder"
 ;          - dezimale Stellensystem (1024= 4x1 + 2x10 + 0x100 + 1x1000)
 
-(: digits (natural -> (list-of natural)))
+;(: digits (natural -> (list-of natural)))
 
-(check-expect (digits 123) (list 3 2 1))
-(check-expect (digits 49) (list 9 4))
-(check-expect (digits 1024) (list 4 2 0 1))
-(check-expect (digits 0) (list 0))
+;(check-expect (digits 123) (list 3 2 1))
+;(check-expect (digits 49) (list 9 4))
+;(check-expect (digits 1024) (list 4 2 0 1))
+;(check-expect (digits 0) (list 0))
 
 ; (c)
 ; Prozedur "double-every-other-number" soll:
 ; - Liste von Zahlen akzeptieren
 ; - jede 2.Zahl verdoppeln
 
-(: double-every-other-number ((list-of number) -> (list-of number)))
+;(: double-every-other-number ((list-of number) -> (list-of number)))
 
-(check-expect (double-every-other-number (list 1 2 3 4 5)) (list 1 4 3 8 5))
-(check-expect (double-every-other-number (list 5 6)) (list 5 12))
-(check-expect (double-every-other-number (list 1)) (list 1))
-(check-expect (double-every-other-number empty) empty)
+;(check-expect (double-every-other-number (list 1 2 3 4 5)) (list 1 4 3 8 5))
+;(check-expect (double-every-other-number (list 5 6)) (list 5 12))
+;(check-expect (double-every-other-number (list 1)) (list 1))
+;(check-expect (double-every-other-number empty) empty)
 
 ; (d)
 ; Prozedur "map-digits" soll:
@@ -64,13 +64,13 @@
 ; - jede Zahl in Liste ihrer Ziffern zerlegen (siehe Teilaufgabe 2b)
 ; - liefert Liste von Listen
 
-(: map-digits ((list-of natural) -> (list-of (list-of natural))))
+;(: map-digits ((list-of natural) -> (list-of (list-of natural))))
 
-(check-expect (map-digits (list 2 13 9)) (list (list 2) (list 3 1) (list 9)))
-(check-expect (map-digits empty) empty)
-(check-expect (map-digits (list 1)) (list (list 1)))
-(check-expect (map-digits (list 1 12)) (list (list 1) (list 2 1)))
-(check-expect (map-digits (list 13)) (list (list 3 1)))
+;(check-expect (map-digits (list 2 13 9)) (list (list 2) (list 3 1) (list 9)))
+;(check-expect (map-digits empty) empty)
+;(check-expect (map-digits (list 1)) (list (list 1)))
+;(check-expect (map-digits (list 1 12)) (list (list 1) (list 2 1)))
+;(check-expect (map-digits (list 13)) (list (list 3 1)))
 
 ; (e)
 ; Prozedur "concat" soll
@@ -78,20 +78,20 @@
 ; - alle enthaltenen Listen aneinander hängen
 ; Hinweis: beachten von Prozedur "append"
 
-(: concat ((list-of (list of %a)) -> (list-of %a)))
+;(: concat ((list-of (list of %a)) -> (list-of %a)))
 
-(check-expect (concat empty) empty)
-(check-expect (concat (list (list 1))) (list 1))
-(check-expect (concat (list (list 2 1))) (list 2 1))
-(check-expect (concat (list (list 3 1) (list 4 5 6))) (list 3 1 4 5 6))
-(check-expect (concat (list (list 1 2) (list 3 4) (list 5))) (list 1 2 3 4 5))
+;(check-expect (concat empty) empty)
+;(check-expect (concat (list (list 1))) (list 1))
+;(check-expect (concat (list (list 2 1))) (list 2 1))
+;(check-expect (concat (list (list 3 1) (list 4 5 6))) (list 3 1 4 5 6))
+;(check-expect (concat (list (list 1 2) (list 3 4) (list 5))) (list 1 2 3 4 5))
 
 ; (f)
 ; Prozedur "luhn-check" soll:
 ; - impletiert nach obigen Verfahren
 ; - #t bei bestandenem Check, #f sonst
 
-(: luhn-check (natural -> boolean))
+;(: luhn-check (natural -> boolean))
 
-(check-expect (luhn-check 5678) #t)
-(check-expect (luhn-check 6789) #f)
+;(check-expect (luhn-check 5678) #t)
+;(check-expect (luhn-check 6789) #f)
