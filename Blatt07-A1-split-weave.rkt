@@ -73,15 +73,15 @@
 (define weave-lists
   (lambda (xs)
     (let ((t1 (tuple-first xs))
-          (t2 (tuple-rest xs)))
+          (t2 (tuple-second xs)))
     (cond
       ((and (empty? t1)
-            (empty? t2)) empty-list)
+            (empty? t2)) empty)
       ((and (empty? t1)
             (pair? t2)) t2)
       ((and (empty? t2)
             (pair? t1)) t1)
-      (else (list t1 t2))))))
+      (else (list (first t1) (first t2) (weave-list (rest t1)) (weave-list (rest t2))))))))
   
 ; (c)
 ; schreiben eines check-property für:
