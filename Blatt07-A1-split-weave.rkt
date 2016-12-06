@@ -33,14 +33,13 @@
 (check-expect (split-list (list "Samstag" "Sonntag")) (make-tuple (list "Samstag") (list "Sonntag")))
 
 (define split-list
-  (lambda (xs)
+  (lambda (xs) 
     (cond
       ((empty? xs) (make-tuple empty empty))
       ((empty? (rest xs)) (make-tuple (list (first xs)) empty))
-      (else (make-tuple (make-pair (first xs)
-                                   (split-list (rest xs)))
-                        (make-pair (first (rest xs))
-                                   (split-list (rest xs))))))))
+      (else (split-list (rest xs)) (make-tuple (list (tuple-first xs))
+                                               (list (tuple-second xs)))))))
+                                   
 
 ; (b)
 
