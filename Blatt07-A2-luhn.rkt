@@ -92,6 +92,7 @@
 (check-expect (map-digits (list 1)) (list (list 1)))
 (check-expect (map-digits (list 1 12)) (list (list 1) (list 2 1)))
 (check-expect (map-digits (list 13)) (list (list 3 1)))
+(check-expect (map-digits (list 12 3)) (list (list 2 1) (list 3)))
 
 (define map-digits
   (lambda (xs)
