@@ -21,13 +21,29 @@
 ; Um wieviele Menschen wächst die Weltbevölkerung in Tagen (days)?
 (: population-growth-in-days (natural -> natural))
 
-(check-expect (population-growth-in-days 0) 0)
-(check-expect (population-growth-in-days 1) 223200)
-(check-expect (population-growth-in-days 5) 1116000)
+(check-expect (population-growth-in-days 0)  0)
+(check-expect (population-growth-in-days 1)  223200)
+(check-expect (population-growth-in-days 5)  1116000)
 (check-expect (population-growth-in-days 10) 2232000)
 
 (define population-growth-in-days
-  (lambda (days) (* days (* 155 minutes-in-a-day))))
+  (lambda (days)
+    (* days (* 155 minutes-in-a-day))))
+
+; Flächeninhalt eines Kreises mit Radius r
+(: circle-area (real -> real))
+
+(check-within (circle-area 24.62) 1904.202 0.001)  
+(check-within (circle-area 1)     pi       0.001)
+(check-within (circle-area 5)     78.5375  0.001)
+(check-within (circle-area 10)    314.15   0.001)
+(check-within (circle-area 2.5)   19.63437 0.001)
+
+(define circle-area
+  (lambda (r)
+    (* pi (* r r))))
+
+
 
 
 
