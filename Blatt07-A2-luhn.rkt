@@ -60,13 +60,25 @@
 ; - Liste von Zahlen akzeptieren
 ; - jede 2.Zahl verdoppeln
 
-;(: double-every-other-number ((list-of number) -> (list-of number)))
+(: double-every-other-number ((list-of number) -> (list-of number)))
 
-;(check-expect (double-every-other-number (list 1 2 3 4 5)) (list 1 4 3 8 5))
-;(check-expect (double-every-other-number (list 5 6)) (list 5 12))
-;(check-expect (double-every-other-number (list 1)) (list 1))
-;(check-expect (double-every-other-number empty) empty)
+(check-expect (double-every-other-number (list 1 2 3 4 5)) (list 1 4 3 8 5))
+(check-expect (double-every-other-number (list 5 6)) (list 5 12))
+(check-expect (double-every-other-number (list 1)) (list 1))
+(check-expect (double-every-other-number empty) empty)
 
+(define double-every-other-number
+  (lambda (xs)
+    (cond
+      ((empty? xs) empty)
+      ((empty? (rest xs)) (list (first xs)))
+      ((and (pair? xs)
+            (empty? (rest (rest xs)))) (list (first xs)
+                                             (* (first (rest xs)) 2)))
+      (else (make-pair (first xs)
+                       (make-pair (* (first (rest xs)) 2)
+                                  (double-every-other-number (rest (rest xs)))))))))
+ 
 ; (d)
 ; Prozedur "map-digits" soll:
 ; - eine Liste von natürlichen Zahlen akzeptieren
