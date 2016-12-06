@@ -85,13 +85,29 @@
 ; - jede Zahl in Liste ihrer Ziffern zerlegen (siehe Teilaufgabe 2b)
 ; - liefert Liste von Listen
 
-;(: map-digits ((list-of natural) -> (list-of (list-of natural))))
+(: map-digits ((list-of natural) -> (list-of (list-of natural))))
 
-;(check-expect (map-digits (list 2 13 9)) (list (list 2) (list 3 1) (list 9)))
-;(check-expect (map-digits empty) empty)
-;(check-expect (map-digits (list 1)) (list (list 1)))
-;(check-expect (map-digits (list 1 12)) (list (list 1) (list 2 1)))
-;(check-expect (map-digits (list 13)) (list (list 3 1)))
+(check-expect (map-digits (list 2 13 9)) (list (list 2) (list 3 1) (list 9)))
+(check-expect (map-digits empty) empty)
+(check-expect (map-digits (list 1)) (list (list 1)))
+(check-expect (map-digits (list 1 12)) (list (list 1) (list 2 1)))
+(check-expect (map-digits (list 13)) (list (list 3 1)))
+
+(define map-digits
+  (lambda (xs)
+    (cond
+      ((empty? xs) empty)
+      ((empty? (rest xs)) (if (< (first xs) 10)
+                              (list (list (first xs)))
+                              (list (digits (first xs)))))
+      ((pair? xs) (make-pair (if (< (first xs) 10)
+                             (list (first xs))
+                             (digits (first xs)))
+                             (make-pair (if (< (first (rest xs)) 10)
+                                            (list (first (rest xs)))
+                                            (digits (first (rest xs))))
+                                        (map-digits (rest (rest xs)))))))))
+       
 
 ; (e)
 ; Prozedur "concat" soll
