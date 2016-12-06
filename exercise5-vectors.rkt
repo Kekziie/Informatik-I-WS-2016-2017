@@ -58,7 +58,22 @@
                  (+ (vector-y vector1) (vector-y vector2))
                  (+ (vector-z vector1) (vector-z vector2)))))
 
-; 3) Betrag (absolute value) eines Vektors berechnen
+; 3) Vektorsubtraktion
+(: vec-sub (vector vector -> vector))
+
+(check-expect (vec-sub Vec1 Vec2) (make-vector 0 0 -1))
+(check-expect (vec-sub Vec3 Vec2) (make-vector 1 1 0))
+(check-expect (vec-sub Vec4 Vec3) (make-vector -2 -1 0))
+(check-within (vec-sub Vec6 Vec3) (make-vector -1.5 -1/2 -1) 0.001)
+(check-within (vec-sub Vec5 Vec6) (make-vector 1.5 1/2 2.5) 0.001)
+
+(define vec-sub
+  (lambda (vector1 vector2)
+    (make-vector (- (vector-x vector1) (vector-x vector2))
+                 (- (vector-y vector1) (vector-y vector2))
+                 (- (vector-z vector1) (vector-z vector2)))))
+
+; 4) Betrag (absolute value) eines Vektors berechnen
 (: absolute-value (vector -> real))
 
 (check-expect (absolute-value Vec1) 0)
