@@ -34,15 +34,20 @@
 
 (define split-list
   (lambda (xs)
-   (let ((split (split-list (rest xs))))) 
     (cond
       ((empty? xs) (make-tuple empty
                                empty))
-      ((empty? (rest xs) (make-tuple (make-pair (first xs)
+      ((empty? (rest xs)) (make-tuple (make-pair (first xs)
                                                 empty)
-                                     empty)))
-      ((pair? xs) (make-tuple (tuple-first split)
-                              (tuple-second split))))))
+                                      empty))
+      ((and (pair? xs)
+            (empty? (rest (rest xs)))) (make-tuple (make-pair (first xs)
+                                                              empty)
+                                                   (make-pair (first (rest xs))
+                                                              empty)))
+      (else (make-tuple (make-pair (first xs)
+                                   (tuple-first (split-list (rest xs))))
+                        (tuple-second (split-list (rest xs))))))))
     
                                    
 
