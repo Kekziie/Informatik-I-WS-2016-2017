@@ -6,11 +6,20 @@
 ; (a)
 ; schreiben einer parametrisch polymorphen Record-Typ für tuple
 
+; ein Tupel besteht aus
+; - erstes Element (tuple-first)
+; - zweites Element (tuple-second)
+
+(: make-tuple (%a %b -> (tuple-of %a %b)))
+(: tuple-first ((tuple-of %a %b) -> %a))
+(: tuple-second ((tuple-of %a %b) -> %b))
+(: tuple? (any -> boolean))
+
 (define-record-procedures-parametric tuple tuple-of
   make-tuple
   tuple?
   (tuple-first
-   tuple-rest))
+   tuple-second))
 
 ; Prozedur "split-list" soll eine Liste in zwei Listen aufspalten
 ; die Elemente sollen abwechselnd auf beide Ergebnislisten aufgeteilt werden
