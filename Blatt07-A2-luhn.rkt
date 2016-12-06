@@ -109,21 +109,28 @@
                                             (digits (first (rest xs))))
                                         (map-digits (rest (rest xs)))))))))
        
-
 ; (e)
 ; Prozedur "concat" soll
 ; - eine Liste von Listen akzeptieren
 ; - alle enthaltenen Listen aneinander hängen
 ; Hinweis: beachten von Prozedur "append"
 
-;(: concat ((list-of (list of %a)) -> (list-of %a)))
+(: concat ((list-of (list-of %a)) -> (list-of %a)))
 
-;(check-expect (concat empty) empty)
-;(check-expect (concat (list (list 1))) (list 1))
-;(check-expect (concat (list (list 2 1))) (list 2 1))
-;(check-expect (concat (list (list 3 1) (list 4 5 6))) (list 3 1 4 5 6))
-;(check-expect (concat (list (list 1 2) (list 3 4) (list 5))) (list 1 2 3 4 5))
+(check-expect (concat empty) empty)
+(check-expect (concat (list (list 1))) (list 1))
+(check-expect (concat (list (list 2 1))) (list 2 1))
+(check-expect (concat (list (list 3 1) (list 4 5 6))) (list 3 1 4 5 6))
+(check-expect (concat (list (list 1 2) (list 3 4) (list 5))) (list 1 2 3 4 5))
 
+(define concat
+  (lambda (xs)
+    (cond
+      ((empty? xs) empty)
+      ((empty? (rest xs)) (first xs))
+      ((pair? xs) (append (first xs)
+                          (concat (rest xs)))))))
+    
 ; (f)
 ; Prozedur "luhn-check" soll:
 ; - impletiert nach obigen Verfahren
