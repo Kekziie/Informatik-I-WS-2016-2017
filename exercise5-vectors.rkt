@@ -92,17 +92,26 @@
 ; 5) Multiplikation eines Vektors mit einer reelen Zahl c
 (: vec-mul (real vector -> vector))
 
-(check-expect (vec-mul 10 Vec3) (make-vector 10 10 10))
-(check-expect (vec-mul 25 Vec4) (make-vector -25 0 25))
-(check-within (vec-mul 5 Vec5) (make-vector 5 5 12.5) 0.001)
-(check-within (vec-mul -5 Vec6) (make-vector 2.5 -2.5 0) 0.001)
-(check-within (vec-mul -2.5 Vec2) (make-vector 0 0 -2.5) 0.001)
+(check-expect (vec-mul 10 Vec3) (make-vector   10   10   10))
+(check-expect (vec-mul 25 Vec4) (make-vector  -25    0   25))
+(check-within (vec-mul 5 Vec5) (make-vector     5    5 12.5) 0.001)
+(check-within (vec-mul -5 Vec6) (make-vector  2.5 -2.5    0) 0.001)
+(check-within (vec-mul -2.5 Vec2) (make-vector  0    0 -2.5) 0.001)
 
 (define vec-mul
   (lambda (c Vector)
     (make-vector (* c (vector-x vector))
                  (* c (vector-y vector))
                  (* c (vector-z vector)))))
+
+; 6) Mittelpunkt einer Strecke zwischen zwei Vektoren
+(: mid-2-vec (vector vector -> vector))
+
+(check-within (mid-2-vec Vec1 Vec2) (make-vector 0 0 0.5) 0.001)
+
+(define mid-2-vec
+  (lambda (vector1 vector2)
+    (vec-mul 1/2 (vec-add vector1 vector2))))
 
 
 
