@@ -129,7 +129,3 @@
 ; (for-all
 ;     ((xs (list-of natural)))
 ;   (list-equal? (weave-lists (split-list xs)) xs)))
-      
-          
-
-
