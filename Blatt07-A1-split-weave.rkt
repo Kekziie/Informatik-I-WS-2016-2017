@@ -46,11 +46,10 @@
                                                    (make-pair (first (rest xs))
                                                               empty)))
       (else (make-tuple (make-pair (first xs)
-                                   (make-pair (first (rest (rest xs)))
-                                              (tuple-first (split-list (rest (rest (rest xs)))))))
+                                   (tuple-first (split-list (rest (rest xs)))))
                         (make-pair (first (rest xs))
-                                   (tuple-second (split-list (rest xs)))))))))
-    
+                                   (tuple-second (split-list (rest (rest xs))))))))))
+   
                                    
 
 ; (b)
