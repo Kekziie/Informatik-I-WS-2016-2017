@@ -106,16 +106,18 @@
 
 (define list-equal?
   (lambda (xs ys)
+   (let ((empty-list1 (empty? xs))
+         (empty-list2 (empty? ys)))
     (cond
-      ((and (empty? xs)
-            (empty? ys)) #t)
-      ((and (empty? xs)
+      ((and empty-list1
+            empty-list2) #t)
+      ((and empty-list1
             (pair? ys)) #f)
       ((and (pair? xs)
-            (empty? ys)) #f)
+            empty-list2) #f)
       ((and (= (first xs) (first ys))
             (list-equal? (rest xs) (rest ys))) #t)
-      (else #f))))
+      (else #f)))))
     
 
 ; schreiben eines check-property für:
@@ -126,7 +128,7 @@
 ;(check-property
 ; (for-all
 ;     ((xs (list-of natural)))
-;   (= (weave-lists (split-list xs)) xs)))
+;   (list-equal? (weave-lists (split-list xs)) xs)))
       
           
 
