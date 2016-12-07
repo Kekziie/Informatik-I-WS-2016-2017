@@ -91,12 +91,12 @@
 ; Flächeninhalt der 3 Formen
 (: shape-area (shape -> real))
 
-(check-expect (shape-area rectangle1) 200)
-(check-within (shape-area rectangle2) 3.75 0.001)
-(check-within (shape-area circle1) 7853.75 0.001)
-(check-within (shape-area circle2) 1963.4375 0.001)
+(check-expect (shape-area rectangle1)     200)
+(check-within (shape-area rectangle2)    3.75 0.001)
+(check-within (shape-area circle1)    7853.75 0.001)
+(check-within (shape-area circle2)  1963.4375 0.001)
 (check-within (shape-area triangle1) 270.6329 0.001)
-(check-within (shape-area triangle3) 2.7063 0.001)
+(check-within (shape-area triangle3)   2.7063 0.001)
 
 (define shape-area
   (lambda (shape)
@@ -110,12 +110,12 @@
 ; Umfang der 3 Formen
 (: shape-perimeter (shape -> real))
 
-(check-expect (shape-perimeter rectangle1) 60)
-(check-within (shape-perimeter rectangle2) 8.0 0.001)
-(check-within (shape-perimeter circle1) 314.15 0.001)
+(check-expect (shape-perimeter rectangle1)   60)
+(check-within (shape-perimeter rectangle2)  8.0 0.001)
+(check-within (shape-perimeter circle1)  314.15 0.001)
 (check-within (shape-perimeter circle2) 157.075 0.001)
-(check-expect (shape-perimeter triangle1) 75)
-(check-expect (shape-perimeter triangle2) 30)
+(check-expect (shape-perimeter triangle1)    75)
+(check-expect (shape-perimeter triangle2)    30)
 
 (define shape-perimeter
   (lambda (shape)
@@ -125,4 +125,18 @@
                                 2))
       ((my-circle? shape) (* 2 pi (my-circle-radius shape)))
       ((my-triangle? shape) (* 3 (my-triangle-length shape))))))
+
+; zeichnen der Formen
+(: shape-drawer (shape -> image))
+
+(check-expect (shape-drawer rectangle1) (rectangle 20 10 "solid" "orchid"))
+(check-expect (shape-drawer circle1) (circle 50 "solid" "maroon"))
+(check-expect (shape-drawer triangle1) (triangle 25 "solid" "beige"))
+
+(define shape-drawer
+  (lambda (shape)
+    (cond
+      ((my-rectangle? shape) (rectangle (my-rectangle-width shape) (my-rectangle-height shape) "solid" (my-rectangle-color shape)))
+      ((my-circle? shape) (circle (my-circle-radius shape) "solid" (my-circle-color shape)))
+      ((my-triangle? shape) (triangle (my-triangle-length shape) "solid" (my-triangle-color shape))))))
       
