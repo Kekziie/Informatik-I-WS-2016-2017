@@ -66,16 +66,16 @@
 
 (: weave-lists ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
 
-;(check-expect (weave-lists (make-tuple (list 1 3 5 6)
-;                                       (list 2 4))) (list 1 2 3 4 5 6))
+(check-expect (weave-lists (make-tuple (list 1 3 5 6)
+                                       (list 2 4))) (list 1 2 3 4 5 6))
 (check-expect (weave-lists (make-tuple empty
                                        empty)) empty)
 (check-expect (weave-lists (make-tuple empty
                                        (list 1))) (list 1))
 (check-expect (weave-lists (make-tuple (list 2 3)
                                        empty)) (list 2 3))
-;(check-expect (weave-lists (make-tuple (list 3 5)
-;                                       (list 2 4))) (list 3 2 5 4))
+(check-expect (weave-lists (make-tuple (list 3 5)
+                                       (list 2 4))) (list 3 2 5 4))
 
 (define weave-lists
   (lambda (xs)
@@ -87,10 +87,12 @@
         ((and (empty? t1)
               (pair? t2)) t2)
         ((and (pair? t1)
-              (empty? t2)) t1)))))
-        
-            
-  
+              (empty? t2)) t1)
+        (else (make-pair (first t1)
+                         (make-pair (first t2)
+                                    (weave-lists (make-tuple (rest t1)
+                                                             (rest t2))))))))))
+                                     
 ; (c)
 ; schreiben eines check-property für:
 ; - die Prozeduren "split-list" und "weave-lists"
