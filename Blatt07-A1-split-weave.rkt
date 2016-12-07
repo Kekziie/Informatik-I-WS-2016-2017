@@ -27,10 +27,16 @@
 
 (: split-list ((list-of %a) -> (tuple-of (list-of %a) (list-of %a))))
 
-(check-expect (split-list (list 1 2 3 4 5)) (make-tuple (list 1 3 5) (list 2 4)))
-(check-expect (split-list empty) (make-tuple empty empty))
-(check-expect (split-list (list 3)) (make-tuple (list 3) empty))
-(check-expect (split-list (list "Samstag" "Sonntag")) (make-tuple (list "Samstag") (list "Sonntag")))
+(check-expect (split-list (list 1 2 3 4 5)) (make-tuple (list 1 3 5)
+                                                        (list 2 4)))
+(check-expect (split-list (list "Hund" "Tiger" "Hamster" "Giraffe" "Katze" "Affe" "Meerschweinchen")) (make-tuple (list "Hund" "Hamster" "Katze" "Meerschweinchen")
+                                                                                                                  (list "Tiger" "Giraffe" "Affe")))
+(check-expect (split-list empty) (make-tuple empty
+                                             empty))
+(check-expect (split-list (list 3)) (make-tuple (list 3)
+                                                empty))
+(check-expect (split-list (list "Samstag" "Sonntag")) (make-tuple (list "Samstag")
+                                                                  (list "Sonntag")))
 
 (define split-list
   (lambda (xs)
