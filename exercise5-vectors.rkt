@@ -61,11 +61,11 @@
 ; 3) Vektorsubtraktion
 (: vec-sub (vector vector -> vector))
 
-(check-expect (vec-sub Vec1 Vec2) (make-vector 0 0 -1))
-(check-expect (vec-sub Vec3 Vec2) (make-vector 1 1 0))
-(check-expect (vec-sub Vec4 Vec3) (make-vector -2 -1 0))
-(check-within (vec-sub Vec6 Vec3) (make-vector -1.5 -1/2 -1) 0.001)
-(check-within (vec-sub Vec5 Vec6) (make-vector 1.5 1/2 2.5) 0.001)
+(check-expect (vec-sub Vec1 Vec2) (make-vector  0      0  -1))
+(check-expect (vec-sub Vec3 Vec2) (make-vector  1      1   0))
+(check-expect (vec-sub Vec4 Vec3) (make-vector -2     -1   0))
+(check-within (vec-sub Vec6 Vec3) (make-vector -1.5 -1/2  -1) 0.001)
+(check-within (vec-sub Vec5 Vec6) (make-vector  1.5  1/2 2.5) 0.001)
 
 (define vec-sub
   (lambda (vector1 vector2)
@@ -88,6 +88,22 @@
     (sqrt (+ (expt (vector-x vector) 2)
              (expt (vector-y vector) 2)
              (expt (vector-z vector) 2)))))
+
+; 5) Multiplikation eines Vektors mit einer reelen Zahl c
+(: vec-mul (real vector -> vector))
+
+(check-expect (vec-mul 10 Vec3) (make-vector 10 10 10))
+(check-expect (vec-mul 25 Vec4) (make-vector -25 0 25))
+(check-within (vec-mul 5 Vec5) (make-vector 5 5 12.5) 0.001)
+(check-within (vec-mul -5 Vec6) (make-vector 2.5 -2.5 0) 0.001)
+(check-within (vec-mul -2.5 Vec2) (make-vector 0 0 -2.5) 0.001)
+
+(define vec-mul
+  (lambda (c Vector)
+    (make-vector (* c (vector-x vector))
+                 (* c (vector-y vector))
+                 (* c (vector-z vector)))))
+
 
 
   
