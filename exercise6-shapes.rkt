@@ -1,8 +1,7 @@
 ;; Die ersten drei Zeilen dieser Datei wurden von DrRacket eingefügt. Sie enthalten Metadaten
 ;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
 #reader(lib "DMdA-beginner-reader.ss" "deinprogramm")((modname exercise6-shapes) (read-case-sensitive #f) (teachpacks ((lib "image2.ss" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.ss" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
-; Übung 6
-; a) Formen 2D
+; Übung 6 Formen
 
 ; Record- und Datendefinition
 
@@ -12,15 +11,15 @@
 ; - Farbe
 (: make-my-rectangle (real real string -> my-rectangle))
 (: my-rectangle-width (my-rectangle -> real))
-(: my-rectangle-heigth (my-rectangle -> real))
+(: my-rectangle-height (my-rectangle -> real))
 (: my-rectangle-color (my-rectangle -> string))
 (: my-rectangle? (any -> boolean))
 
 (define-record-procedures my-rectangle
-  make-my-rechteck
+  make-my-rectangle
   my-rectangle?
   (my-rectangle-width
-   my-rectangle-heigth
+   my-rectangle-height
    my-rectangle-color))
 
 ; ein Kreis besteht aus
@@ -78,3 +77,32 @@
 
 (define triangle3
   (make-my-triangle 2.5 "indigo"))
+
+; definieren einer Signatur für Formen
+
+(define shape
+  (signature (mixed my-rectangle
+                    my-circle
+                    my-triangle)))
+
+; definieren der Kreiszahl pi
+(define pi 3.1415)
+
+; Flächeninhalt der 3 Formen
+(: shape-area (shape -> real))
+
+(check-expect (shape-area rectangle1) 200)
+(check-within (shape-area rectangle2) 3.75 0.001)
+(check-within (shape-area circle1) 7853.75 0.001)
+(check-within (shape-area circle2) 1963.4375 0.001)
+(check-within (shape-area triangle1) 270.6329 0.001)
+(check-within (shape-area triangle3) 2.7063 0.001)
+
+(define shape-area
+  (lambda (shape)
+    (cond
+      ((my-rectangle? shape) (* (my-rectangle-width shape) (my-rectangle-height shape)))
+      ((my-circle? shape) (* pi (expt (my-circle-radius shape) 2)))
+      ((my-triangle? shape) (* (/ (expt (my-triangle-length shape) 2)
+                                   4)
+                               (sqrt 3))))))
