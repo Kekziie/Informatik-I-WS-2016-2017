@@ -106,3 +106,23 @@
       ((my-triangle? shape) (* (/ (expt (my-triangle-length shape) 2)
                                    4)
                                (sqrt 3))))))
+
+; Umfang der 3 Formen
+(: shape-perimeter (shape -> real))
+
+(check-expect (shape-perimeter rectangle1) 60)
+(check-within (shape-perimeter rectangle2) 8.0 0.001)
+(check-within (shape-perimeter circle1) 314.15 0.001)
+(check-within (shape-perimeter circle2) 157.075 0.001)
+(check-expect (shape-perimeter triangle1) 75)
+(check-expect (shape-perimeter triangle2) 30)
+
+(define shape-perimeter
+  (lambda (shape)
+    (cond
+      ((my-rectangle? shape) (* (+ (my-rectangle-width shape)
+                                   (my-rectangle-height shape))
+                                2))
+      ((my-circle? shape) (* 2 pi (my-circle-radius shape)))
+      ((my-triangle? shape) (* 3 (my-triangle-length shape))))))
+      
