@@ -25,29 +25,31 @@
 ; die Elemente sollen abwechselnd auf beide Ergebnislisten aufgeteilt werden
 ; bei ungerader Azahl in Eingabeliste -> 1. Ergebnisliste länger
 
-;(: split-list ((list-of %a) -> (tuple-of (list-of %a) (list-of %a))))
+(: split-list ((list-of %a) -> (tuple-of (list-of %a) (list-of %a))))
 
-;(check-expect (split-list (list 1 2 3 4 5)) (make-tuple (list 1 3 5) (list 2 4)))
-;(check-expect (split-list empty) (make-tuple empty empty))
-;(check-expect (split-list (list 3)) (make-tuple (list 3) empty))
-;(check-expect (split-list (list "Samstag" "Sonntag")) (make-tuple (list "Samstag") (list "Sonntag")))
+(check-expect (split-list (list 1 2 3 4 5)) (make-tuple (list 1 3 5) (list 2 4)))
+(check-expect (split-list empty) (make-tuple empty empty))
+(check-expect (split-list (list 3)) (make-tuple (list 3) empty))
+(check-expect (split-list (list "Samstag" "Sonntag")) (make-tuple (list "Samstag") (list "Sonntag")))
 
-;(define split-list
-;  (lambda (xs)
-;    (cond
-;      ((empty? xs) (make-tuple empty
-;                               empty))
-;      ((empty? (rest xs)) (make-tuple (make-pair (first xs)
-;                                                empty)
-;                                      empty))
-;      ((and (pair? xs)
-;            (empty? (rest (rest xs)))) (make-tuple (make-pair (first xs)
-;                                                              empty)
-;                                                   (make-pair (first (rest xs))
-;                                                              empty)))
-;      (else (make-tuple (make-pair (first xs)
-;                                   (tuple-first (split-list (rest xs))))
-;                        (tuple-second (split-list (rest xs))))))))
+(define split-list
+  (lambda (xs)
+    (cond
+      ((empty? xs) (make-tuple empty
+                               empty))
+      ((empty? (rest xs)) (make-tuple (make-pair (first xs)
+                                                empty)
+                                      empty))
+      ((and (pair? xs)
+            (empty? (rest (rest xs)))) (make-tuple (make-pair (first xs)
+                                                              empty)
+                                                   (make-pair (first (rest xs))
+                                                              empty)))
+      (else (make-tuple (make-pair (first xs)
+                                   (make-pair (first (rest (rest xs)))
+                                              (tuple-first (split-list (rest (rest (rest xs)))))))
+                        (make-pair (first (rest xs))
+                                   (tuple-second (split-list (rest xs)))))))))
     
                                    
 
@@ -60,15 +62,15 @@
 ;(: weave-lists ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
 
 ;(check-expect (weave-lists (make-tuple (list 1 3 5 6)
-                                       (list 2 4))) (list 1 2 3 4 5 6))
+;                                       (list 2 4))) (list 1 2 3 4 5 6))
 ;(check-expect (weave-lists (make-tuple empty
-                                       empty)) empty)
+;                                       empty)) empty)
 ;(check-expect (weave-lists (make-tuple empty
-                                       (list 1))) (list 1))
+;                                       (list 1))) (list 1))
 ;(check-expect (weave-lists (make-tuple (list 2 3)
-                                       empty)) (list 2 3))
+;                                       empty)) (list 2 3))
 ;(check-expect (weave-lists (make-tuple (list 3 5)
-                                       (list 2 4))) (list 3 2 5 4))
+;                                       (list 2 4))) (list 3 2 5 4))
 
 ;(define weave-lists
 ;  (lambda (xs)
@@ -90,9 +92,9 @@
 ; - beliebige Listen xs mit natürlichen Zahlen
 ; soll folgende Äquivalenz prüfen: (weave-lists (split-list xs)) <-> xs
 
-(check-property
- (for-all (xs (list-of natural))
-   (= (weave-lists (split-lists xs)) xs)))
+;(check-property
+; (for-all (xs (list-of natural))
+;   (= (weave-lists (split-lists xs)) xs)))
           
 
 
