@@ -94,14 +94,40 @@
                                                              (rest t2))))))))))
                                      
 ; (c)
+; schreiben einer Hilfsprozedur list-equal? die 2 Listen vergleicht, ob sie identisch sind
+(: list-equal? ((list-of %a) (list-of %a) -> boolean))
+
+(check-expect (list-equal? empty empty) #t)
+(check-expect (list-equal? empty (list 1)) #f)
+(check-expect (list-equal? (list 3) empty) #f)
+(check-expect (list-equal? (list 1) (list 1)) #t)
+(check-expect (list-equal? (list 1 2 3) (list 3 2 1)) #f)
+(check-expect (list-equal? (list 1 2 3) (list 1 2 3)) #t)
+
+(define list-equal?
+  (lambda (xs ys)
+    (cond
+      ((and (empty? xs)
+            (empty? ys)) #t)
+      ((and (empty? xs)
+            (pair? ys)) #f)
+      ((and (pair? xs)
+            (empty? ys)) #f)
+      ((and (= (first xs) (first ys))
+            (list-equal? (rest xs) (rest ys))) #t)
+      (else #f))))
+    
+
 ; schreiben eines check-property für:
 ; - die Prozeduren "split-list" und "weave-lists"
 ; - beliebige Listen xs mit natürlichen Zahlen
 ; soll folgende Äquivalenz prüfen: (weave-lists (split-list xs)) <-> xs
 
 ;(check-property
-; (for-all (xs (list-of natural))
-;   (= (weave-lists (split-lists xs)) xs)))
+; (for-all
+;     ((xs (list-of natural)))
+;   (= (weave-lists (split-list xs)) xs)))
+      
           
 
 
