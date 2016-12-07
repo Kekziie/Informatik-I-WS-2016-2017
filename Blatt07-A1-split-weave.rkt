@@ -64,32 +64,32 @@
 ; Ergebnisliste enthält Elemente der konsumierten Liste in abwechselnder Reihenfolge
 ; bei ungleicher Länge der Listen -> überschüssige Elemente werden an Ergebnisliste hinten angehängt
 
-;(: weave-lists ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
+(: weave-lists ((tuple-of (list-of %a) (list-of %a)) -> (list-of %a)))
 
 ;(check-expect (weave-lists (make-tuple (list 1 3 5 6)
 ;                                       (list 2 4))) (list 1 2 3 4 5 6))
-;(check-expect (weave-lists (make-tuple empty
-;                                       empty)) empty)
-;(check-expect (weave-lists (make-tuple empty
-;                                       (list 1))) (list 1))
-;(check-expect (weave-lists (make-tuple (list 2 3)
-;                                       empty)) (list 2 3))
+(check-expect (weave-lists (make-tuple empty
+                                       empty)) empty)
+(check-expect (weave-lists (make-tuple empty
+                                       (list 1))) (list 1))
+(check-expect (weave-lists (make-tuple (list 2 3)
+                                       empty)) (list 2 3))
 ;(check-expect (weave-lists (make-tuple (list 3 5)
 ;                                       (list 2 4))) (list 3 2 5 4))
 
-;(define weave-lists
-;  (lambda (xs)
-;    (let ((t1 (tuple-first xs))
-;          (t2 (tuple-second xs)))
-;    (cond
-;      ((and (empty? t1)
-;            (empty? t2)) empty)
-;      ((and (empty? t1)
-;            (pair? t2)) t2)
-;      ((and (empty? t2)
-;            (pair? t1)) t1)
-;      (else (list (first t1) (first t2)
-;                  (weave-lists (rest t1)) (weave-lists (rest t2))))))))
+(define weave-lists
+  (lambda (xs)
+    (let ((t1 (tuple-first xs))
+          (t2 (tuple-second xs)))
+      (cond
+        ((and (empty? t1)
+              (empty? t2)) empty)
+        ((and (empty? t1)
+              (pair? t2)) t2)
+        ((and (pair? t1)
+              (empty? t2)) t1)))))
+        
+            
   
 ; (c)
 ; schreiben eines check-property für:
