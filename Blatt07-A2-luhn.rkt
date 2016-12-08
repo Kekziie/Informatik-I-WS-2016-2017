@@ -135,4 +135,5 @@
 
 (define luhn-check
   (lambda (n)
-    (= (modulo (sum (concat (map-digits (double-every-other-number (digits n))))) 10) 0)))
+    (= (modulo (sum (concat (map-digits (double-every-other-number (digits n))))) 10)
+       0)))
