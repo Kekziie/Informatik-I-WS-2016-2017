@@ -98,10 +98,8 @@
       ((pair? xs) (make-pair (if (< (first xs) 10)
                              (list (first xs))
                              (digits (first xs)))
-                             (make-pair (if (< (first (rest xs)) 10)
-                                            (list (first (rest xs)))
-                                            (digits (first (rest xs))))
-                                        (map-digits (rest (rest xs)))))))))
+                             (map-digits (rest xs)))))))
+
        
 ; (e)
 ; Prozedur "concat" soll
