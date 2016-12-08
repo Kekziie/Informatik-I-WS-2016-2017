@@ -27,9 +27,6 @@
     (cond
       ((empty? xs) (violation "Liste ist leer"))
       ((empty? (rest xs)) (first xs))
-      ((and (pair? xs)
-            (empty? (rest (rest xs)))) (+ (first xs)
-                                          (first (rest xs))))
       (else (+ (first xs)
                (sum (rest xs)))))))
 
@@ -72,9 +69,6 @@
     (cond
       ((empty? xs) empty)
       ((empty? (rest xs)) (list (first xs)))
-      ((and (pair? xs)
-            (empty? (rest (rest xs)))) (list (first xs)
-                                             (* (first (rest xs)) 2)))
       (else (make-pair (first xs)
                        (make-pair (* (first (rest xs)) 2)
                                   (double-every-other-number (rest (rest xs)))))))))
