@@ -33,23 +33,21 @@
 ; (b)
 ; Prozedur "digits" soll eine natürliche Zahl in ihre Ziffern zerlegen und als Liste zurückliefern
 ; Liste soll Ziffern von links nach rechts enthalten
-; ! bei n=0 evaluiert die Prozedur zu empty
-; Hinweis: - benutzen von Prozeduren "quotient" und "remainder"
-;          - dezimale Stellensystem (1024= 4x1 + 2x10 + 0x100 + 1x1000)
 
 (: digits (natural -> (list-of natural)))
 
 (check-expect (digits 123) (list 3 2 1))
 (check-expect (digits 49) (list 9 4))
 (check-expect (digits 1024) (list 4 2 0 1))
-(check-expect (digits 0) empty)
+(check-expect (digits 0) (list 0))
+(check-expect (digits 1234567890) (list 0 9 8 7 6 5 4 3 2 1))
 
 (define digits
   (lambda (n) 
     (cond
-      ((= n 0) empty)
-      ((> n 0) (make-pair (remainder n 10)
-                          (digits (floor (/ n 10))))))))
+      ((<= n 9) (list n))
+      ((> n 9) (make-pair (remainder n 10)
+                          (digits (quotient n 10)))))))
 
 ; (c)
 ; Prozedur "double-every-other-number" soll:
