@@ -735,3 +735,41 @@
               (on-key (lambda (o key)
                         (cond ((key=? key "escape") (perform-all o))
                               (else (perform-next o))))))))
+
+;==========================================================================================================================================================
+; TAG 2
+; Aufgabe "transportiere alle Pakete von der Inbox nacheinander auf die Outbox"
+;==========================================================================================================================================================
+; "list-index-worker" 
+; - akzeptiert ein Prädikat p? und eine Liste xs
+; - gibt Position des 1.Elements an, auf das das Prädikat zutrifft, also #t auswertet
+; - Zählung der Position beginnt mit 0 fürs erste Listenelement
+(: list-index-worker ((%a -> boolean) (list-of %a) natural -> natural))
+(check-expect (list-index-worker natural? (list 1 2 3) 0) 0)
+(check-expect (list-index-worker string? (list #t #f #t #f "a") 0) 4)
+(check-error (list-index-worker natural? empty 0) "leere Liste")
+(define list-index-worker
+  (lambda (p? xs acc)
+    (cond
+      ((empty? xs)(violation "leere Liste"))
+      ((pair? xs) (if (p? (first xs))
+                      acc
+                      (list-index-worker p? (rest xs) (+ acc 1)))))))
+
+; (f)
+; schreiben einer H.O.P. "list-index"
+; - akzeptiert ein Prädikat p? und eine Liste xs
+; - gibt Position des 1.Elements an, auf das das Prädikat zutrifft, also #t auswertet
+; - Zählung der Position beginnt mit 0 fürs erste Listenelement
+(: list-index ((%a -> boolean) (list-of %a) -> natural))
+
+(check-expect (list-index natural? (list 1 2 3)) 0)
+(check-expect (list-index string? (list #t #f #t #f "a")) 4)
+(check-expect (list-index zero? (list 2 0)) 1)
+(check-expect (list-index zero? (list 0)) 0)
+(check-expect (list-index integer? (list "a" "b" "c" 0 4 -10)) 3)
+(check-error (list-index boolean? empty) "leere Liste")
+
+(define list-index
+  (lambda (p? xs)
+    (list-index-worker p? xs 0)))
