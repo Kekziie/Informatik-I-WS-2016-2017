@@ -773,3 +773,30 @@
 (define list-index
   (lambda (p? xs)
     (list-index-worker p? xs 0)))
+
+; (g)
+; Hilfsprozedur
+(: label-searcher (string office -> boolean))
+
+(check-expect (label-searcher "jumpA" day01) #f)
+
+(define label-searcher
+  (lambda (label o)
+    (cond
+      ((empty? (instruction-list o)) #f)
+      ((instr? (first (instruction-list o))) (label-searcher label (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (rest (instruction-list o)) (ip o) (time-clock o))))
+      ((string=? label (first (instruction-list o))) #t)
+      (else (label-searcher label (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (rest (instruction-list o)) (ip o) (time-clock o)))))))
+
+; implementieren einer Instruktion "jump"
+; - Worker setzt Arbeit im nächsten Schritt fort, an Stelle der Instruktionsliste, wo sich Label (string) befindet
+; - Position und Inhalte der Pakete im Postamt bleiben unverändert
+; - wenn gesuchtes Label nicht auf Instruktionsliste -> Programmabbruch
+(: jump (string -> instruction))
+(define jump
+  (lambda (Label)
+    (make-instr "jump"
+                (lambda (o)                  
+                  (if (label-searcher Label o)
+                      (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (instruction-list o) (list-index (lambda (s) (and (string? s) (string=? s Label))) (instruction-list o)) (time-clock o)) 
+                      (violation "gesuchtes Label nicht auf Instruction-list"))))))
