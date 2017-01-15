@@ -133,6 +133,50 @@
     ((empty? xss) empty)
     ((pair? xss) (append (first xss) (flatten (rest xss)))))))
 
+; Hilfsprozedur für "transpose":
+; - every-nth
+; - vert-sort
+
+; Prozedur "every-nth" soll:
+; - eine Liste xs und eine natürliche Zahl n akzeptieren
+; - ein Liste zurückgeben
+; - Liste enthält erstes und jedes weitere nte Element, also 1, 1+n, 1+2n, ...
+; - n soll ungleich 0 sein
+(: every-nth (natural (list-of %a) -> (list-of %a)))
+
+(check-expect (every-nth 2 empty) empty)
+(check-expect (every-nth 4 (list 1 2 3)) (list 1))
+(check-expect (every-nth 2 (list 1 2 3 4 5)) (list 1 3 5))
+(check-expect (every-nth 5 (list "a" "b")) (list "a"))
+(check-expect (every-nth 1 (list 1 2 3)) (list 1 2 3))
+
+(define every-nth
+  (lambda (n xs)
+    (cond
+      ((empty? xs) empty)
+      ((pair? xs) (make-pair (first xs)
+                             (every-nth n (drop (- n 1) (rest xs))))))))
+
+; Prozedur "vert-sort" soll:
+; - eine Liste von Listen xss akzeptiern
+; - die Liste von Listen "vertikal" sortieren, also "transponieren" und dann in eine Liste ausgeben
+; - innere Listen sollen dabei gleich lang sein
+(: vert-sort ((list-of (list-of %a)) -> (list-of %a)))
+
+(check-expect (vert-sort (list (list 1 2 3)
+                               (list 4 5 6))) (list 1 4 2 5 3 6))
+(check-expect (vert-sort empty) empty)
+(check-expect (vert-sort (list (list "a" "c")
+                               (list "b" "d"))) (list "a" "b" "c" "d"))
+
+(define vert-sort
+  (lambda (xss)
+    (cond
+      ((empty? xss) empty)
+      ((pair? xss) (take (length (flatten xss)) (append (every-nth (length (first xss)) (flatten xss))
+                                                        (vert-sort (rows (length (first xss)) (drop 1 (flatten xss))))))))))
+                              
+
 ; schreiben einer Prozedur "transpose", die
 ; - eine Liste von Listen xss akzeptiert
 ; - die übergebene Liste "transponiert"
