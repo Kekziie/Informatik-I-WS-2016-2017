@@ -29,3 +29,10 @@
 ;    3.) Sortierung der beiden Listen rekursiv
 ;    4.) Zusammenfügung der soriterten Liste mit Pivot-Element in der Mitte
 (: quicksort ((list-of number) -> (list-of number)))
+
+(check-expect (quicksort (list 0 -5 5 -10 10)) (list -10 -5 0 5 10))
+(check-expect (quicksort empty) empty)
+(check-expect (quicksort (list 1)) (list 1))
+(check-expect (quicksort (list 1 2 3)) (list 1 2 3))
+(check-expect (quicksort (list 5 3 1)) (list 1 3 5))
+(check-within (quicksort (list 1/2 2 -2.5 -10 8 1/2 4 13 42)) (list -10 -2.5 1/2 1/2 2 4 8 13 42) 0.001)
