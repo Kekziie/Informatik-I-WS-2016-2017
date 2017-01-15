@@ -1,6 +1,6 @@
 ;; Die ersten drei Zeilen dieser Datei wurden von DrRacket eingefügt. Sie enthalten Metadaten
 ;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
-#reader(lib "DMdA-vanilla-reader.ss" "deinprogramm")((modname Blatt08-A1-image-processing) (read-case-sensitive #f) (teachpacks ()) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ())))
+#reader(lib "DMdA-vanilla-reader.ss" "deinprogramm")((modname Blatt08-A1-image-processing) (read-case-sensitive #f) (teachpacks ((lib "universe.rkt" "teachpack" "deinprogramm") (lib "image2.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "universe.rkt" "teachpack" "deinprogramm") (lib "image2.rkt" "teachpack" "deinprogramm")))))
 ; Aufgabe 8
 ; arbeiten mit Bildern:
 ; - vertikal spiegeln
@@ -233,3 +233,15 @@
     (color-list->bitmap (flatten (reverse (transpose (rows (image-width image) (image->color-list image)))))
                         (image-width image)
                         (image-height image))))
+
+
+; alle Testfälle nebeneinander
+(define Lücke (square 10 "solid" "white"))
+
+(beside Testbild
+        Lücke
+        (vert-mirror Testbild)
+        Lücke
+        (horiz-mirror Testbild)
+        Lücke
+        (rotate-90-left Testbild))
