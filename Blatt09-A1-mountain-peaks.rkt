@@ -18,6 +18,35 @@
   (lambda (ss)
     (write-string (unlines ss))))
 
+; Prozedur "Whitespace"
+; akzeptiert natürliche Zahl n
+; gibt n Whitespaces in einem String aus
+
+(: whitespace (natural -> string))
+(check-expect (whitespace 0) "")
+(check-expect (whitespace 1) " ")
+(check-expect (whitespace 2) "  ")
+(define whitespace
+  (lambda (n)
+    (cond
+      ((= n 0) "")
+      ((> n 0) (string-append " " (whitespace (- n 1)))))))
+
+; Prozedur "Whitespace-string"
+; - akzeptiert eine Liste von Strings
+; - fügt ein oder mehrere Whitespaces an String je nach Position und Länge einer Liste
+; (-> hilft bei "Einrückung" der Zeilen des Gebirges)
+
+(: whitespace-string ((list-of string) -> (list-of string)))
+(check-expect (whitespace-string (list "a" "b" "c")) (list "  a" " b" "c"))
+(check-expect (whitespace-string empty) empty)
+(define whitespace-string
+  (lambda (xs)
+    (cond
+      ((empty? xs) empty)
+      ((pair? xs) (make-pair (string-append (whitespace (- (length xs) 1)) (first xs))
+                             (whitespace-string (rest xs)))))))
+
 ; (print (mountaint-peaks n)) zeichnet "Gebirgszug" für jede natürlich Zahl n
 ; (vgl. Zeichnungen)
 ;                                                          /\          
