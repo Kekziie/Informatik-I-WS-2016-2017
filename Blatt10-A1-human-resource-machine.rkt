@@ -1095,3 +1095,88 @@
 (check-expect (outbox (perform-next day05)) empty)
 (check-expect (inbox (perform-next day05)) (list 3 4 8 7 6 3))
 (check-expect (worker (perform-next day05)) 0)
+
+;==========================================================================================================================================================
+; BONUS
+; TAG 29
+; Aufgabe "lege jeden auf der Inbox befindlichen Buchstaben genau ein Mal auf Outbox,
+;          taucht ein Buchstabe erneut in Inbox auf, dann muss dieser übersprungen werden
+;          es liegen nie mehr als 10 verschiedene Buchstaben in der Inbox"
+;==========================================================================================================================================================
+
+; implementieren einer Möglichkeit zur indirekten Adressierung
+; - für alle Instruktionen, die sich auf Fußbodenabschnitten beziehen
+
+; Instruktion "copy-to-indirect" funktioniert analog zu copy-to
+(: copy-to-indirect (natural -> instruction))
+(define copy-to-indirect
+  (lambda (n)
+    (make-instr "copy-to-indirect"
+                (lambda (o)
+                  (if (empty? (worker o))
+                      (violation "worker no package")
+                      (make-office (inbox o) (outbox o) (list-update (floor-slots o) (list-ref (floor-slots o) n) (worker o)) (worker o) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))
+
+; Instruktion "copy-from-indirect" funktioniert analog zu copy-from
+(: copy-from-indirect (natural -> instruction))
+(define copy-from-indirect
+  (lambda (n)
+    (make-instr "copy-from-indirect"
+                (lambda (o)
+                  (if (empty? (worker o))
+                      (violation "worker no package")
+                      (make-office (inbox o) (outbox o) (floor-slots o) (list-ref (floor-slots o) (list-ref (floor-slots o) n)) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))
+
+; Instruktion "add-indirect" funktioniert analog zu add
+(: add-indirect (natural -> instruction))
+(define add-indirect
+  (lambda (n) 
+   (make-instr "add-indirect"
+              (lambda (o)
+                (if (empty? (list-ref (floor-slots o) (list-ref (floor-slots o) n)))
+                    (violation "floor-slot empty")
+                    (if (empty? (worker o))
+                        (violation "worker no package")
+                       (let ((floor-slot (list-ref (floor-slots o) n))) 
+                        (make-office (inbox o) (outbox o) (floor-slots o) (+ (worker o) (if (string? floor-slot)
+                                                                                            (ordinal floor-slot)
+                                                                                            floor-slot)) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))))
+
+; Instruktion "sub-indirect" funktioniert analog zu sub
+(: sub-indirect (natural -> instruction))
+(define sub-indirect
+  (lambda (n) 
+   (make-instr "sub-indirect"
+              (lambda (o)
+                (if (empty? (list-ref (floor-slots o) n))
+                    (violation "floor-slot empty")
+                    (if (empty? (worker o))
+                        (violation "worker no package")
+                       (let ((floor-slot (list-ref (floor-slots o) (list-ref (floor-slots o) n)))) 
+                        (make-office (inbox o) (outbox o) (floor-slots o) (- (worker o) (if (string? floor-slot)
+                                                                                            (ordinal floor-slot)
+                                                                                            floor-slot)) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))))
+
+; Instuktion "bumb+-indirect" funktioniert analog zu bump+
+(: bump+-indirect (natural -> instruction))
+(define bump+-indirect
+  (lambda (n)
+    (make-instr "bump+-indirect"
+                (lambda (o)
+                  (if (empty? (list-ref (floor-slots o) n))
+                      (violation "floor-slot empty")
+                    (letrec ((floor-slot (list-ref (floor-slots o) (list-ref (floor-slots o) n)))
+                             (convert-slot (if (string? floor-slot) (ordinal floor-slot) floor-slot)))
+                      (make-office (inbox o) (outbox o) (+ convert-slot 1) (+ convert-slot 1) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
+
+; Instuktion "bumb--indirect" funktioniert analog zu bump-
+(: bump--indirect (natural -> instruction))
+(define bump--indirect
+  (lambda (n)
+    (make-instr "bump--indirect"
+                (lambda (o)
+                  (if (empty? (list-ref (floor-slots o) n))
+                      (violation "floor-slot empty")
+                     (letrec ((floor-slot (list-ref (floor-slots o) (list-ref (floor-slots o) n)))
+                             (convert-slot (if (string? floor-slot) (ordinal floor-slot) floor-slot))) 
+                      (make-office (inbox o) (outbox o) (- convert-slot 1) (+ convert-slot 1) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
