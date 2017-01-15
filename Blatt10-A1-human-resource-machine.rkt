@@ -1180,3 +1180,25 @@
                      (letrec ((floor-slot (list-ref (floor-slots o) (list-ref (floor-slots o) n)))
                              (convert-slot (if (string? floor-slot) (ordinal floor-slot) floor-slot))) 
                       (make-office (inbox o) (outbox o) (- convert-slot 1) (+ convert-slot 1) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
+
+; --------------------------------------------------------------------------------------------------------------
+; Office day29 Test
+; --------------------------------------------------------------------------------------------------------------
+
+; formulieren einer Instruktionsliste, das die oben sthenede Aufgabe für Tag29 umsetzt
+; ->testen
+
+;Office day29
+(define day29
+  (make-office (list "H" "A" "P" "P" "Y" "N" "E" "W" "Y" "E" "A" "R") empty      
+               (replicate 16 #f) 0
+               (list (copy-to 15)
+                     "jumpA"
+                     <-inbox
+                     (copy-to 0)
+                     <-inbox
+                     (copy-to 1)
+                     (jump "jumpA"))       
+               0 0))                              
+
+;(check-expect (outbox (perform-all day29)) (list HAPYNEWR))
