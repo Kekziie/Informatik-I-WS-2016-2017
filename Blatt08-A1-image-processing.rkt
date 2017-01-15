@@ -211,7 +211,10 @@
 ; (: color-list->bitmap ((list-of rgb-color) natural natural -> image))
 
 ; Prozedur "vert-mirror" soll Bild vertikal spiegeln
+(: vert-mirror (image -> image))
 
 ; Prozedur "horiz-mirror" soll Bild horizontal spiegeln
+(: horiz-mirror (image -> image))
 
 ; Prozedur "rotate-90-left" soll ein Bild um 90° gegen Uhrzeigersinn rotieren
+(: rotate-90-left (image -> image))
