@@ -179,6 +179,13 @@
 ;      - aus geg. Office -> baut neues Office
 ;      - ip auf #f, wenn (inbox o) leer
 ;      - worker besetzt mit erstem Element von (inbox o) + inbox um ein Element verkürzt
+(: <-inbox instruction)
+(define <-inbox
+  (make-instr "<-inbox"
+              (lambda (o)
+                 (if (empty? (inbox o))
+                   (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (instruction-list o) #f (time-clock o))
+                   (make-office (rest (inbox o)) (outbox o) (floor-slots o) (first (inbox o)) (instruction-list o) (+ (ip o) 1) (time-clock o))))))
 
 ; (b)
 ; Instruktion: ->outbox besteht aus:
@@ -187,3 +194,16 @@
 ;     - aus geg. Office -> baut neues Office
 ;     - worker legt Paket, das er trägt in outbox ab -> danach kein Paket
 ;     - wenn kein Paket davor -> Abbruch mit (violation "...")
+(: ->outbox instruction)
+(define ->outbox
+  (make-instr "->outbox"
+              (lambda (o)
+              (if (empty? (worker o))
+                  (violation "worker hat kein Paket")
+                  (make-office (inbox o)
+                               (make-pair (worker o) (outbox o))
+                               (floor-slots o)
+                                #f
+                               (instruction-list o)
+                               (+ (ip o) 1)
+                               (time-clock o))))))
