@@ -938,3 +938,30 @@
                   (if (empty? (worker o))
                       (violation "worker no package")
                       (make-office (inbox o) (outbox o) (floor-slots o) (list-ref (floor-slots o) n) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))
+
+; --------------------------------------------------------------------------------------------------------------
+; Office day4 Test
+; --------------------------------------------------------------------------------------------------------------
+
+; (m)
+; formulieren einer Instruktionsliste für Tag4
+; -> testen
+;Office day 4
+(define day04
+  (make-office (list "E" -3 4 5 "A" -1) empty      ; inbox, outbox
+               (replicate 16 #f) #f                ; floor, worker
+               (list "jumpA"                       ; instructions:
+                     <-inbox
+                     (copy-to 0)
+                     <-inbox
+                     ->outbox
+                     (copy-from 0)
+                     ->outbox
+                     (jump "jumpA"))       
+               0 0))                               ; ip, time
+
+(check-expect (outbox (perform-all day04)) (list "A" -1 4 5 "E" -3))
+(check-expect (inbox (perform-next day04)) (list "E" -3 4 5 "A" -1))
+(check-expect (inbox (perform-next (perform-next day04))) (list -3 4 5 "A" -1))
+(check-expect (outbox (perform-next day04)) empty)
+(check-expect (worker (perform-next (perform-next day04))) "E")
