@@ -97,6 +97,19 @@
                              (rows-worker w (drop w xs) acc))))))
 
 ; Prozedur "rows" soll auf "rows-worker" zugreifen -> endrekursiv
+(: rows (natural (list-of %a) -> (list-of (list-of %a))))
+
+(check-expect (rows 2 (list 1 2 3 4 5)) (list (list 1 2)
+                                              (list 3 4)
+                                              (list 5)))
+(check-expect (rows 3 (list 1 2 3)) (list (list 1 2 3)))
+(check-expect (rows 1 empty) empty)
+(check-expect (rows 3 (list "a" "b" "c" "d" "e")) (list (list "a" "b" "c")
+                                                        (list "d" "e")))
+
+(define rows
+  (lambda (w xs)
+    (rows-worker w xs empty)))
 
 ; schreiben einer Prozedur "flatten", die
 ; - eine Liste von Listen xss akzeptiert
