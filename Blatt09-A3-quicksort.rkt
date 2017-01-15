@@ -19,3 +19,12 @@
                       (make-pair (first xs)
                                  (filter p? (rest xs)))
                       (filter p? (rest xs)))))))
+
+; Prozedur "quicksort" soll:
+; - eine Liste xs von Zahlen akzeptieren
+; - leere Liste -> sortiert
+; - nichte leere Liste:
+;    1.) Pivot-Element x bestimmen -> erstes Element der Liste
+;    2.) Aufteilung der Liste xs in 2 Listen: 1. Elemente kleiner gleich x, 2. Elemente größer x
+;    3.) Sortierung der beiden Listen rekursiv
+;    4.) Zusammenfügung der soriterten Liste mit Pivot-Element in der Mitte
