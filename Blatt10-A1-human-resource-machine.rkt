@@ -924,3 +924,17 @@
                   (if (empty? (worker o))
                       (violation "worker no package")
                       (make-office (inbox o) (outbox o) (list-update (floor-slots o) n (worker o)) (worker o) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))
+
+; (l)
+; implementieren der Instruktion "copy-from"
+; - worker nimmt Kopie des Pakets, das sich auf gewünschten Fußbodenabschnitt befindet
+; - Orginal verbleibt auf Fußboden
+; - befindet sich kein Paket auf Fußbodenabschnitt -> Programmabbruch
+(: copy-from (natural -> instruction))
+(define copy-from
+  (lambda (n)
+    (make-instr "copy-from"
+                (lambda (o)
+                  (if (empty? (worker o))
+                      (violation "worker no package")
+                      (make-office (inbox o) (outbox o) (floor-slots o) (list-ref (floor-slots o) n) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))
