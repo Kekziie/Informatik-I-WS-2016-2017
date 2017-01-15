@@ -965,3 +965,25 @@
 (check-expect (inbox (perform-next (perform-next day04))) (list -3 4 5 "A" -1))
 (check-expect (outbox (perform-next day04)) empty)
 (check-expect (worker (perform-next (perform-next day04))) "E")
+
+;==========================================================================================================================================================
+; TAG 5
+; Aufgabe "berechne für je zwei Zahlen a,b der inbox deren Ganzzahldivison ohne Rest (/ a b),
+;          packe das ergebnis auf Outbox (negative Zahlen und 0 können nicht auftreten"
+;==========================================================================================================================================================
+; (n)
+; schreiben einer Prozedur "ordinal"
+; gibt für jeden Buchstaben eine natürliche Zahl aus, dessen Position im Alphabet
+; ("A"->1, "B"->2, ...)
+(: ordinal (character -> natural))
+(check-expect (ordinal "A") 1)
+(check-expect (ordinal "B") 2)
+(check-expect (ordinal "Z") 26)
+(define ordinal
+  (lambda (c)
+    (cond ((string=? c "A") 1)  ((string=? c "B") 2)  ((string=? c "C") 3)  ((string=? c "D") 4)  ((string=? c "E") 5)
+          ((string=? c "F") 6)  ((string=? c "G") 7)  ((string=? c "H") 8)  ((string=? c "I") 9)  ((string=? c "J") 10)
+          ((string=? c "K") 11) ((string=? c "L") 12) ((string=? c "M") 13) ((string=? c "N") 14) ((string=? c "O") 15)
+          ((string=? c "P") 16) ((string=? c "Q") 17) ((string=? c "R") 18) ((string=? c "S") 19) ((string=? c "T") 20)
+          ((string=? c "U") 21) ((string=? c "V") 22) ((string=? c "W") 23) ((string=? c "X") 24) ((string=? c "Y") 25)
+          ((string=? c "Z") 26))))
