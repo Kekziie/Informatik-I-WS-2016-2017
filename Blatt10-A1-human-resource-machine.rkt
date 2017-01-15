@@ -987,3 +987,74 @@
           ((string=? c "P") 16) ((string=? c "Q") 17) ((string=? c "R") 18) ((string=? c "S") 19) ((string=? c "T") 20)
           ((string=? c "U") 21) ((string=? c "V") 22) ((string=? c "W") 23) ((string=? c "X") 24) ((string=? c "Y") 25)
           ((string=? c "Z") 26))))
+
+;----------------------------------------------------------------------------------------------------------------------
+; implementieren der 4 Instruktionen: add, sub, bump+ und bump-
+; Bemerkung:
+; - Buchtstaben werden zuerst umgewandelt
+; - kein Paket auf Fußbodenabschnitt -> Programmabbruch
+;----------------------------------------------------------------------------------------------------------------------
+
+; Instruktion "add"
+; - Inhalt des Pakets am geg. Fußbodenabschnitt wird mit Inhalt des Pakets vom Wokrer addiert
+; - Paket auf Fußbodenabschnitt unverändert
+(: add (natural -> instruction))
+(define add
+  (lambda (n) 
+   (make-instr "add"
+              (lambda (o)
+                (if (empty? (list-ref (floor-slots o) n))
+                    (violation "floor-slot empty")
+                    (if (empty? (worker o))
+                        (violation "worker no package")
+                       (let ((floor-slot (list-ref (floor-slots o) n))) 
+                        (make-office (inbox o) (outbox o) (floor-slots o) (+ (worker o) (if (string? floor-slot)
+                                                                                            (ordinal floor-slot)
+                                                                                            floor-slot)) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))))
+
+; Instruktion "sub"
+; - Inhalt des Pakets am geg. Fußbodenabschnitt wird vom Inhalt des Pakets vom Wokrer abgezogen
+; - Paket auf Fußbodenabschnitt unverändert
+(: sub (natural -> instruction))
+(define sub
+  (lambda (n) 
+   (make-instr "sub"
+              (lambda (o)
+                (if (empty? (list-ref (floor-slots o) n))
+                    (violation "floor-slot empty")
+                    (if (empty? (worker o))
+                        (violation "worker no package")
+                       (let ((floor-slot (list-ref (floor-slots o) n))) 
+                        (make-office (inbox o) (outbox o) (floor-slots o) (- (worker o) (if (string? floor-slot)
+                                                                                            (ordinal floor-slot)
+                                                                                            floor-slot)) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))))
+
+; Instuktion "bumb+"
+; - Inhalt des Pakets am Fußbodenabschnitt wird um Ganzzahl 1 erhöht
+; - worker nimmt anschließend Paket auf
+; - Kopie verbleibt auf Fußbodenabschnitt
+(: bump+ (natural -> instruction))
+(define bump+
+  (lambda (n)
+    (make-instr "bump+"
+                (lambda (o)
+                  (if (empty? (list-ref (floor-slots o) n))
+                      (violation "floor-slot empty")
+                    (letrec ((floor-slot (list-ref (floor-slots o) n))
+                             (convert-slot (if (string? floor-slot) (ordinal floor-slot) floor-slot)))
+                      (make-office (inbox o) (outbox o) (+ convert-slot 1) (+ convert-slot 1) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
+
+; Instuktion "bumb-"
+; - Inhalt des Pakets am Fußbodenabschnitt wird um Ganzzahl 1 verringert
+; - worker nimmt anschließend Paket auf
+; - Kopie verbleibt auf Fußbodenabschnitt
+(: bump- (natural -> instruction))
+(define bump-
+  (lambda (n)
+    (make-instr "bump-"
+                (lambda (o)
+                  (if (empty? (list-ref (floor-slots o) n))
+                      (violation "floor-slot empty")
+                     (letrec ((floor-slot (list-ref (floor-slots o) n))
+                             (convert-slot (if (string? floor-slot) (ordinal floor-slot) floor-slot))) 
+                      (make-office (inbox o) (outbox o) (- convert-slot 1) (+ convert-slot 1) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
