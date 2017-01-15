@@ -73,3 +73,68 @@
 (: instr? (any -> boolean))
 (: description (instruction -> string))
 (: action (instruction -> (office -> office)))
+
+; --------------------------------------------------------------------------------------------------------------
+; Some predefined list functions
+; --------------------------------------------------------------------------------------------------------------
+
+; replicate an element n times
+(: replicate (natural %a -> (list-of %a)))
+(define replicate
+  (lambda (n x)
+    (cond ((= n 0) empty)
+          (else (make-pair x (replicate (- n 1) x))))))
+
+; Zip two lists with a given function
+(: zipWith ((%a %b -> %c) (list-of %a) (list-of %b) -> (list-of %c)))
+(define zipWith
+  (lambda (f xs ys)
+    (cond ((empty? xs) empty)
+          ((empty? ys) empty)
+          (else        (make-pair (f (first xs) (first ys)) 
+                                  (zipWith f (rest xs) (rest ys)))))))
+
+; Return an integer list range
+(: range (integer integer -> (list-of integer)))
+(define range
+  (lambda (from to)
+    (cond ((> from to) empty)
+          (else (make-pair from (range (+ from 1) to))))))
+
+; (take w xs):
+; - liefert die ersten w Elemente der Liste xs zurück
+; - hat xs nur m < w Elemente, liefere diese m Elemente zurück
+(: take (natural (list-of %a) -> (list-of %a)))
+(check-expect (take 0 empty) empty)
+(check-expect (take 0 (list 1)) empty)
+(check-expect (take 2 (list 1)) (list 1))
+(check-expect (take 2 (list 1 2)) (list 1 2))
+(check-expect (take 2 (list 1 2 3)) (list 1 2))
+(check-expect (take 3 (list 1 2 3 4 5 6 7 8 9)) (list 1 2 3))
+(define take
+  (lambda (w xs)
+    (cond
+      ((empty? xs) empty)
+      ((= 0 w) empty)
+      ((pair? xs) (if (<= (length xs) w)
+                      xs
+                      (make-pair (first xs)
+                                 (take (- w 1) (rest xs))))))))  
+
+; (drop w xs)
+; - verwirft die ersten w Elemente der Liste xs und gibt den Rest zurück
+; - hat xs nur m < w Elemente, liefere die leere Liste zurück
+(: drop (natural (list-of %a) -> (list-of %a)))
+(check-expect (drop 0 empty) empty)
+(check-expect (drop 0 (list 3)) (list 3))
+(check-expect (drop 1 (list 1)) empty)
+(check-expect (drop 2 (list 1 2 3)) (list 3))
+(check-expect (drop 3 (list 1 2 3 4 5 6 7 8 9)) (list 4 5 6 7 8 9))
+(define drop
+  (lambda (w xs)
+    (cond
+      ((empty? xs) empty)
+      ((= w 0) xs)
+      ((pair? xs) (if (<= (length xs) w)
+                       empty
+                      (drop (- w 1) (rest xs)))))))
