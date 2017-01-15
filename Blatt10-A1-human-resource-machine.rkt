@@ -56,3 +56,20 @@
 (define maybe-of
   (lambda (t)
     (signature (mixed t (one-of #f)))))
+
+; --------------------------------------------------------------------------------------------------------------
+; Instructions
+; --------------------------------------------------------------------------------------------------------------
+; An instruction consists of
+; - a text representation and
+; - a function that modifies a given office, following the instruction
+
+(define-record-procedures instruction
+  make-instr
+  instr?
+  (description action))
+
+(: make-instr (string (office -> office) -> instruction))
+(: instr? (any -> boolean))
+(: description (instruction -> string))
+(: action (instruction -> (office -> office)))
