@@ -207,3 +207,63 @@
                                (instruction-list o)
                                (+ (ip o) 1)
                                (time-clock o))))))
+
+; --------------------------------------------------------------------------------------------------------------
+; Running the office
+; --------------------------------------------------------------------------------------------------------------
+; Hilsprozedur
+; jump-in? schaut, ob eine Insturkiton "jump" enthalten ist in der Instrcution Liste
+(: jump-in? (office -> boolean))
+(define jump-in?
+  (lambda (o)
+    (cond 
+      ((empty? (instruction-list o)) #f)   
+      ((pair? (instruction-list o)) (let ((string-or-instr (if (string? (first (instruction-list o)))
+                                                                 (first (instruction-list o))
+                                                                 (description (first (instruction-list o))))))
+                                    (cond
+                                      ((string=? string-or-instr "jump") #t)
+                                      ((string=? string-or-instr "jump-if-neg") #t)
+                                      ((string=? string-or-instr "jump-if-zero") #t)
+                                      (else (jump-in? (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (rest (instruction-list o)) (ip o) (time-clock o))))))))))
+
+; (c)
+; Prozedur "perform-next" soll:
+; - bei einem geg. Postamt o die nächste Arbeitsanweisung durchführen
+; - wenn (ip o) den Wert #f hat, office bleibt unverändert
+; - Stechuhr hochzählen
+(: perform-next (office -> office))
+(define perform-next
+  (lambda (o)
+    (if (boolean? (ip o))
+        o
+       (let ((>instr (list-ref (instruction-list o) (ip o)))) 
+        (if (string? >instr)
+            (make-office (inbox o)
+                         (outbox o)
+                         (floor-slots o)
+                         (worker o)
+                         (instruction-list o)
+                         (+ (ip o) 1)
+                         (time-clock o))
+            (let ((run-instr ((action >instr) o))) 
+              (make-office (inbox run-instr)
+                           (outbox run-instr)
+                           (floor-slots run-instr)
+                           (worker run-instr)
+                           (instruction-list o)
+                           (ip run-instr)
+                           (+ 1 (time-clock o)))))))))
+                               
+; (d)                                                                                                      
+; Prozedur "perform-all" soll:
+; - auf perform-next aufbauen
+; - solange iterativ (jeweils nächste Instruktion ausführen) bis ip Wert #f
+
+(define perform-all
+  (lambda (o)
+    (cond
+      ((empty? (instruction-list o)) o)
+      ((pair? (instruction-list o)) (if (jump-in? o)
+                                        ((repeat (* (length (inbox o)) (length (instruction-list o))) perform-next) o)
+                                        ((repeat (length (instruction-list o)) perform-next) o))))))
