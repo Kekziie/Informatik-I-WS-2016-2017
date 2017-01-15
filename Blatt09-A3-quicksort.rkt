@@ -36,3 +36,13 @@
 (check-expect (quicksort (list 1 2 3)) (list 1 2 3))
 (check-expect (quicksort (list 5 3 1)) (list 1 3 5))
 (check-within (quicksort (list 1/2 2 -2.5 -10 8 1/2 4 13 42)) (list -10 -2.5 1/2 1/2 2 4 8 13 42) 0.001)
+
+(define quicksort
+  (lambda (xs)
+    (cond
+      ((empty? xs) empty)
+      ((pair? xs) (append (quicksort (filter (lambda (x)
+                                                   (<= x (first xs))) (rest xs)))
+                          (list (first xs))
+                          (quicksort (filter (lambda (x)
+                                                   (not (<= x (first xs)))) (rest xs))))))))
