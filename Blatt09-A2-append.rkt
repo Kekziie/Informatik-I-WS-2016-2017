@@ -93,5 +93,3 @@
       ((= n 0) xs)
       ((empty? xs) empty)
       ((pair? xs) (drop (- n 1) (rest xs))))))
-
-(cat (take 2 (list 1 2 3)) (drop 2 (list 1 2 3)))
