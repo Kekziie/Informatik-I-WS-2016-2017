@@ -65,6 +65,36 @@
 ; - übergebene Liste xs soll in eine Liste von Listen xss umgewandelt werden
 ; - jede innere Liste soll w Elemnte enthalten
 ; - letzte inner Lite kann weniger als w Elemente enthalten
+(: rows-worker (natural (list-of %a) (list-of %a) -> (list-of (list-of %a))))
+
+(check-expect (rows-worker 2
+                          (list 1 2 3 4 5 6)
+                          empty) (list (list 1 2)
+                                       (list 3 4)
+                                       (list 5 6)))
+(check-expect (rows-worker 0 empty empty) empty)
+(check-expect (rows-worker 2
+                           (list 3)
+                           empty) (list (list 3)))
+(check-expect (rows-worker 2
+                           (list 1 2 3 4 5)
+                           empty) (list (list 1 2)
+                                        (list 3 4)
+                                        (list 5)))
+(check-expect (rows-worker 3
+                           (list 1 2 3)
+                           empty) (list (list 1 2 3)))
+(check-expect (rows-worker 3
+                           (list 1 2 3 4 5)
+                           empty) (list (list 1 2 3)
+                                        (list 4 5)))
+
+(define rows-worker
+  (lambda (w xs acc)
+    (cond
+      ((empty? xs) acc)
+      ((pair? xs) (make-pair (take w xs)
+                             (rows-worker w (drop w xs) acc))))))
 
 ; Prozedur "rows" soll auf "rows-worker" zugreifen -> endrekursiv
 
