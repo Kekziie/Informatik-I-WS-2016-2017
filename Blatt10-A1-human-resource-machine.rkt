@@ -824,3 +824,40 @@
 (check-expect (inbox (perform-next (perform-next day02))) (list 3 "A"))
 (check-expect (outbox (perform-next day02)) empty)
 (check-expect (worker (perform-next (perform-next day02))) "E")
+
+;==========================================================================================================================================================
+; TAG 3
+; Aufgabe "entferne Pakete mit negativen Zahlen, transportiere alle anderen zur Outbox"
+;==========================================================================================================================================================
+; (i)
+; implementieren von zwei Instruktionen "jump-if-zero" und "jump-if-negative"
+
+; "jump-if-zero"
+; - verhält sich wie jump -> springt zu geg. Label auf Instruktionsliste
+; - Ausnahme: "jump" nur, wenn worker Paket mit Ganzzahl 0 trägt
+; - kein Paket -> Programmabbruch
+(: jump-if-zero (string -> instruction))
+(define jump-if-zero
+  (lambda (Label)
+    (make-instr "jump-if-zero"
+                (lambda (o)                  
+                  (if (boolean? (worker o))
+                      (violation "no package")
+                      (if (= (worker o) 0)
+                          ((action (jump Label)) o)
+                          (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
+                      
+; "jump-if-negative"
+; - verhält sich wie jump -> springt zu geg. Label auf Instruktionsliste
+; - Ausnahme: "jump" nur, wenn worker Paket mit negativer Zahl trägt
+; - Buchstaben werden als positive Zahlen gewertet
+(: jump-if-negative (string -> instruction))
+(define jump-if-negative
+  (lambda (Label)
+    (make-instr "jump-if-neg"
+                (lambda (o)                  
+                  (if (boolean? (worker o))
+                      (violation "no package")
+                      (if (< (worker o) 0)
+                          ((action (jump Label)) o)
+                          (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
