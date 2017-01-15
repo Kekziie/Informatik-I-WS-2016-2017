@@ -212,9 +212,24 @@
 
 ; Prozedur "vert-mirror" soll Bild vertikal spiegeln
 (: vert-mirror (image -> image))
+(define vert-mirror
+  (lambda (image)
+    (color-list->bitmap (flatten (reverse (rows (image-width image) (reverse (image->color-list image)))))
+                        (image-width image)
+                        (image-height image))))
 
 ; Prozedur "horiz-mirror" soll Bild horizontal spiegeln
 (: horiz-mirror (image -> image))
+(define horiz-mirror
+  (lambda (image)
+    (color-list->bitmap (flatten (reverse (rows (image-width image) (image->color-list image))))
+                        (image-width image)
+                        (image-height image))))
 
 ; Prozedur "rotate-90-left" soll ein Bild um 90° gegen Uhrzeigersinn rotieren
 (: rotate-90-left (image -> image))
+(define rotate-90-left
+  (lambda (image)
+    (color-list->bitmap (flatten (reverse (transpose (rows (image-width image) (image->color-list image)))))
+                        (image-width image)
+                        (image-height image))))
