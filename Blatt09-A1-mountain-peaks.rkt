@@ -96,3 +96,15 @@
 ;                            /\           /\ \           / /\ \    
 ;                /\         / /\         / /\ \         / / /\ \
 ; n=1: /\  n=2: /\ \  n=3: / /\ \  n=4: / /\ \ \  n=5: / / /\ \ \
+(: mountain-peaks (natural -> (list-of string)))
+
+(check-expect (mountain-peaks 0) empty)
+(check-expect (mountain-peaks 1) (list "/\\"))
+(check-expect (mountain-peaks 2) (list " /\\" "/\\ \\"))
+(check-expect (mountain-peaks 3) (list "  /\\" " / /\\" "/ /\\ \\"))
+
+(define mountain-peaks
+  (lambda (n)
+    (if (odd? n)
+        (whitespace-string (reverse (mountain-odd n)))
+        (whitespace-string (reverse (mountain-even n))))))
