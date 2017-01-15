@@ -89,13 +89,9 @@
                    (make-pair (string-append "/ " (first (mountain-odd (- n 1))))
                               (mountain-odd (- n 1))))))))
 
-; (print (mountaint-peaks n)) zeichnet "Gebirgszug" für jede natürlich Zahl n
-; (vgl. Zeichnungen)
-;                                                          /\          
-;                                          /\             / /\
-;                            /\           /\ \           / /\ \    
-;                /\         / /\         / /\ \         / / /\ \
-; n=1: /\  n=2: /\ \  n=3: / /\ \  n=4: / /\ \ \  n=5: / / /\ \ \
+; Funktion "mountain-peaks" soll:
+; - eine natürliche Zahl n akzeptieren
+; - eine Liste von einem "Gebirgszug" der gegebenen Größe n auswerfen 
 (: mountain-peaks (natural -> (list-of string)))
 
 (check-expect (mountain-peaks 0) empty)
@@ -108,3 +104,17 @@
     (if (odd? n)
         (whitespace-string (reverse (mountain-odd n)))
         (whitespace-string (reverse (mountain-even n))))))
+
+; (print (mountaint-peaks n)) zeichnet "Gebirgszug" für jede natürlich Zahl n
+; (vgl. Zeichnungen)
+;                                                          /\          
+;                                          /\             / /\
+;                            /\           /\ \           / /\ \    
+;                /\         / /\         / /\ \         / / /\ \
+; n=1: /\  n=2: /\ \  n=3: / /\ \  n=4: / /\ \ \  n=5: / / /\ \ \
+
+(print (mountain-peaks 1))
+(print (mountain-peaks 2))
+(print (mountain-peaks 3))
+(print (mountain-peaks 4))
+(print (mountain-peaks 5))
