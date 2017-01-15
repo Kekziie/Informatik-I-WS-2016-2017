@@ -26,3 +26,12 @@
 (check-within (zipWith /
                        (list 2 4)
                        (list 3)) (list 2/3) 0.001)
+
+(define zipWith
+  (lambda (f xs ys)
+    (cond
+      ((or (empty? xs)
+           (empty? ys)) empty)
+      ((and (pair? xs)
+            (pair? ys)) (make-pair (f (first xs) (first ys))
+                                   (zipWith f (rest xs) (rest ys)))))))
