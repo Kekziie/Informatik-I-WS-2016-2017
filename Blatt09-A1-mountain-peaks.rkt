@@ -47,6 +47,48 @@
       ((pair? xs) (make-pair (string-append (whitespace (- (length xs) 1)) (first xs))
                              (whitespace-string (rest xs)))))))
 
+; Hilfprozeduren "mountain-even" und "mountain-odd"
+; - akezpetieren eine natürliche Zahl n
+; - erstellen einer Liste von einem "Gebirgszug" verkehrt herum
+; - mountain-even für gerade n
+; - mountain-odd für ungerade n
+
+(: mountain-even (natural -> (list-of string)))
+
+(check-expect (mountain-even 0) empty)
+(check-expect (mountain-even 1) (list "/\\"))
+(check-expect (mountain-even 2) (list "/\\ \\" "/\\" ))
+(check-expect (mountain-even 3) (list  "/ /\\ \\" "/\\ \\" "/\\"))
+
+(define mountain-even
+  (lambda (n) 
+    (cond
+      ((= n 0) empty)
+      ((= n 1) (list "/\\"))
+      ((> n 1) (if (even? n)
+                   (make-pair (string-append (first (mountain-even (- n 1))) " \\")
+                              (mountain-even (- n 1)))
+                   (make-pair (string-append "/ " (first (mountain-even (- n 1))))
+                              (mountain-even (- n 1))))))))
+
+(: mountain-odd (natural -> (list-of string)))
+
+(check-expect (mountain-odd 0) empty)
+(check-expect (mountain-odd 1) (list "/\\"))
+(check-expect (mountain-odd 2) (list "/ /\\" "/\\" ))
+(check-expect (mountain-odd 3) (list  "/ /\\ \\" "/ /\\" "/\\"))
+
+(define mountain-odd
+  (lambda (n) 
+    (cond
+      ((= n 0) empty)
+      ((= n 1) (list "/\\"))
+      ((> n 1) (if (odd? n)
+                   (make-pair (string-append (first (mountain-odd (- n 1))) " \\")
+                              (mountain-odd (- n 1)))
+                   (make-pair (string-append "/ " (first (mountain-odd (- n 1))))
+                              (mountain-odd (- n 1))))))))
+
 ; (print (mountaint-peaks n)) zeichnet "Gebirgszug" für jede natürlich Zahl n
 ; (vgl. Zeichnungen)
 ;                                                          /\          
