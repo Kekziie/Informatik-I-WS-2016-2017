@@ -23,6 +23,19 @@
 ; Fall n=0
 ; --------
 
+; (cat (take 0 xs) (drop 0 xs))
+
+; => {apply(λ) in take, apply(λ) in drop}
+; (cat ((lambda 0 xs) (cond ((= 0 0) ...))) ((lambda 0 xs) (cond ((= 0 0) ...))))
+
+; => {eval(cond) von take, eval(cond) von drop}
+; (cat ((cond (#t empty)...) ((cond (#t xs)...)))
+
+; => {Reduktion take, Reduktion drop}
+; (cat empty xs)
+
+; => {Reduktion cat}
+; xs
 
 ; Fall n>0
 ; --------
