@@ -267,3 +267,30 @@
       ((pair? (instruction-list o)) (if (jump-in? o)
                                         ((repeat (* (length (inbox o)) (length (instruction-list o))) perform-next) o)
                                         ((repeat (length (instruction-list o)) perform-next) o))))))
+
+; --------------------------------------------------------------------------------------------------------------
+; Office day1 Test
+; --------------------------------------------------------------------------------------------------------------
+; Office day 1
+(define day01
+  (make-office (list "E" 3) empty    ; inbox, outbox
+               (replicate 16 #f) #f  ; floor, worker
+               (list <-inbox         ; instructions:
+                     ->outbox
+                     <-inbox
+                     ->outbox)            
+               0 0))                 ; ip, time
+
+(check-expect (outbox (perform-all day01)) (list 3 "E"))
+(check-expect (inbox (perform-all day01)) empty)
+(check-expect (inbox (perform-next day01)) (list 3))
+(check-expect (inbox (perform-next (perform-next day01))) (list 3))
+(check-expect (outbox (perform-next day01)) empty)
+(check-expect (outbox (perform-next (perform-next day01))) (list "E"))
+(check-expect (outbox (perform-next (perform-next (perform-next (perform-next day01))))) (list 3 "E"))
+(check-expect (worker (perform-next day01)) "E")
+(check-expect (worker (perform-next (perform-next day01))) #f)
+(check-expect (ip (perform-next day01)) 1)
+(check-expect (ip (perform-next (perform-next day01))) 2)
+(check-expect (time-clock (perform-next day01)) 1)
+(check-expect (time-clock (perform-next (perform-next day01))) 2)
