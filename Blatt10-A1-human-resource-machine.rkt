@@ -886,3 +886,28 @@
 (check-expect (inbox (perform-next (perform-next day03))) (list 5 -3 4 5 0))
 (check-expect (outbox (perform-next day03)) empty)
 (check-expect (worker (perform-next (perform-next day03))) -1)
+
+;==========================================================================================================================================================
+; TAG 4
+; Aufgabe "nimm je zwei Pakete von der Inbox und lege sie in umgekehrter reihenfolge auf Outbox,
+;          wiederhole dies, bis Inbox leer ist"
+;==========================================================================================================================================================
+; (k)
+; schreiben einer Prozedur "list-update"
+; - emörglicht Element x an einer bestimmten Position p einer beliebigen Liste xs auszutauschen
+; - Position einer Liste beginnt mit Zählung von 0 aufwärts
+(: list-update ((list-of %a) natural %a -> (list-of %a)))
+
+(check-expect (list-update (list 1 2 3) 2 4) (list 1 2 4))
+(check-expect (list-update (list 1 2 3 4) 0 -5) (list -5 2 3 4))
+(check-expect (list-update (list "a") 5 "b") (list "a"))
+(check-expect (list-update empty 7 9) empty)
+(check-expect (list-update (list "a") 0 "b") (list "b"))
+
+(define list-update
+  (lambda (xs p x)
+    (cond
+      ((empty? xs) empty)
+      ((> p 0) (make-pair (first xs)
+                          (list-update (rest xs) (- p 1) x)))
+      ((= p 0) (append (reverse (rest (reverse (list (first xs))))) (list x) (rest xs))))))
