@@ -1058,3 +1058,40 @@
                      (letrec ((floor-slot (list-ref (floor-slots o) n))
                              (convert-slot (if (string? floor-slot) (ordinal floor-slot) floor-slot))) 
                       (make-office (inbox o) (outbox o) (- convert-slot 1) (+ convert-slot 1) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
+
+; --------------------------------------------------------------------------------------------------------------
+; Office day5 Test
+; --------------------------------------------------------------------------------------------------------------
+
+; (o)
+; formulieren einer Instruktionsliste für Tag5
+; -> testen
+
+; Office day 5
+(define day05
+  (make-office (list 3 4 8 7 6 3) empty      
+               (replicate 16 #f) 0                
+               (list (copy-to 10)    ;0
+                     "jumpA"         ;1
+                     (copy-from 10)  ;2
+                     (copy-to 8)     ;3
+                     <-inbox         ;4              
+                     (copy-to 0)     ;5
+                     <-inbox         ;6
+                     (copy-to 1)     ;7
+                     "jumpB"         ;8
+                     (copy-from 0)   ;9
+                     (sub 1)         ;10
+                     (jump-if-negative "jumpC")
+                     (copy-to 0)     ;12 
+                     (bump+ 8)       ;13
+                     (jump "jumpB")  ;14
+                     "jumpC"         ;15
+                     (copy-from 8)   ;16
+                     ->outbox        ;17
+                     (jump "jumpA")) ;18  
+               0 0))                               
+
+(check-expect (outbox (perform-next day05)) empty)
+(check-expect (inbox (perform-next day05)) (list 3 4 8 7 6 3))
+(check-expect (worker (perform-next day05)) 0)
