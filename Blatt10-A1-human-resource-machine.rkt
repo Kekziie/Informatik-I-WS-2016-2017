@@ -911,3 +911,16 @@
       ((> p 0) (make-pair (first xs)
                           (list-update (rest xs) (- p 1) x)))
       ((= p 0) (append (reverse (rest (reverse (list (first xs))))) (list x) (rest xs))))))
+
+; implementieren der Instruktion "copy-to"
+; - worker legt Kopie seines Pakets auf gewünschten Fußbodenabschnitt
+; - Orginal bleibt beim Worker
+; - worker kein Paket -> Programmabbruch
+(: copy-to (natural -> instruction))
+(define copy-to
+  (lambda (n)
+    (make-instr "copy-to"
+                (lambda (o)
+                  (if (empty? (worker o))
+                      (violation "worker no package")
+                      (make-office (inbox o) (outbox o) (list-update (floor-slots o) n (worker o)) (worker o) (instruction-list o) (+ (ip o) 1) (time-clock o)))))))
