@@ -7,3 +7,22 @@
 ;  - kombiniert Elemente der Listen xs und ys an der gleichen Position mittels funktion f
 ;  - überstehende Elemente verwerfen
 (: zipWith ((%a %b -> %c) (list-of %a) (list-of %b) -> (list-of %c)))
+
+(check-expect (zipWith +
+                       (list 1 2 3)
+                       (list 10 20 30 40)) (list 11 22 33))
+(check-expect (zipWith *
+                       empty
+                       (list 1 2 3)) empty)
+(check-expect (zipWith /
+                       empty
+                       empty) empty)
+(check-expect (zipWith +
+                       (list 42)
+                       empty) empty)
+(check-expect (zipWith *
+                       (list 1 2 3)
+                       (list 3 2 1)) (list 3 4 3))
+(check-within (zipWith /
+                       (list 2 4)
+                       (list 3)) (list 2/3) 0.001)
