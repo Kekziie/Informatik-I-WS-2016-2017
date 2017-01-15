@@ -6,3 +6,4 @@
 ;  - eine Funktion f und 2 Listen xs und ys konsumieren
 ;  - kombiniert Elemente der Listen xs und ys an der gleichen Position mittels funktion f
 ;  - überstehende Elemente verwerfen
+(: zipWith ((%a %b -> %c) (list-of %a) (list-of %b) -> (list-of %c)))
