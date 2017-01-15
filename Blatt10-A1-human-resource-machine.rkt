@@ -861,3 +861,28 @@
                       (if (< (worker o) 0)
                           ((action (jump Label)) o)
                           (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (instruction-list o) (+ (ip o) 1) (time-clock o))))))))
+
+; --------------------------------------------------------------------------------------------------------------
+; Office day3 Test
+; --------------------------------------------------------------------------------------------------------------
+; (j)
+; formulieren einer Instruktionsliste für Worker, die Aufgabe für Tag 3 erfüllt
+; -> testen!
+; Hinweis: mit "jump" kann man rückwärts und vorwärts springen
+
+;Office day 3
+(define day03
+  (make-office (list -1 5 -3 4 5 0) empty      ; inbox, outbox
+               (replicate 16 #f) #f                ; floor, worker
+               (list "jumpB"                       ; instructions:
+                     <-inbox
+                     (jump-if-negative "jumpB")
+                     ->outbox
+                     (jump "jumpB"))       
+                0 0))                              ; ip, time
+
+(check-expect (outbox (perform-all day03)) (list 0 5 4 5))
+(check-expect (inbox (perform-next day03)) (list -1 5 -3 4 5 0))
+(check-expect (inbox (perform-next (perform-next day03))) (list 5 -3 4 5 0))
+(check-expect (outbox (perform-next day03)) empty)
+(check-expect (worker (perform-next (perform-next day03))) -1)
