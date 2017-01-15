@@ -1202,3 +1202,23 @@
                0 0))                              
 
 ;(check-expect (outbox (perform-all day29)) (list HAPYNEWR))
+
+;===============================================================================================================================================================
+; Animation von allen Tagen
+;===============================================================================================================================================================
+
+; vorgegebenes Design des office
+;(start-office-day day01)
+;(start-office-day day02)
+;(start-office-day day03)
+;(start-office-day day04)
+;(start-office-day day05)
+;(start-office-day day29)
+
+; eigenes office Design aus Aufgabe e)
+;(start-office-day2 day01)
+;(start-office-day2 day02)
+;(start-office-day2 day03)
+;(start-office-day2 day04)
+;(start-office-day2 day05)
+;(start-office-day2 day29)
