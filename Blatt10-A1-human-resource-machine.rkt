@@ -158,3 +158,32 @@
     (cond
       ((= n 0) (lambda (x) x))
       ((> n 0) (compose (repeat (- n 1) f) f)))))
+
+; =====================================================================================================================================
+
+; Lösungen ab hier :D
+
+;===========================================================================================================================================
+; TAG 1
+; Aufgabe "transportiert die ersten zwei Pakete der Inbox nacheinander auf die Outbox"
+;===========================================================================================================================================
+
+; ------------------------------------------------------------------------------------------------------
+; first instructions
+; ------------------------------------------------------------------------------------------------------
+
+; (a) 
+; Instruktion: <-inbox besthet aus:
+; - Textdarstellung "<-inbox"
+; - Funktion:
+;      - aus geg. Office -> baut neues Office
+;      - ip auf #f, wenn (inbox o) leer
+;      - worker besetzt mit erstem Element von (inbox o) + inbox um ein Element verkürzt
+
+; (b)
+; Instruktion: ->outbox besteht aus:
+; - Textdarstellung: "->outbox"
+; - Funktion:
+;     - aus geg. Office -> baut neues Office
+;     - worker legt Paket, das er trägt in outbox ab -> danach kein Paket
+;     - wenn kein Paket davor -> Abbruch mit (violation "...")
