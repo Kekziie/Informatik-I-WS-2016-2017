@@ -382,3 +382,356 @@
 (check-expect (ip (perform-next (perform-next day01))) 2)
 (check-expect (time-clock (perform-next day01)) 1)
 (check-expect (time-clock (perform-next (perform-next day01))) 2)
+
+;==================================================================================================================================
+; Bonus              
+;==================================================================================================================================
+
+; (e)
+; "verschönern" des office
+;--------------------------------------------------------
+; Boden des office
+;--------------------------------------------------------
+; definieren von "bodenkacheln"
+(define tile-size 30)
+
+(define tile1
+  (square tile-size "solid" "burlywood"))
+
+(define tile2
+  (square tile-size "solid" "wheat"))
+
+(define tile3
+  (square tile-size "solid" "tan"))
+
+(define tile-square1
+  (above (beside tile1 tile2 tile3)
+         (beside tile2 tile1 tile2)
+         (beside tile3 tile2 tile1)))
+
+(define tile-square2
+  (above (beside tile2 tile3 tile1)
+         (beside tile3 tile1 tile3)
+         (beside tile1 tile3 tile2)))
+
+(define tile-square3
+  (above (beside tile3 tile1 tile3)
+         (beside tile1 tile2 tile1)
+         (beside tile2 tile1 tile3)))
+
+(define office-floor
+  (beside (empty-scene 40 0)
+          (above (beside tile-square2 tile-square2 tile-square1 tile-square3)
+                 (beside tile-square2 tile-square1 tile-square3 tile-square3)
+                 (beside tile-square1 tile-square2 tile-square1 tile-square2))
+          (empty-scene 40 0)
+          (rectangle 250 380 "solid" "LightGoldenrodYellow")))
+
+;--------------------------------------------------------
+; Pakete
+;--------------------------------------------------------
+; zeichnet Pakete
+(: draw-package2 ((maybe-of package) -> image))
+(define draw-package2
+  (lambda (p)
+    (place-image (text (cond ((number? p) (number->string p))
+                             ((string? p) p)
+                             (else ""))
+                       14 "black")
+                 12 12
+                 (overlay
+                  (cond ((boolean? p) empty-image)
+                        ((integer? p) (rectangle 20 20 "solid" "palegreen"))
+                        (else (rectangle 20 20 "solid" "cornflowerblue")))
+                  (cond ((boolean? p) (rectangle 23 23 "solid" "lavender" ))
+                        ((integer? p) (rectangle 23 23 "solid" "limegreen"))
+                        (else (rectangle 23 23 "solid" "royalblue")))
+                  (rectangle 24 24 "solid" "white")))))
+
+; Zeichnet eine Liste von Paketen für inbox,outbox
+(: draw-pkgs2 ((list-of (maybe-of package)) -> image))
+(define draw-pkgs2
+  (lambda (ps)
+      (fold empty-image above (map draw-package2 ps))))
+
+; zeichnet liste von paketen für floor-slots
+(: draw-pkgs3 ((list-of (maybe-of package)) -> image))
+(define draw-pkgs3
+  (lambda (ps)
+      (above (fold empty-image beside (map draw-package2 (take 4 ps)))
+             (fold empty-image beside (map draw-package2 (take 4 (drop 4 ps))))
+             (fold empty-image beside (map draw-package2 (take 4 (drop 8 ps))))
+             (fold empty-image beside (map draw-package2 (take 4 (drop 12 ps)))))))
+
+;--------------------------------------------------------
+; Inbox Outbox
+;--------------------------------------------------------
+; "Markierung" für Inbox, Outbox
+; Winkel der Rotation von der Notiz: angle
+; Wort/Notiz: str als string
+(define draw-notice
+  (lambda (angle str)
+    (rotate angle (overlay (text str 25 "black")
+                           (rectangle (* 15 (string-length str)) 30 "solid" "ivory")))))
+
+; definieren eines "Fließbandes" für inbox und outbox
+(define production-line1
+  (let ((line1 (rectangle 35 25 "solid" "tan"))
+        (line2 (rectangle 35 25 "solid" "blanchedalmond")))
+  (overlay (above line1 line2 line1 line2 line1 line2)
+           (rectangle 40 155 "solid" "black"))))
+
+(define production-line2
+  (let ((line1 (rectangle 35 25 "solid" "tan"))
+        (line2 (rectangle 35 25 "solid" "blanchedalmond")))
+  (overlay (above line2 line1 line2 line1 line2 line1)
+           (rectangle 40 155 "solid" "black"))))
+
+; zeichnet inbox des office mit seinen Paketen ps
+(: draw-inbox ((list-of (maybe-of package)) -> image))
+(define draw-inbox
+  (lambda (ps)
+    (beside (draw-notice 90 "INBOX->")
+            (empty-scene 5 0)
+            (overlay/xy (draw-pkgs2 ps)
+                        -7 -4
+                        (if (odd? (length ps))
+                            production-line1
+                            production-line2)))))
+
+; zeichnet outbox des office mit seinen Paketen ps
+(: draw-outbox ((list-of (maybe-of package)) -> image))
+(define draw-outbox
+  (lambda (ps)
+    (beside (overlay/xy (draw-pkgs2 ps)
+                        -7 -4
+                        (if (odd? (length ps))
+                            production-line2
+                            production-line1))
+            (empty-scene 5 0)
+            (draw-notice -90 "OUTBOX->"))))
+
+;--------------------------------------------------------
+; floor-slots
+;--------------------------------------------------------
+; Zeichnet Slots auf dem Boden des office
+(: draw-floor-slots ((list-of (maybe-of package)) -> image))
+(define draw-floor-slots
+  (lambda (ps)
+    (above (text "floor-slots" 25 "black")
+           (overlay (draw-pkgs3 ps)
+                    (square 120 "solid" "peru")))))
+
+;--------------------------------------------------------
+; worker
+;--------------------------------------------------------
+; implementieren des "Körpers" vom Worker
+(define hat
+  (overlay/xy (square 15 "solid" "black")
+              -5 12
+              (rectangle 25 10 "solid" "black")))
+
+(define eye-left
+ (overlay/xy (circle 4 "solid" "black")
+             -7 -7.7
+            (overlay/xy (circle 8.5 "solid" "white")
+                        -2 -2.2
+                        (circle 11 "solid" "black"))))
+
+(define eye-right
+  (overlay/xy (ellipse 6 8 "solid" "black")
+              -7 -7.7
+              (overlay/xy (ellipse 14 15.5 "solid" "white")
+                          -3.5 -2.2
+                          (ellipse 19 21 "solid" "blacke"))))
+
+(define worker-head
+  (overlay/xy (rotate 180 (triangle 8 "solid" "darkred"))
+              -32 -48
+              (overlay/xy (rotate 25 hat)
+                           0 18
+                          (overlay/xy eye-right
+                                      -35 -10
+                                     (overlay/xy eye-left
+                                                 -13 -10
+                                                 (ellipse 50 40 "solid" "PapayaWhip"))))))
+
+(define leg
+  (overlay/xy (rectangle 10 20 "solid" "black")
+              0 15
+              (ellipse 20 10 "solid" "black")))
+  
+(define worker-body
+  (overlay/xy worker-head
+              12 47
+              (overlay/xy (rhombus 15 30 "solid" "midnightblue")
+                          -13 5
+                          (overlay/xy (rectangle 20 20 "solid" "white")
+                                      -6 0
+                                      (underlay/xy leg
+                                                   -2 -25
+                                                  (underlay/xy leg
+                                                               -18 -25
+                                                              (rectangle 30 30 "solid" "black")))))))
+
+(define arm
+  (rotate 90 (isosceles-triangle 22 120 "solid" "black")))
+
+(define hand
+  (ellipse 20 15 "solid" "PapayaWhip"))
+
+; Zeichnet worker mit einem beliebigen Paket p
+(: draw-worker ((maybe-of package) -> image))
+(define draw-worker
+  (lambda (p)
+    (overlay/xy (rotate 90 hand)
+                -7 -62
+                (overlay/xy (rotate 90 hand)
+                            -34 -62
+                            (overlay/xy (draw-package2 p)
+                                         -15 -60
+                                         (underlay/xy arm
+                                                     -5 -45
+                                                     (underlay/xy (rotate 180 arm)
+                                                                 -40 -45
+                                                                 worker-body)))))))
+
+
+;--------------------------------------------------------
+; instruction-list und instrcution-pointer
+;--------------------------------------------------------
+; zeichnet einzelne Instruktion bzw. String auf einen "Zettel"
+(: draw-instr (instruction -> image))
+(define draw-instr
+  (lambda (instr)
+    (if (string? instr)
+        (overlay (text/font instr 16 "black" #f "swiss" "normal" "bold" #f)
+                 (rectangle (* 10 (string-length instr)) 30 "solid" "GreenYellow"))
+        (overlay (text/font (description instr) 16 "black" #f "swiss" "normal" "bold" #f)
+                 (rectangle (* 10 (string-length (description instr))) 30 "solid"
+                            (cond
+                              ((string=? (description instr) "<-inbox") "gold")
+                              ((string=? (description instr)  "->outbox") "orange red")
+                              ((string=? (description instr) "jump") "green")
+                              ((string=? (description instr) "jump-if-zero") "yellow")
+                              ((string=? (description instr) "jump-if-neg") "pink")
+                              ((string=? (description instr) "copy-from") "spring green")
+                              ((string=? (description instr) "copy-to") "aqua")
+                              ((string=? (description instr) "sub") "purple")
+                              ((string=? (description instr) "add") "plum")
+                              ((string=? (description instr) "bump+") "violet")
+                              (else "moccasin")))))))
+
+; Zeichnet Instruktion basierend auf Instruction Pointer (ip) und seinem Wert
+(: draw-instruction2 ((maybe-of natural) -> (natural (mixed instruction string) -> image)))
+(define draw-instruction2
+  (lambda (ip)
+    (lambda (n instr)
+      (let ((current? (and (number? ip) (= ip n))))
+        (beside (text/font (string-append
+                           (if current? ">" " ")
+                           (if (< n 10) "0" "")
+                           (number->string n) ": ")
+                            20 "black" #f "modern" "normal"
+                           (if current? "bold" "normal") #f)
+                (draw-instr instr))))))
+
+; Zeichnet Liste von Instruktionen
+(: draw-instructions2 ((list-of (mixed instruction string)) (maybe-of natural) -> image))
+(define draw-instructions2
+  (lambda (is ip)
+    (above/align "left"
+                 (text "Board of instructions:"  20 "black")
+                 (text "(press any key to proceed,"  20 "black")
+                 (text "ESC to finish work)"  20 "black")
+                 (empty-scene 0 6)
+                 (beside (empty-scene 12 0)
+                         (fold empty-image
+                               (lambda (instr res)
+                                   (above/align "left" instr res))
+                               (zipWith (draw-instruction2 ip)
+                                        (range 0 (- (length is) 1))
+                                        is)))            
+                 (empty-scene 0 6))))
+
+;--------------------------------------------------------
+; time-clock
+;--------------------------------------------------------
+; implementieren der "Teile" einer Uhr
+       ; Zeiger der Uhr
+(define clock-hand (put-pinhole (/ 3 2)
+                                (- 3 (* 1/16 28))
+                                (rectangle 3 28 "solid" "DeepPink")))
+
+       ; Markierungen der Uhr
+(define m (put-pinhole 2
+                        30
+                        (rectangle 4 6 "solid" "orchid")))
+
+       ; "Uhrscheibe"
+(define clock-background (overlay/pinhole m
+                                          (rotate 30 m)
+                                          (rotate 60 m)
+                                          (rotate 90 m)
+                                          (rotate 120 m)
+                                          (rotate 150 m)
+                                          (rotate 180 m)
+                                          (rotate 210 m)
+                                          (rotate 240 m)
+                                          (rotate 270 m)
+                                          (rotate 300 m)
+                                          (rotate 330 m)
+                                          (circle 30 "solid" "lightpink")))
+
+; Darstellung einer Uhr mit einem Zeiger in Abhängigkeit von Zeit t
+(: clock (natural -> image))
+(define clock
+  (lambda (t)
+    (clear-pinhole
+      (overlay/pinhole
+         (position-hand t)
+         clock-background))))
+
+; Position des Zeigers bei Zeit t
+(: position-hand (natural -> image))
+(define position-hand
+  (lambda (t)
+    (rotate (* t -30) clock-hand)))
+
+; Prozedur zeichnet time-clock
+(define draw-time-clock
+  (lambda (n)
+    (overlay (text/font (number->string n) 30 "black" #f "swiss" "normal" "bold" #f)
+             (rotate 180 (clock n)))))
+
+;--------------------------------------------------------
+; office
+;--------------------------------------------------------
+; Prozedur zeichnet gegebenes office
+(: draw-office2 (office -> image))
+(define draw-office2
+  (lambda (o)
+    (above (text "Human Resource Machine Post Office" 30 "Peru")
+           (overlay/xy (draw-inbox (inbox o))
+                        -10 -160
+                       (overlay/xy (draw-outbox (outbox o))
+                                   -355 -160
+                                   (overlay/xy (draw-worker (worker o))
+                                                -100 -70
+                                               (overlay/xy (draw-floor-slots (floor-slots o))
+                                                           -160 -150
+                                                           (overlay/xy (draw-instructions2 (instruction-list o) (ip o))
+                                                                        -450 -10
+                                                                        (overlay/xy (draw-time-clock (time-clock o))
+                                                                                    -333 -65
+                                                                                    office-floor)))))))))
+
+; Prozedur animiert gegebenes office
+(: start-office-day2 (office -> office))
+(define start-office-day2
+  (lambda (o)
+    (big-bang o
+              (to-draw draw-office2)
+              (on-key (lambda (o key)
+                        (cond ((key=? key "escape") (perform-all o))
+                              (else (perform-next o))))))))
