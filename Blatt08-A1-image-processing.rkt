@@ -176,12 +176,33 @@
       ((pair? xss) (take (length (flatten xss)) (append (every-nth (length (first xss)) (flatten xss))
                                                         (vert-sort (rows (length (first xss)) (drop 1 (flatten xss))))))))))
                               
-
 ; schreiben einer Prozedur "transpose", die
 ; - eine Liste von Listen xss akzeptiert
 ; - die übergebene Liste "transponiert"
 ;   (bei 2-dimensionalen Matrix: Zeilen zu Spalten umwandelt)
 ; - innere Listen jeweils gleich lang
+(: transpose ((list-of (list-of %a)) -> (list-of (list-of %a))))
+
+(check-expect (transpose empty) empty)
+(check-expect (transpose (list (list 1)
+                               (list 2))) (list (list 1 2)))
+(check-expect (transpose (list (list 4 5)
+                               (list 1 2))) (list (list 4 1)
+                                                  (list 5 2)))
+(check-expect (transpose (list (list 1 2 3)
+                               (list 4 5 6))) (list (list 1 4)
+                                                    (list 2 5)
+                                                    (list 3 6)))
+(check-expect (transpose (list (list 1 2)
+                               (list 3 4)
+                               (list 5 6))) (list (list 1 3 5)
+                                                  (list 2 4 6)))
+
+(define transpose
+  (lambda (xss)
+    (cond
+      ((empty? xss) empty)
+      ((pair? xss) (rows (length xss) (vert-sort xss))))))
 
 ;================================================================================================
 
