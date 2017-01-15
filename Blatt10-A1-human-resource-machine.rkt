@@ -139,6 +139,94 @@
                        empty
                       (drop (- w 1) (rest xs)))))))
 
+; --------------------------------------------------------------------------------------------------------------
+; Draw and animate the office
+; --------------------------------------------------------------------------------------------------------------
+
+; Draw package
+(: draw-package ((maybe-of package) -> image))
+(define draw-package
+  (lambda (p)
+    (place-image (text (cond ((number? p) (number->string p))
+                             ((string? p) p)
+                             (else ""))
+                       14 "black")
+                 12 12
+                 (overlay
+                  (cond ((boolean? p) empty-image)
+                        (else (rectangle 20 20 "solid" "lightgray")))
+                  (rectangle 23 23 "solid" "brown")
+                  (rectangle 24 24 "solid" "white")))))
+
+; Draw list of packages
+(: draw-pkgs (string (list-of (maybe-of package)) -> image))
+(define draw-pkgs
+  (lambda (lbl ps)
+    (beside (place-image/align (text lbl 14 "black") (* 2.5 24) 12 "right" "center" (rectangle (* 2.5 24) 24 "solid" "white"))
+            (empty-scene 3 0)
+            (fold empty-image beside (map draw-package ps)))))
+
+; Draw instruction based on instruction pointer and a given line number
+(: draw-instruction ((maybe-of natural) -> (natural (mixed instruction string) -> image)))
+(define draw-instruction
+  (lambda (ip)
+    (lambda (n instr)
+      (let ((current? (and (number? ip) (= ip n))))
+        (text (string-append
+               (if current? "> " "   ")
+               (if (< n 10) "0" "")
+               (number->string n) ": "
+               (cond ((string? instr)
+                      (string-append "\"" instr "\""))
+                     (else (description instr))))
+              16
+              "black")))))
+
+; Draw list of instructions
+(: draw-instructions ((list-of (mixed instruction string)) (maybe-of natural) -> image))
+(define draw-instructions
+  (lambda (is ip)
+    (above/align "left"
+                 (text "Board of instructions: (press any key to proceed, ESC to finish work)"  14 "black")
+                 (empty-scene 0 6)
+                 (beside (empty-scene 12 0)
+                         (fold empty-image
+                               (lambda (instr res)
+                                   (above/align "left" instr res))
+                               (zipWith (draw-instruction ip)
+                                        (range 0 (- (length is) 1))
+                                        is)))            
+                 (empty-scene 0 6))))
+
+; Draw the office
+(: draw-office (office -> image))
+(define draw-office
+  (lambda (o)
+    (above/align "left"
+                 (text "Human Resource Machine Post Office" 30 "gray")
+                 (empty-scene 0 6)
+                 (draw-instructions (instruction-list o) (ip o))
+                 (empty-scene 0 6)
+                 (draw-pkgs "inbox <-" (inbox o))
+                 (empty-scene 0 6)
+                 (beside (draw-pkgs "worker" (list (worker o)))
+                         (draw-pkgs "floor" (floor-slots o)))
+                 (empty-scene 0 6)
+                 (draw-pkgs "outbox ->" (outbox o))
+                 (empty-scene 0 6)
+                 (text (string-append "Time clock: " (number->string (time-clock o))) 14 "black")
+                 )))
+
+; Animate the office
+(: start-office-day (office -> office))
+(define start-office-day
+  (lambda (o)
+    (big-bang o
+              (to-draw draw-office)
+              (on-key (lambda (o key)
+                        (cond ((key=? key "escape") (perform-all o))
+                              (else (perform-next o))))))))
+
 ;---------------------------------------------------------------------------------------------------------------------------------
 ; H.O.P. aus Vorlesung
 ;---------------------------------------------------------------------------------------------------------------------------------
