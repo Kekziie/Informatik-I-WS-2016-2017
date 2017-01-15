@@ -114,6 +114,24 @@
 ; schreiben einer Prozedur "flatten", die
 ; - eine Liste von Listen xss akzeptiert
 ; - eine Liste von Listen in eine Liste wandelt, die alle Elemente aus xss  enthält
+(: flatten ((list-of (list-of %a)) -> (list-of %a)))
+
+(check-expect (flatten empty) empty)
+(check-expect (flatten (list (list 1))) (list 1))
+(check-expect (flatten (list (list 1)
+                             (list 2))) (list 1 2))
+(check-expect (flatten (list (list #t)
+                             (list 1 2 3)
+                             (list "Baum" "Apfel"))) (list #t 1 2 3 "Baum" "Apfel"))
+(check-expect (flatten (list (list 1 2 3)
+                             (list)
+                             (list 4 5))) (list 1 2 3 4 5))
+
+(define flatten
+  (lambda (xss)
+   (cond 
+    ((empty? xss) empty)
+    ((pair? xss) (append (first xss) (flatten (rest xss)))))))
 
 ; schreiben einer Prozedur "transpose", die
 ; - eine Liste von Listen xss akzeptiert
