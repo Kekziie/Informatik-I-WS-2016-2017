@@ -800,3 +800,27 @@
                   (if (label-searcher Label o)
                       (make-office (inbox o) (outbox o) (floor-slots o) (worker o) (instruction-list o) (list-index (lambda (s) (and (string? s) (string=? s Label))) (instruction-list o)) (time-clock o)) 
                       (violation "gesuchtes Label nicht auf Instruction-list"))))))
+
+; --------------------------------------------------------------------------------------------------------------
+; Office day2 Test
+; --------------------------------------------------------------------------------------------------------------
+; (h) 
+; Änderung der Instruktionsliste von Tag1
+; Unabhängig von Elementen in Inbox sollen alle auf die Outbox gelegt werden
+; -> testen!
+
+; Office day 2
+(define day02
+  (make-office (list "E" 3 "A") empty    ; inbox, outbox
+               (replicate 16 #f) #f          ; floor, worker
+               (list "jump A"             ; instructions:
+                     <-inbox
+                     ->outbox
+                     (jump "jump A"))       
+               0 0))                        ; ip, time
+
+(check-expect (outbox (perform-all day02)) (list "A" 3 "E"))
+(check-expect (inbox (perform-next day02)) (list "E" 3 "A"))
+(check-expect (inbox (perform-next (perform-next day02))) (list 3 "A"))
+(check-expect (outbox (perform-next day02)) empty)
+(check-expect (worker (perform-next (perform-next day02))) "E")
