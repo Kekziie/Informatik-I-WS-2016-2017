@@ -138,3 +138,23 @@
       ((pair? xs) (if (<= (length xs) w)
                        empty
                       (drop (- w 1) (rest xs)))))))
+
+;---------------------------------------------------------------------------------------------------------------------------------
+; H.O.P. aus Vorlesung
+;---------------------------------------------------------------------------------------------------------------------------------
+
+; Hintereinanderschaltung von 2 Funktionen f(g(x))
+(: compose ((%b -> %c) (%a -> %b) -> (%a -> %c)))
+(define compose
+  (lambda (f g)
+    (lambda (x)
+      (f (g x)))))
+
+; Hintereinanderschaltung von Funktion f n-mal mit sich selbst
+(: repeat (natural (%a -> %a) -> (%a -> %a)))
+(check-expect ((repeat 10 (lambda (n) (+ n 1))) 0) 10)
+(define repeat
+  (lambda (n f)
+    (cond
+      ((= n 0) (lambda (x) x))
+      ((> n 0) (compose (repeat (- n 1) f) f)))))
