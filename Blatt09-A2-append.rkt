@@ -40,6 +40,32 @@
 ; Fall n>0
 ; --------
 
+; (cat (take n+1 xs) (drop n+1 xs))
+
+; => {apply(λ) in take, apply(λ) in drop}
+; (cat ((lambda n+1 xs) (cond ((= n+1 0) ...))    ((lambda n+1 xs) (cond ((= n+1 0) ...)))
+;                             ((empty? xs) ...)                          ((empty? xs) ...)
+;                             ((pair? xs) ...)))                         ((pair? xs) ...)))
+
+; => {eval(cond) von take, eval(cond) von drop}
+; (cat (cond (#f ...)                                  (cond (#f ...)
+;            (#f ...)                                        (#f ...)
+;            (#t (make-pair (first xs)                       (#t (drop (- n+1 1) (rest xs)))))
+;                           (take (- n+1 1) (rest xs))))
+
+; => {nach eval(cond) von take, nach eval(cond) von drop}
+; (cat (make-pair (first xs)                   (drop (- n+1 1) (rest xs))))
+;                 (take (- n+1 1) (rest xs)))
+
+; => {apply(prim(-)) -> Annahme: - realisiert Differenz korrekt}
+; (cat (make-pair (first xs)          (drop n (rest xs))))
+;                 (take n (rest xs)))
+
+; => {ersetzen, da (make-pair (first xs) (take n (rest xs))=(take n xs) und (drop n (rest xs))=(drop n xs)}
+; (cat (take n xs) (drop n xs))
+
+; => {Induktionsvoraussetzung: (cat (take n xs) (drop n xs)) = xs}
+; xs
 
 ; Definitionen von cat, take und drop:
 
