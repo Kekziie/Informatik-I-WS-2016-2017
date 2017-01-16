@@ -21,7 +21,7 @@
         "positive"
         "negative")))
 
-; ii) Prozedur mit cond mit Verwendung von and
+; ii) Prozedur mit cond und and
 ; Prozedur überprüft, ob gegebene Zahl n positiv und gerade
 (: even-and-positive? (number -> boolean))
 
@@ -35,3 +35,19 @@
     (cond
       ((and (even? n) (positive? n)) #t)
       (else #f))))
+
+; iii) Prozedur mit or
+; Prozedur überprüft, ob gegebene Zahl n entweder ungerade oder negativ,
+; d.h. nur eins von beidem muss zustimmen, damit #t ausgewertet wird
+(: negative-or-odd? (number -> boolean))
+
+(check-expect (negative-or-odd? 9) #t)
+(check-expect (negative-or-odd? 1) #t)
+(check-expect (negative-or-odd? -2) #t)
+(check-expect (negative-or-odd? 42) #f)
+(check-expect (negative-or-odd? 0) #f)
+
+(define negative-or-odd?
+  (lambda (n)
+    (or (negative? n)
+        (odd? n))))
