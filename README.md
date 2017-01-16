@@ -30,3 +30,4 @@ Sprache:
 ### example
 Beispiele für Wiki bzw. teils Script
 - exa1: Konstruktionsanleitung
+- exa2: Fallunterscheidung; Funktion: or, and 
