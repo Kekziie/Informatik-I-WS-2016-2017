@@ -7,6 +7,13 @@
 ; Listenfaltung rechts
 (: foldr (%b (%a %b -> %b) (list-of %a) -> %b))
 
+(check-expect (foldr empty make-pair (list 1 2 3)) (list 1 2 3))
+(check-expect (foldr 0 + (list 1 2 3 4 5)) 15)
+(check-expect (foldr 1 * (list -1 1 0)) 0)
+(check-expect (foldr 5 * (list 1 2 3)) 30)
+(check-expect (foldr 0 - (list -1 1)) -2)
+(check-expect (foldr 1 = empty) 1)
+
 (define foldr
   (lambda (z c xs)
     (cond
