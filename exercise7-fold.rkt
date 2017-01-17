@@ -59,6 +59,10 @@
 (: contains? (%a (%a %a -> boolean) (list-of %a) -> boolean))
 
 (check-expect (contains? "a" string=? (list "a" "b")) #t)
+(check-expect (contains? 1 = (list 5 4 3 2 1)) #t)
+(check-expect (contains? 3 = (list 42 0 -1 -2 -3)) #f)
+(check-expect (contains? "BAUM" string=? (list "baum")) #f)
+(check-expect (contains? 2 = empty) #f)
 
 (define contains?
   (lambda (z c xs)
