@@ -25,8 +25,13 @@
 ; Listenfaltung links
 (: foldl (%b (%b %a -> %b) (list-of %a) -> %b))
 
+(check-expect (foldl 1 * (list 1 2 3)) 6)
+(check-expect (foldl 0 * empty) 0)
+(check-expect (foldl 0 + (list 1 2 3 4 5)) 15)
+(check-expect (foldl 2 - (list 0 2 4)) -4)
+
 (define foldl
   (lambda (z c xs)
     (cond
-      ((empty? xs) empty)
+      ((empty? xs) z)
       ((pair? xs) (foldl (c z (first xs)) c (rest xs))))))
