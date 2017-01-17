@@ -75,10 +75,15 @@
 (: multi-comp (%a (%a %a -> boolean) (list-of %a) -> boolean))
 
 (check-expect (multi-comp 2 = (list 2 2 2)) #t)
+(check-expect (multi-comp 1 <= (list 2 3 4)) #t)
+(check-expect (multi-comp 0 = empty) #f)
+(check-expect (multi-comp "a" string=? (list "b")) #f)
+(check-expect (multi-comp 1 > (list -1 0)) #t)
+(check-expect (multi-comp 1 > (list 42)) #f)
 
 (define multi-comp
   (lambda (z c xs)
     (cond
       ((empty? xs) #f)
       ((pair? xs) (fold #t (lambda (a b)
-                             (and (c a z) b)) xs)))))
+                             (and (c z a) b)) xs)))))
