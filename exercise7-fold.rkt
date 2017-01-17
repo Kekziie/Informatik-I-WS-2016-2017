@@ -20,3 +20,13 @@
       ((empty? xs) z)
       ((pair? xs) (c (first xs)
                      (foldr z c (rest xs)))))))
+
+; ii) foldl(eft)
+; Listenfaltung links
+(: foldl (%b (%b %a -> %b) (list-of %a) -> %b))
+
+(define foldl
+  (lambda (z c xs)
+    (cond
+      ((empty? xs) empty)
+      ((pair? xs) (foldl (c z (first xs)) c (rest xs))))))
