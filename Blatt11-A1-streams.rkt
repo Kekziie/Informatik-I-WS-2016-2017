@@ -4,7 +4,7 @@
 ; Aufgabe 1
 
 ; (a) Prozedur "const-stream"
-; - akzeptiert beliebigen Wert
+; - akzeptiert beliebigen Wert x
 ; - gibt einen konstanten unendlichen Strom vom Wert zurück
 
 (: const-stream (%a -> (stream-of %a)))
@@ -14,3 +14,8 @@
 (check-expect (stream-take 10 (const-stream 2)) (list 2 2 2 2 2 2 2 2 2 2))
 (check-expect (stream-take 3 (const-stream "a")) (list "a" "a" "a"))
 (check-expect (stream-take 2 (const-stream #f)) (list #f #f))
+
+(define const-stream
+  (lambda (x)
+    (make-cons n
+               (lambda () (const-stream n)))))
