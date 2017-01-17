@@ -38,6 +38,15 @@
         (make-pair (head str)
                    (stream-take (- n 1) (force (tail str)))))))
 
+; Stream der Zahlen ab n (n, n+1, n+2, ...)
+(: from (number -> (stream-of number)))
+(check-expect (stream-take 5 (from 1)) (list 1 2 3 4 5))
+(check-expect (stream-take 3 (from 0)) (list 0 1 2))
+(check-expect (stream-take 10 (from -10)) (list -10 -9 -8 -7 -6 -5 -4 -3 -2 -1))
+(define from
+  (lambda (n)
+    (make-cons n
+               (lambda () (from (+ n 1))))))
 
 ; (a) Prozedur "const-stream"
 ; - akzeptiert beliebigen Wert x
@@ -67,3 +76,4 @@
 ; - akzeptiert Prozedur f und Strom str
 ; - liefert Strom zurück, nach Anwedung f auf Elemente vom Strom
 (: stream-map ((%a -> %b) (stream-of %a) -> (stream-of %b)))
+
