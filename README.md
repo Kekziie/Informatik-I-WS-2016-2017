@@ -26,6 +26,7 @@ Sprache:
 - ex4: Bilder und Animation einer Uhr mit Teachpack: universe und image2
 - ex5: Record-Definition
 - ex6: Record-Definition; Signaturen
+- ex7: H.O.P.: fold/foldr/foldl
 
 ### example
 Beispiele für Wiki bzw. teils Script
