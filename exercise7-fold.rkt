@@ -54,7 +54,7 @@
                    (make-pair b a)) xs)))
 
 ; iv) contains?
-; - akzeptiert Element x, Prozedur und Liste xs
+; - akzeptiert Element x, Prozedur und beliebige Liste xs
 ; - gibt an, ob Element x in Liste xs
 (: contains? (%a (%a %a -> boolean) (list-of %a) -> boolean))
 
@@ -68,4 +68,17 @@
   (lambda (z c xs)
     (fold #f (lambda (a b)
                (or (c a z) b)) xs)))
-    
+
+; v) multi-comp(arator)
+; - akzeptiert Element x, Prozedur und beliebige Liste xs
+; - vergleicht Element x mit jedem Element der Liste xs
+(: multi-comp (%a (%a %a -> boolean) (list-of %a) -> boolean))
+
+(check-expect (multi-comp 2 = (list 2 2 2)) #t)
+
+(define multi-comp
+  (lambda (z c xs)
+    (cond
+      ((empty? xs) #f)
+      ((pair? xs) (fold #t (lambda (a b)
+                             (and (c a z) b)) xs)))))
