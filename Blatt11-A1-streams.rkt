@@ -2,6 +2,42 @@
 ;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
 #reader(lib "DMdA-vanilla-reader.ss" "deinprogramm")((modname Blatt11-A1-streams) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
 ; Aufgabe 1
+; Definitionen
+; (promise t): Versprechen, einen Wert der Signatur t zu liefern
+(define promise
+  (lambda (t)
+    (signature (-> t))))
+
+; erzwungene Auswertung des Promise p
+(: force ((promise %a) -> %a))
+(define force
+  (lambda (p) (p)))
+
+; polymorphes Paar
+(: make-cons (%a %b -> (cons-of %a %b)))
+(: head ((cons-of %a %b) -> %a))
+(: tail ((cons-of %a %b) -> %b))
+(define-record-procedures-parametric cons cons-of
+  make-cons
+  cons?
+  (head
+   tail))
+
+; ein Stream besteht aus: erstes Element (head) und einem Promise, der den Rest des Streams generieren kann (tail)
+(define stream-of
+  (lambda (t)
+    (signature (cons-of t
+                        (promise (stream-of t))))))
+
+; "stream-take" nimmt erste n Elemente des Streams str in eine Liste extrahieren
+(: stream-take (natural (stream-of %a) -> (list-of %a)))
+(define stream-take
+  (lambda (n str)
+    (if (= n 0)
+        empty
+        (make-pair (head str)
+                   (stream-take (- n 1) (force (tail str)))))))
+
 
 ; (a) Prozedur "const-stream"
 ; - akzeptiert beliebigen Wert x
@@ -17,5 +53,5 @@
 
 (define const-stream
   (lambda (x)
-    (make-cons n
-               (lambda () (const-stream n)))))
+    (make-cons x
+               (lambda () (const-stream x)))))
