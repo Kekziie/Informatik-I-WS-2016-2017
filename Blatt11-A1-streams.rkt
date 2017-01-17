@@ -55,3 +55,10 @@
   (lambda (x)
     (make-cons x
                (lambda () (const-stream x)))))
+
+; "ones" ist ein Strom von Einsen
+(check-expect (stream-take 3 ones) (list 1 1 1))
+(check-expect (stream-take 5 ones) (list 1 1 1 1 1))
+
+(define ones
+  (const-stream 1))
