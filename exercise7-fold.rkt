@@ -36,6 +36,8 @@
       ((empty? xs) z)
       ((pair? xs) (foldl (c z (first xs)) c (rest xs))))))
 
+; foldl ist endrekursiv, da z als Akkumulator fungiert
+
 ; iii) my-reverse <=> reverse
 ; soll Liste verkehrt herum wiedergeben
 (: my-reverse ((list-of %a) -> (list-of %a)))
@@ -50,3 +52,16 @@
   (lambda (xs)
     (foldl empty (lambda (a b)
                    (make-pair b a)) xs)))
+
+; iv) contains?
+; - akzeptiert Element x, Prozedur und Liste xs
+; - gibt an, ob Element x in Liste xs
+(: contains? (%a (%a %a -> boolean) (list-of %a) -> boolean))
+
+(check-expect (contains? "a" string=? (list "a" "b")) #t)
+
+(define contains?
+  (lambda (z c xs)
+    (fold #f (lambda (a b)
+               (or (c a z) b)) xs)))
+    
