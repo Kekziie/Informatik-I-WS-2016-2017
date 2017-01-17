@@ -77,3 +77,7 @@
 ; - liefert Strom zurück, nach Anwedung f auf Elemente vom Strom
 (: stream-map ((%a -> %b) (stream-of %a) -> (stream-of %b)))
 
+(check-expect (stream-take 3 (stream-map (lambda (n) (+ n 2)) (from 1))) (list 3 4 5))
+(check-expect (stream-take 5 (stream-map (lambda (n) (* n 2)) (from 0))) (list 0 2 4 6 8))
+(check-expect (stream-take 1 (stream-map (lambda (n) (- n 2)) (const-stream 2))) (list 0))
+
