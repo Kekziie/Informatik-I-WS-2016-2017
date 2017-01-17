@@ -62,3 +62,8 @@
 
 (define ones
   (const-stream 1))
+
+; (b) Prozedur "stream-map"
+; - akzeptiert Prozedur f und Strom str
+; - liefert Strom zurück, nach Anwedung f auf Elemente vom Strom
+(: stream-map ((%a -> %b) (stream-of %a) -> (stream-of %b)))
