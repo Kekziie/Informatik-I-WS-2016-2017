@@ -2,3 +2,9 @@
 ;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
 #reader(lib "DMdA-vanilla-reader.ss" "deinprogramm")((modname Blatt11-A1-streams) (read-case-sensitive #f) (teachpacks ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm"))) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ((lib "image2.rkt" "teachpack" "deinprogramm") (lib "universe.rkt" "teachpack" "deinprogramm")))))
 ; Aufgabe 1
+
+; (a) Prozedur "const-stream"
+; - akzeptiert beliebigen Wert
+; - gibt einen konstanten unendlichen Strom vom Wert zurück
+
+(: const-stream (%a -> (stream-of %a)))
