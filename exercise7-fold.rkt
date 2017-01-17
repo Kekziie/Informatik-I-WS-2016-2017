@@ -35,3 +35,18 @@
     (cond
       ((empty? xs) z)
       ((pair? xs) (foldl (c z (first xs)) c (rest xs))))))
+
+; iii) my-reverse <=> reverse
+; soll Liste verkehrt herum wiedergeben
+(: my-reverse ((list-of %a) -> (list-of %a)))
+
+(check-expect (my-reverse (list 1 2 3)) (list 3 2 1))
+(check-expect (my-reverse empty) empty)
+(check-expect (my-reverse (list "a")) (list "a"))
+(check-expect (my-reverse (list #t #f 1 2 3)) (list 3 2 1 #f #t))
+(check-expect (my-reverse (list 1 2 3 4 5)) (list 5 4 3 2 1))
+
+(define my-reverse
+  (lambda (xs)
+    (foldl empty (lambda (a b)
+                   (make-pair b a)) xs)))
