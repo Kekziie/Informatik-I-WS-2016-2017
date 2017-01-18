@@ -58,6 +58,10 @@
 (check-expect (stream-take 1 (stream-iterate (lambda (x) (/ x 2)) 1)) (list 1))
 (check-expect (stream-take 3 (stream-iterate (lambda (x) (* x 2)) 1)) (list 1 2 4))
 
+(define stream-iterate
+  (lambda (f x)
+    (make-cons x
+               (lambda () (stream-iterate f (f x))))))
 
 ; (b)
 ; (stream-converge d s) liefert erstes Element aus einem konvergierenden Strom s
