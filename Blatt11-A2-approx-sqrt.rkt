@@ -51,9 +51,13 @@
 ; (a)
 ; (stream-iterate f x) erzeugt einen Strom
 ; beginnt mit x und weitere Elemente, sind die Ergebnisse der wiederholten Anwendung von f: x, f(x), f(f(x)), f(f(f(x))), ...
-;(: stream-iterate ((%a -> %a) %a -> (stream-of %a)))
+(: stream-iterate ((%a -> %a) %a -> (stream-of %a)))
 
-;(check-expect (stream-take 5 (stream-iterate (lambda (x) (+ x 2)) 1)) (list 1 3 5 7 9))
+(check-expect (stream-take 5 (stream-iterate (lambda (x) (+ x 2)) 1)) (list 1 3 5 7 9))
+(check-expect (stream-take 5 (stream-iterate (lambda (x) (- x 0)) 1)) (list 1 1 1 1 1))
+(check-expect (stream-take 1 (stream-iterate (lambda (x) (/ x 2)) 1)) (list 1))
+(check-expect (stream-take 3 (stream-iterate (lambda (x) (* x 2)) 1)) (list 1 2 4))
+
 
 ; (b)
 ; (stream-converge d s) liefert erstes Element aus einem konvergierenden Strom s
