@@ -71,7 +71,6 @@
 (check-within (stream-converge 0.3 (stream-iterate (lambda (x) (/ x 10)) 100)) 0.01 0.00001)
 (check-expect (stream-converge 0.5 (stream-iterate (lambda (x) (* x 2)) 1)) 2)
 (check-within (stream-converge 0.1 (stream-iterate (lambda  (x) (/ x 2)) 1)) 0.06 0.0001)
-(check-expect (stream-converge 2 (stream-iterate (lambda (x) (+ x 2)) 2)) 0)
 
 (define stream-converge
   (lambda (d str)
@@ -81,8 +80,26 @@
         (stream-converge d (force (tail str))))))
  
 ; (c)
+; Hilfsprozedur "approach" berechnet Näherungswert für (Wurzel a)
+(: approach (real -> (stream-of real)))
+(define approach
+  (lambda (a)
+    (stream-iterate (lambda (x)
+                      (/ (+ x (/ a x))
+                         2))
+                    (/ (+ a 1)
+                       2))))
+
 ; (approx-sqrt a delta) berechnet Näherungswert (Wurzel a)
 ; vorhergehender Approximationswert soll sich um weniger als delta unterscheiden
-;(: approx-sqrt (real real -> real))
+(: approx-sqrt (real real -> real))
 
-;(check-within (approx-sqrt 15 0.01) 3.872 0.001)
+(check-within (approx-sqrt 15 0.01) 3.872 0.001)
+(check-within (approx-sqrt 4 0.01) 2 0.001)
+(check-within (approx-sqrt 16 0.01) 4 0.001)
+(check-within (approx-sqrt 25 0.01) 5 0.001)
+(check-within (approx-sqrt (approx-sqrt 81 0.01) 0.01) 3 0.001)
+
+(define approx-sqrt
+  (lambda (a delta)
+    (stream-converge delta (approach a))))
