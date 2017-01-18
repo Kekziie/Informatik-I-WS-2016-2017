@@ -69,8 +69,9 @@
 (: stream-converge (real (stream-of real) -> real))
 
 (check-within (stream-converge 0.3 (stream-iterate (lambda (x) (/ x 10)) 100)) 0.01 0.00001)
-(check-expect (stream-converge 0.5 (stream-iterate (lambda (x) (* x 2)) 1)) 2)
-(check-within (stream-converge 0.1 (stream-iterate (lambda  (x) (/ x 2)) 1)) 0.06 0.0001)
+(check-expect (stream-converge 1 (stream-iterate (lambda (x) (* x 2)) 1)) 2)
+(check-within (stream-converge 0.1 (stream-iterate (lambda  (x) (/ x 2)) 1)) 0.0625 0.0001)
+(check-within (stream-converge 2 (stream-iterate (lambda  (x) (* x 3)) 1)) 3 0.001)
 
 (define stream-converge
   (lambda (d str)
