@@ -60,4 +60,11 @@
 ; unterscheidet sich um weniger als d von seinem Vorgänger
 ;(: stream-converge (real (stream-of real) -> real))
 
-;(check-within (stream-converge 0.3 (stream-iterate (lambda (x) (/ x 10)) 100)) 0.01 0.00001) 
+;(check-within (stream-converge 0.3 (stream-iterate (lambda (x) (/ x 10)) 100)) 0.01 0.00001)
+
+; (c)
+; (approx-sqrt a delta) berechnet Näherungswert (Wurzel a)
+; vorhergehender Approximationswert soll sich um weniger als delta unterscheiden
+;(: approx-sqrt (real real -> real))
+
+;(check-within (approx-sqrt 15 0.01) 3.872 0.001)
