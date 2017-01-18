@@ -64,16 +64,21 @@
                (lambda () (stream-iterate f (f x))))))
 
 ; (b)
-; (stream-converge d s) liefert erstes Element aus einem konvergierenden Strom s
+; (stream-converge d str) liefert erstes Element aus einem konvergierenden Strom str
 ; unterscheidet sich um weniger als d von seinem Vorgänger
 (: stream-converge (real (stream-of real) -> real))
 
 (check-within (stream-converge 0.3 (stream-iterate (lambda (x) (/ x 10)) 100)) 0.01 0.00001)
-(check-expect (stream-converge 0.5 (stream-iterate (lambda (x) (* x 2))) 1) 2)
+(check-expect (stream-converge 0.5 (stream-iterate (lambda (x) (* x 2)) 1)) 2)
 (check-within (stream-converge 0.1 (stream-iterate (lambda  (x) (/ x 2)) 1)) 0.06 0.0001)
-(check-expect (stream-converge 2 (stream-iterate (lambda (x) (+ x 2)) 2) 0))
+(check-expect (stream-converge 2 (stream-iterate (lambda (x) (+ x 2)) 2)) 0)
 
-
+(define stream-converge
+  (lambda (d str)
+    (if (>= d (abs (- (head str)
+                      (first (stream-take 1 (force (tail str)))))))
+        (first (rest (stream-take 2 str)))
+        (stream-converge d (force (tail str))))))
  
 ; (c)
 ; (approx-sqrt a delta) berechnet Näherungswert (Wurzel a)
