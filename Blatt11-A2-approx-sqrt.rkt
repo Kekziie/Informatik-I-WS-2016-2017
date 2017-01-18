@@ -49,4 +49,9 @@
                (lambda () (from (+ n 1))))))
 
 ; (a)
-; 
+; (stream-iterate f x) erzeugt einen Strom
+; beginnt mit x und weitere Elemente, sind die Ergebnisse der wiederholten Anwendung von f: x, f(x), f(f(x)), f(f(f(x))), ...
+(: stream-iterate ((%a -> %a) %a -> (stream-of %a)))
+
+(check-expect (stream-take 5 (stream-iterate (lambda (x) (+ x 2)) 1)) (list 1 3 5 7 9))
+
