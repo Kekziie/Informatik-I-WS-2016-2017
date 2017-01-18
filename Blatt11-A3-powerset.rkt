@@ -20,9 +20,7 @@
     (cond
       ((empty? xs) (make-pair (list "Ø")
                               empty))
-      (else (append (powerset (rest xs))
-                    (map (lambda (x)
-                           (make-pair (first xs) x))
-                         (powerset (rest xs)))
-                    (list "Ø"))))))
+      (else (make-pair (list "Ø")
+                       (make-pair xs
+                                  ...))))))
       
