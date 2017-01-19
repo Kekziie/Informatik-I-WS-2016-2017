@@ -10,6 +10,7 @@
 ; Hilfsprozeduren
 ; powerset-worker
 ; erstellt alle mögliche Kombinationen von der Liste xs
+(: powerset-worker ((list-of %a) -> (list-of (list-of %a))))
 (define powerset-worker
   (lambda (xs)
     (cond
@@ -22,6 +23,7 @@
 
 ; change
 ; prozedur ersetzt erstes Element empty der Liste durch die leere Menge (list "Ø")
+(: change ((list-of (list-of %a)) -> (list-of (list-of %a))))
 (define change
   (lambda (xs)
     (if (empty? (first xs))
