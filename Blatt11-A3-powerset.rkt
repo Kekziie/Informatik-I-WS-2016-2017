@@ -12,6 +12,10 @@
 ; erstellt alle mögliche Kombinationen von der Liste xs
 (: powerset-worker ((list-of %a) -> (list-of (list-of %a))))
 (check-expect (powerset-worker (list 1 2)) (list empty (list 2) (list 1) (list 1 2)))
+(check-expect (powerset-worker (list 1 2 #t #f)) (list empty (list #f) (list #t) (list #t #f)
+                                                       (list 2) (list 2 #f) (list 2 #t) (list 2 #t #f)
+                                                       (list 1) (list 1 #f) (list 1 #t) (list 1 #t #f)
+                                                       (list 1 2) (list 1 2 #f) (list 1 2 #t) (list 1 2 #t #f)))
 (check-expect (powerset-worker empty) (list empty))
 (check-expect (powerset-worker (list #f)) (list empty (list #f)))
 (define powerset-worker
