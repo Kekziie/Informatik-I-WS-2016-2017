@@ -31,6 +31,9 @@
 ; change
 ; prozedur ersetzt erstes Element empty der Liste durch die leere Menge (list "Ø")
 (: change ((list-of (list-of %a)) -> (list-of (list-of %a))))
+(check-expect (change (list (list 1) (list 2))) (list (list 1) (list 2)))
+(check-expect (change (list empty (list 1) (list 2))) (list (list "Ø") (list 1) (list 2)))
+(check-expect (change (list empty)) (list (list "Ø")))
 (define change
   (lambda (xs)
     (if (empty? (first xs))
