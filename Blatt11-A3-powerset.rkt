@@ -11,6 +11,9 @@
 ; powerset-worker
 ; erstellt alle mögliche Kombinationen von der Liste xs
 (: powerset-worker ((list-of %a) -> (list-of (list-of %a))))
+(check-expect (powerset-worker (list 1 2)) (list empty (list 2) (list 1) (list 1 2)))
+(check-expect (powerset-worker empty) (list empty))
+(check-expect (powerset-worker (list #f)) (list empty (list #f)))
 (define powerset-worker
   (lambda (xs)
     (cond
