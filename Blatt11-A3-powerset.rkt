@@ -7,17 +7,26 @@
 ; P(S) enthält dabei immer die leere Menge Ø sowie S selbst
 ; z.B. P({1,2,3}) = {{1,2,3},{1,2},{2,3},{1,3},{1},{2},{3},Ø}
 
-; Hilfsprozedur powerset-worker
+; Hilfsprozeduren
+; powerset-worker
 ; erstellt alle mögliche Kombinationen von der Liste xs
 (define powerset-worker
   (lambda (xs)
     (cond
       ((empty? xs) (make-pair empty
                               empty))
-      (else  (append (powerset (rest xs))
+      (else  (append (powerset-worker (rest xs))
                           (map (lambda (x)
                                  (make-pair (first xs) x))
-                               (powerset (rest xs))))))))
+                               (powerset-worker (rest xs))))))))
+
+; change
+; prozedur ersetzt erstes Element empty der Liste durch die leere Menge (list "Ø")
+(define change
+  (lambda (xs)
+    (if (empty? (first xs))
+        (make-pair (list "Ø") (rest xs))
+        xs)))
 
 ; Funktion "powerset" soll Potenzmenge einer Menge von beliebigen Elementen berechnen
 ; akzeptiert eine beliebige Liste xs und erstellt die Potenzmenge als Liste von Listen
