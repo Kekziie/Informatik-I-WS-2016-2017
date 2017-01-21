@@ -46,6 +46,22 @@
                x
                empty-tree)))
 
+; Beispielbaum: t1
+(: t1 (btree-of real))
+(define t1
+  (make-node empty-tree
+             1
+             (make-node empty-tree
+                        2.5
+                        (make-leaf 3))))
+
+; Beispielbaum: t2
+(: t2 (btree-of real))
+(define t2
+  (make-node (make-leaf 4)
+             -30
+             (make-leaf 42)))
+
 ; Prozedur btree-min
 ; ermittelt minimalste Markierung eines Binärbaumes
 ;(: btree-min ((btree-of real) -> real))
