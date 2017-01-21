@@ -45,3 +45,12 @@
     (make-node empty-tree
                x
                empty-tree)))
+
+; (a)
+; Prädikat search-tree?
+; stellt fest, ob Binärbaum t, ein Suchbaum ist
+; (ein Suchbaum ist, wenn alle Markierungen:
+;                   - im linken Teilbaum kleiner sind als x
+;                   - im rechten Teilbaum größer sind als x
+;                   - nur einmal im Baum vorkommen)
+(: search-tree? ((btree-of real) -> boolean))
