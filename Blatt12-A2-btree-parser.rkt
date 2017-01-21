@@ -58,9 +58,9 @@
 ; Beispielbaum: t2
 (: t2 (btree-of real))
 (define t2
-  (make-node (make-leaf -42)
+  (make-node (make-leaf 4)
              0
-             (make-leaf 42)))
+             (make-leaf 4)))
 
 ; Funktion btree-parse
 ; akzeptiert einen String und konstruiert einen Baum
@@ -69,6 +69,6 @@
 (check-expect (btree-parse "_") empty-tree)
 (check-expect (btree-parse "(_1_)") (make-node (make-leaf 1)))
 (check-expect (btree-parse "(((_1_)2_)3(_4_))") t1)
-(check-expect (btree-parse "(_-42_)0(_42_)") t2)
+(check-expect (btree-parse "(_4_)0(_4_)") t2)
               
 
