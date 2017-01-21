@@ -18,6 +18,7 @@ Sprache:
 - Blatt09: polymorphe Paare und Listen; Rekursion/Endrekursion;  vollständige Induktion; H.O.P.: filter
 - Blatt10: Record-Definition; Higher Order Procedures; polymorphe Paare und Listen; Programmabbruch; Animation
 - Blatt11: Streams; polymorphe Paare und Listen; H.O.P.: map
+- Blatt12: Binärbäume; polymorphe Paare und Listen
 
 ### exercise
 - ex1: cond, Fallunterscheidung
