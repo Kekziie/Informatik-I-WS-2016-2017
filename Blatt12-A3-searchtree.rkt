@@ -69,4 +69,9 @@
 ; Prozedur list->searchtree
 ; wandelt eine Liste von Elementen in einen Suchbaum
 ; (benutzen von fold)
-(: list->searchtree ((list-of integer) -> (btree-of integer)))
+;(: list->searchtree ((list-of integer) -> (btree-of integer)))
+
+; (e)
+; Prozedur searchtree-delete
+; entfernt eine Markierung y aus einem Suchbaum t
+(: searchtree-delete (integer (btree-of integer) -> (btree-of integer)))
