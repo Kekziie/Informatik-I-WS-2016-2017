@@ -91,26 +91,6 @@
 (define maxi-to-15
   (make-shipment "maxi-to-15" 1000 (make-size 35 30 15) 2.35))
 
-;====================================================================
-; Testfälle
-(define Test-Size1
-  (make-size 12 12 0.5))
-
-(define Test-Size2
-  (make-size 25 25 1))
-
-(define Test-Size3
-  (make-size 10 10 0))
-
-(define Test-Size4
-  (make-size 35 20 3))
-
-(define Test-Size5
-  (make-size 10 10 15))
-
-(define Test-Size6
-  (make-size 20 30 12))
-
 ;========================================================================
 
 ; (a)
@@ -121,12 +101,12 @@
 ; wenn  kein Angebot passt, soll eine Fehlermedlung zurückgegeben werden
 (: which-one? (size -> (mixed letter shipment)))
 
-(check-expect (which-one? Test-Size1) standard-letter)
-(check-expect (which-one? Test-Size2) large-letter)
-(check-expect (which-one? Test-Size3) postcard)
-(check-expect (which-one? Test-Size4) Maxi-letter)
-(check-expect (which-one? Test-Size5) compact)
-(check-expect (which-one? Test-Size6) compact)
+(check-expect (which-one? (make-size 12 12 0.5)) standard-letter)
+(check-expect (which-one? (make-size 25 25 1)) large-letter)
+(check-expect (which-one? (make-size 10 10 0)) postcard)
+(check-expect (which-one? (make-size 35 20 3)) Maxi-letter)
+(check-expect (which-one? (make-size 10 10 15)) compact)
+(check-expect (which-one? (make-size 20 30 12)) compact)
 
 (define which-one?
   (lambda (s)
