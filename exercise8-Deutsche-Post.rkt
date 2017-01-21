@@ -115,9 +115,10 @@
 
 ; (a)
 ; Prozedur which-one?
-; akzeptiert eine Größe
+; akzeptiert eine Größe s
 ; soll Angebot raussuchen,dass zur Größe passt
 ; wenn mehrere Angebote passen, dann soll das billigste wiedergegegben werden
+; wenn  kein Angebot passt, soll eine Fehlermedlung zurückgegeben werden
 (: which-one? (size -> (mixed letter shipment)))
 
 (check-expect (which-one? Test-Size1) standard-letter)
@@ -125,7 +126,31 @@
 (check-expect (which-one? Test-Size3) postcard)
 (check-expect (which-one? Test-Size4) Maxi-letter)
 (check-expect (which-one? Test-Size5) compact)
-(check-expect (which-one? Test-Size1) compact)
+(check-expect (which-one? Test-Size6) compact)
 
 (define which-one?
-  
+  (lambda (s)
+    (cond
+      ((and (= (size-height s) 0)
+            (<= (size-length s) 23.5)
+            (<= (size-width s) 12.5)) postcard)
+      ((and (<= (size-height s) 0.5)
+            (<= (size-length s) 23.5)
+            (<= (size-width s) 12.5)) standard-letter)
+      ((and (<= (size-height s) 1)
+            (<= (size-length s) 23.5)
+            (<= (size-width s) 12.5)) compact-letter)
+      ((and (<= (size-height s) 2)
+            (<= (size-length s) 35.3)
+            (<= (size-width s) 25)) large-letter)
+      ((and (<= (size-height s) 5)
+            (<= (size-length s) 35.3)
+            (<= (size-width s) 25)) Maxi-letter)
+      ((and (<= (size-height s) 15)
+            (<= (size-length s) 35.3)
+            (<= (size-width s) 30)) compact)
+      (else (violation "kein Angebot passt")))))
+      
+      
+            
+    
