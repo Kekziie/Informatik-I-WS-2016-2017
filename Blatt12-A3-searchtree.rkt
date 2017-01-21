@@ -58,4 +58,9 @@
 ; (b)
 ; Prädikat search-tree-member?
 ; entscheidet, ob sich eine Markirung x in einem Suchbaum t befindet
-(: searchtree-member? (integer (btree-of integer) -> boolean))
+;(: searchtree-member? (integer (btree-of integer) -> boolean))
+
+; (c)
+; Prozedur searchtree-insert
+; fügt eine Markierung y in einem Suchbaum t ein
+(: searchtree-insert (integer (searchtree-of integer) -> (btree-of integer)))
