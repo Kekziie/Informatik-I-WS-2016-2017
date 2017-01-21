@@ -66,6 +66,14 @@
 ; ermittelt minimalste Markierung eines Binärbaumes
 ;(: btree-min ((btree-of real) -> real))
 
+(check-expect (btree-min t1) 1)
+(check-expect (btree-min t2) -30)
+(check-expect (btree-min (make-node (make-leaf 3))) 3)
+
 ; Prozedur btree-max
 ; ermittelt maximalste Markierung eines Binärbaumes
 ;(: btree-max ((btree-of real) -> real))
+
+(check-expect (btree-max t1) 3)
+(check-expect (btree-max t2) 42)
+(check-expect (btree-max (make-node (make-leaf 3))) 3)
