@@ -46,6 +46,23 @@
                x
                empty-tree)))
 
+; Beispielbaum: t1
+(: t1 (btree-of real))
+(define t1
+  (make-node (make-node (make-leaf 1)
+                        2
+                        empty-tree)
+             3
+             (make-leaf 4)))
+
+; Beispielbaum: t2
+(: t2 (btree-of real))
+(define t2
+  (make-node (make-leaf -42)
+             0
+             (make-leaf 42)))
+
 ; Funktion btree-parse
 ; akzeptiert einen String und konstruiert einen Baum
 (: btree-parse (string -> (btree-of string)))
+
