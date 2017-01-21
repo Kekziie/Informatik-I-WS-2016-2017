@@ -107,6 +107,8 @@
 (check-expect (which-one? (make-size 35 20 3)) Maxi-letter)
 (check-expect (which-one? (make-size 10 10 15)) compact)
 (check-expect (which-one? (make-size 20 30 12)) compact)
+(check-expect (which-one? (make-size 20 12 1)) compact-letter)
+(check-error (which-one? (make-size 50 50 50)) "kein Angebot passt")
 
 (define which-one?
   (lambda (s)
