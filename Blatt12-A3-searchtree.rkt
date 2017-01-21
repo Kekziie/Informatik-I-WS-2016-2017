@@ -74,4 +74,4 @@
 ; (e)
 ; Prozedur searchtree-delete
 ; entfernt eine Markierung y aus einem Suchbaum t
-(: searchtree-delete (integer (btree-of integer) -> (btree-of integer)))
+;(: searchtree-delete (integer (btree-of integer) -> (btree-of integer)))
