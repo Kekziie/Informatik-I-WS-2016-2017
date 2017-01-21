@@ -90,3 +90,30 @@
 
 (define maxi-to-15
   (make-shipment "maxi-to-15" 1000 (make-size 35 30 15) 2.35))
+
+;====================================================================
+; Testfälle
+(define Test-Size1
+  (make-size 12 12 0.5))
+
+(define Test-Size2
+  (make-size 25 25 1))
+
+(define Test-Size3
+  (make-size 10 10 0))
+
+(define Test-Size4
+  (make-size 35 20 3))
+
+(define Test-Size5
+  (make-size 10 10 20))
+
+(define Test-Size1
+  (make-size 20 35 12))
+
+;========================================================================
+
+; (a)
+; Prozedur which-one?
+; akzeptiert eine Größe
+; soll Angebot raussuchen,dass zur Größe passt
