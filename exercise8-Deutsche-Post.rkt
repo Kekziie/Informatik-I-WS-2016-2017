@@ -94,44 +94,47 @@
 ;========================================================================
 
 ; (a)
-; Prozedur which-one?
+; Prozedur which-one1?
 ; akzeptiert eine Größe s
 ; soll Angebot raussuchen,dass zur Größe passt
 ; wenn mehrere Angebote passen, dann soll das billigste wiedergegegben werden
 ; wenn  kein Angebot passt, soll eine Fehlermedlung zurückgegeben werden
-(: which-one? (size -> (mixed letter shipment)))
+(: which-one1? (size -> (mixed letter shipment)))
 
-(check-expect (which-one? (make-size 12 12 0.5)) standard-letter)
-(check-expect (which-one? (make-size 25 25 1)) large-letter)
-(check-expect (which-one? (make-size 10 10 0)) postcard)
-(check-expect (which-one? (make-size 35 20 3)) Maxi-letter)
-(check-expect (which-one? (make-size 10 10 15)) compact)
-(check-expect (which-one? (make-size 20 30 12)) compact)
-(check-expect (which-one? (make-size 20 12 1)) compact-letter)
-(check-error (which-one? (make-size 50 50 50)) "kein Angebot passt")
+(check-expect (which-one1? (make-size 12 12 0.5)) standard-letter)
+(check-expect (which-one1? (make-size 25 25 1)) large-letter)
+(check-expect (which-one1? (make-size 10 10 0)) postcard)
+(check-expect (which-one1? (make-size 35 20 3)) Maxi-letter)
+(check-expect (which-one1? (make-size 10 10 15)) compact)
+(check-expect (which-one1? (make-size 20 30 12)) compact)
+(check-expect (which-one1? (make-size 20 12 1)) compact-letter)
+(check-error (which-one1? (make-size 50 50 50)) "kein Angebot passt")
 
-(define which-one?
+(define which-one1?
   (lambda (s)
+   (let ((length (size-length s))
+         (width (size-width s))
+         (height (size-height s)))
     (cond
-      ((and (= (size-height s) 0)
-            (<= (size-length s) 23.5)
-            (<= (size-width s) 12.5)) postcard)
-      ((and (<= (size-height s) 0.5)
-            (<= (size-length s) 23.5)
-            (<= (size-width s) 12.5)) standard-letter)
-      ((and (<= (size-height s) 1)
-            (<= (size-length s) 23.5)
-            (<= (size-width s) 12.5)) compact-letter)
-      ((and (<= (size-height s) 2)
-            (<= (size-length s) 35.3)
-            (<= (size-width s) 25)) large-letter)
-      ((and (<= (size-height s) 5)
-            (<= (size-length s) 35.3)
-            (<= (size-width s) 25)) Maxi-letter)
-      ((and (<= (size-height s) 15)
-            (<= (size-length s) 35.3)
-            (<= (size-width s) 30)) compact)
-      (else (violation "kein Angebot passt")))))
+      ((and (= height 0)
+            (<= length 23.5)
+            (<= width 12.5)) postcard)
+      ((and (<= height 0.5)
+            (<= length 23.5)
+            (<= width 12.5)) standard-letter)
+      ((and (<= height 1)
+            (<= length 23.5)
+            (<= width 12.5)) compact-letter)
+      ((and (<= height 2)
+            (<= length 35.3)
+            (<= width 25)) large-letter)
+      ((and (<= height 5)
+            (<= length 35.3)
+            (<= width 25)) Maxi-letter)
+      ((and (<= height 15)
+            (<= length 35.3)
+            (<= width 30)) compact)
+      (else (violation "kein Angebot passt"))))))
       
       
             
