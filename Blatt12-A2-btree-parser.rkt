@@ -62,13 +62,38 @@
              0
              (make-leaf 4)))
 
-; Funktion btree-parse
-; akzeptiert einen String und konstruiert einen Baum
-(: btree-parse (string -> (btree-of string)))
+; Prädikat string-for-parse?
+; soll überprüfen, ob übegebener String str geeignet, um Baum daraus zu konstruieren
+(: string-for-parse? (string -> boolean))
 
-(check-expect (btree-parse "_") empty-tree)
-(check-expect (btree-parse "(_1_)") (make-node (make-leaf 1)))
-(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1)
-(check-expect (btree-parse "(_4_)0(_4_)") t2)
+(check-expect (string-for-parse? "_") #t)
+(check-expect (string-for-parse? "2") #f)
+(check-expect (string-for-parse? "(_2_)") #t)
+(check-expect (string-for-parse? "(_-2_)") #f)
+(check-expect (string-for-parse? "(_42_)") #f)
+(check-expect (string-for-parse? "(_4_)4(_4_)") #t)
+(check-expect (string-for-parse? "((_)_)") #f)
+(check-expect (string-for-parse? "(_2)9_2)2)") #f)
+
+(define string-for-parse?
+  (lambda (str)
+    (cond
+      ((string=? "_" str) #t)
+      (... (string->strings-list str) ...)
+      (else #f))))
+
+; Funktion btree-parse
+; akzeptiert einen String str und konstruiert einen Baum
+;(: btree-parse (string -> (btree-of string)))
+;
+;(check-expect (btree-parse "_") empty-tree)
+;(check-expect (btree-parse "(_1_)") (make-node (make-leaf 1)))
+;(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1)
+;(check-expect (btree-parse "(_4_)0(_4_)") t2)
+;
+;(define btree-parse
+;  (lambda (str)
+;    (if (
+    
               
 
