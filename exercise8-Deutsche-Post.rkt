@@ -11,6 +11,7 @@
 (: size-length (size -> real))
 (: size-width (size -> real))
 (: size-height (size -> real))
+(: size? (any -> boolean))
 
 (define-record-procedures size
   make-size
@@ -29,6 +30,7 @@
 (: letter-weight (letter -> real))
 (: letter-size (letter -> size))
 (: letter-price (letter -> real))
+(: letter? (any -> boolean))
 
 (define-record-procedures letter
   make-letter
@@ -37,3 +39,23 @@
    letter-weight
    letter-size
    letter-price))
+
+; eine Warensendung (shipment) besteht aus:
+; - Name (name)
+; - Gewicht (weight)
+; - Maße (size)
+; - Preis (price)
+(: make-shipment (string real size real -> shipment))
+(: shipment-name (shipment -> string))
+(: shipment-weight (shipment -> real))
+(: shipment-size (shipment -> size))
+(: shipment-price (shipment -> real))
+(: shipment? (any -> boolean))
+
+(define-record-procedures shipment
+  make-shipment
+  shipment?
+  (shipment-name
+   shipment-weight
+   shipment-size
+   shipment-price))
