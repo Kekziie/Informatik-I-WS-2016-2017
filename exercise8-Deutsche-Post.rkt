@@ -3,10 +3,10 @@
 #reader(lib "DMdA-vanilla-reader.ss" "deinprogramm")((modname exercise8-Deutsche-Post) (read-case-sensitive #f) (teachpacks ()) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ())))
 ; Übung 8 Deutsche Post 2107
 
-; ein Maß (size) besteht aus:
-; - Länge (length)
-; - Breite (width)
-; - Höhe (height)
+; ein max. Maß (size) besteht aus:
+; - Länge (length) in cm
+; - Breite (width) in cm
+; - Höhe (height) in cm
 (: make-size (real real real -> size))
 (: size-length (size -> real))
 (: size-width (size -> real))
@@ -22,12 +22,12 @@
 
 ; ein Brief (letter) besteht aus:
 ; - Name (name)
-; - Gewicht (weight)
-; - Maße (size)
-; - Preis (price)
+; - max. Gewicht (max-weight) in g
+; - max. Maße (size)
+; - Preis (price) in €
 (: make-letter (string real size real -> letter))
 (: letter-name (letter -> string))
-(: letter-weight (letter -> real))
+(: letter-max-weight (letter -> real))
 (: letter-size (letter -> size))
 (: letter-price (letter -> real))
 (: letter? (any -> boolean))
@@ -36,18 +36,18 @@
   make-letter
   letter?
   (letter-name
-   letter-weight
+   letter-max-weight
    letter-size
    letter-price))
 
 ; eine Warensendung (shipment) besteht aus:
 ; - Name (name)
-; - Gewicht (weight)
-; - Maße (size)
-; - Preis (price)
+; - max. Gewicht (max-weight) in g
+; - max. Maße (size)
+; - Preis (price) in €
 (: make-shipment (string real size real -> shipment))
 (: shipment-name (shipment -> string))
-(: shipment-weight (shipment -> real))
+(: shipment-max-weight (shipment -> real))
 (: shipment-size (shipment -> size))
 (: shipment-price (shipment -> real))
 (: shipment? (any -> boolean))
@@ -56,6 +56,37 @@
   make-shipment
   shipment?
   (shipment-name
-   shipment-weight
+   shipment-max-weight
    shipment-size
    shipment-price))
+
+; Datendefinitionen
+; Briefe
+(define postcard
+  (make-letter "postcard" 150  (make-size 23.5 12.5 0) 0.45))
+
+(define standard-letter
+  (make-letter "standard-letter" 20 (make-size 23.5 12.5 0.5) 0.70))
+
+(define compact-letter
+  (make-letter "compact-letter" 50 (make-size 23.5 12.5 1) 0.85))
+
+(define large-letter
+  (make-letter "large-letter" 500 (make-size 35.3 25 2) 1.45))
+
+(define Maxi-letter
+  (make-letter "Maxi-letter" 1000 (make-size 35.3 25 5) 2.60))
+
+;--------------------------------------------------------------
+; Warensendungen
+(define compact
+  (make-shipment "compact" 50 (make-size 35.3 30 15) 0.90))
+
+(define large
+  (make-shipment "large" 500 (make-size 35.3 30 15) 1.90))
+
+(define maxi-to-5
+  (make-shipment "maxi-to-5" 1000 (make-size 35.3 30 5) 2.20))
+
+(define maxi-to-15
+  (make-shipment "maxi-to-15" 1000 (make-size 35 30 15) 2.35))
