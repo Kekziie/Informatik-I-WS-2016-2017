@@ -53,4 +53,9 @@
 ;                   - im linken Teilbaum kleiner sind als x
 ;                   - im rechten Teilbaum größer sind als x
 ;                   - nur einmal im Baum vorkommen)
-(: search-tree? ((btree-of real) -> boolean))
+;(: search-tree? ((btree-of real) -> boolean))
+
+; (b)
+; Prädikat search-tree-member?
+; entscheidet, ob sich eine Markirung x in einem Suchbaum t befindet
+(: searchtree-member? (integer (btree-of integer) -> boolean))
