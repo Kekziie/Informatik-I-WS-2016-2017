@@ -63,4 +63,10 @@
 ; (c)
 ; Prozedur searchtree-insert
 ; fügt eine Markierung y in einem Suchbaum t ein
-(: searchtree-insert (integer (searchtree-of integer) -> (btree-of integer)))
+;(: searchtree-insert (integer (searchtree-of integer) -> (btree-of integer)))
+
+; (d)
+; Prozedur list->searchtree
+; wandelt eine Liste von Elementen in einen Suchbaum
+; (benutzen von fold)
+(: list->searchtree ((list-of integer) -> (btree-of integer)))
