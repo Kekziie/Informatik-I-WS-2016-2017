@@ -66,3 +66,9 @@
 ; akzeptiert einen String und konstruiert einen Baum
 (: btree-parse (string -> (btree-of string)))
 
+(check-expect (btree-parse "_") empty-tree)
+(check-expect (btree-parse "(_1_)") (make-node (make-leaf 1)))
+(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1)
+(check-expect (btree-parse "(_-42_)0(_42_)") t2)
+              
+
