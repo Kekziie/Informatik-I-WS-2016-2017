@@ -106,10 +106,10 @@
   (make-size 35 20 3))
 
 (define Test-Size5
-  (make-size 10 10 20))
+  (make-size 10 10 15))
 
-(define Test-Size1
-  (make-size 20 35 12))
+(define Test-Size6
+  (make-size 20 30 12))
 
 ;========================================================================
 
@@ -117,3 +117,15 @@
 ; Prozedur which-one?
 ; akzeptiert eine Größe
 ; soll Angebot raussuchen,dass zur Größe passt
+; wenn mehrere Angebote passen, dann soll das billigste wiedergegegben werden
+(: which-one? (size -> (mixed letter shipment)))
+
+(check-expect (which-one? Test-Size1) standard-letter)
+(check-expect (which-one? Test-Size2) large-letter)
+(check-expect (which-one? Test-Size3) postcard)
+(check-expect (which-one? Test-Size4) Maxi-letter)
+(check-expect (which-one? Test-Size5) compact)
+(check-expect (which-one? Test-Size1) compact)
+
+(define which-one?
+  
