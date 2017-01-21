@@ -45,3 +45,7 @@
     (make-node empty-tree
                x
                empty-tree)))
+
+; Funktion btree-parse
+; akzeptiert einen String und konstruiert einen Baum
+(: btree-parse (string -> (btree-of string)))
