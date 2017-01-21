@@ -63,7 +63,7 @@
 ; Datendefinitionen
 ; Briefe
 (define postcard
-  (make-letter "postcard" 150  (make-size 23.5 12.5 0) 0.45))
+  (make-letter "postcard" 15  (make-size 23.5 12.5 0) 0.45))
 
 (define standard-letter
   (make-letter "standard-letter" 20 (make-size 23.5 12.5 0.5) 0.70))
@@ -136,6 +136,29 @@
             (<= width 30)) compact)
       (else (violation "kein Angebot passt"))))))
       
-      
+; (b)
+; Proezdur which-one2?
+; akzeptiert ein Gewicht w
+; soll Angebot raussuchen,dass zum Gewicht passt
+; wenn mehrere Angebote passen, dann soll das billigste wiedergegegben werden
+; wenn  kein Angebot passt, soll eine Fehlermedlung zurückgegeben werden
+(: which-one2? (real -> (mixed letter shipment)))
+
+(check-expect (which-one2? 15) postcard)
+(check-expect (which-one2? 20) standard-letter)
+(check-expect (which-one2? 50) compact-letter)
+(check-expect (which-one2? 200) large-letter)
+(check-expect (which-one2? 1000) Maxi-letter)
+(check-error (which-one2? 2000) "kein Angebot passt")
+
+(define which-one2?
+  (lambda (w)
+    (cond
+      ((<= w 15) postcard)
+      ((<= w 20) standard-letter)
+      ((<= w 50) compact-letter)
+      ((<= w 500) large-letter)
+      ((<= w 1000) Maxi-letter)
+      (else (violation "kein Angebot passt")))))
             
     
