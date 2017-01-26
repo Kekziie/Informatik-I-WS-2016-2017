@@ -176,4 +176,10 @@
 (check-expect (stream-take 5 (stream-sum (from 1))) (list 1 3 6 10 15))
 (check-expect (stream-take 4 (stream-sum (from 0))) (list 0 1 3 6))
 (check-expect (stream-take 3 (stream-sum (from 5))) (list 5 11 18))
+
+(define stream-sum
+  (lambda (str)
+    (make-cons (head str)
+               (lambda () (stream-sum (make-cons (+ (head str) (head (force (tail str))))
+                                                 (lambda () (force (tail (force (tail str)))))))))))
         
