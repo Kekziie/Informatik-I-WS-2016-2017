@@ -2,6 +2,14 @@
 ;; über die Sprachebene dieser Datei in einer Form, die DrRacket verarbeiten kann.
 #reader(lib "DMdA-vanilla-reader.ss" "deinprogramm")((modname Blatt12-A3-searchtree) (read-case-sensitive #f) (teachpacks ()) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ())))
 ; Aufgabe 3
+
+(: filter ((%a -> boolean) (list-of %a) -> (list-of %a)))
+(define filter
+  (lambda (p xs)
+    (cond ((empty? xs)    empty)
+          ((p (first xs)) (make-pair (first xs) (filter p (rest xs))))
+          (else           (filter p (rest xs))))))
+
 ; Definition Binärbaum
 
 ; Ein Knoten (node) besitzt
@@ -130,22 +138,18 @@
 ;                   - im linken Teilbaum kleiner sind als x
 ;                   - im rechten Teilbaum größer sind als x
 ;                   - nur einmal im Baum vorkommen)
-;(: search-tree? ((btree-of real) -> boolean))
-;
-;(check-expect (search-tree? t1) #t)
-;(check-expect (search-tree? t2) #f)
-;(check-expect (search-tree? t3) #t)
-;(check-expect (search-tree? t4) #f)
-;(check-expect (search-tree? t5) #t)
-;(check-expect (search-tree? empty-tree) #t)
-;
-;(define search-tree?
-;  (lambda (btree)
-;    (cond
-;      ((empty-tree? t) #t)
-;      ((empty-tree? (node-right-branch t)) (search-tree? (node-left-branch t)))
-;      ((empty-tree? (node-left-branch t)) (search-tree? (node-right-branch t)))
-;      (...)
+(: search-tree? ((btree-of real) -> boolean))
+
+(check-expect (search-tree? t1) #t)
+(check-expect (search-tree? t2) #f)
+(check-expect (search-tree? t3) #t)
+(check-expect (search-tree? t4) #f)
+(check-expect (search-tree? t5) #t)
+(check-expect (search-tree? empty-tree) #t)
+
+(define search-tree?
+  (lambda (btree)
+    (levelorder btree)))
     
 ; (b)
 ; Prädikat search-tree-member?
