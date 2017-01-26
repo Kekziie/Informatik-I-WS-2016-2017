@@ -62,25 +62,49 @@
              0
              (make-leaf 4)))
 
+; Prozedur digit? gibt an, ob String ein einstellige Zahl ist
+(: digit? (string -> boolean))
+(check-expect (digit? "1") #t)
+(check-expect (digit? "2") #t)
+(check-expect (digit? "3") #t)
+(check-expect (digit? "4") #t)
+(check-expect (digit? "5") #t)
+(check-expect (digit? "42") #f)
+(check-expect (digit? "Baum") #f)
+(define digit?
+  (lambda (s)
+    (cond
+      ((string=? s "1") #t)
+      ((string=? s "2") #t)
+      ((string=? s "3") #t)
+      ((string=? s "4") #t)
+      ((string=? s "5") #t)
+      ((string=? s "6") #t)
+      ((string=? s "7") #t)
+      ((string=? s "8") #t)
+      ((string=? s "9") #t)
+      ((string=? s "0") #t)
+      (else #f))))
+
 ; Prädikat string-for-parse?
 ; soll überprüfen, ob übegebener String str geeignet, um Baum daraus zu konstruieren
-(: string-for-parse? (string -> boolean))
-
-(check-expect (string-for-parse? "_") #t)
-(check-expect (string-for-parse? "2") #f)
-(check-expect (string-for-parse? "(_2_)") #t)
-(check-expect (string-for-parse? "(_-2_)") #f)
-(check-expect (string-for-parse? "(_42_)") #f)
-(check-expect (string-for-parse? "(_4_)4(_4_)") #t)
-(check-expect (string-for-parse? "((_)_)") #f)
-(check-expect (string-for-parse? "(_2)9_2)2)") #f)
-
-(define string-for-parse?
-  (lambda (str)
-    (cond
-      ((string=? "_" str) #t)
-      (... (string->strings-list str) ...)
-      (else #f))))
+;(: string-for-parse? (string -> boolean))
+;
+;(check-expect (string-for-parse? "_") #t)
+;(check-expect (string-for-parse? "2") #f)
+;(check-expect (string-for-parse? "(_2_)") #t)
+;(check-expect (string-for-parse? "(_-2_)") #f)
+;(check-expect (string-for-parse? "(_42_)") #f)
+;(check-expect (string-for-parse? "(_4_)4(_4_)") #t)
+;(check-expect (string-for-parse? "((_)_)") #f)
+;(check-expect (string-for-parse? "(_2)9_2)2)") #f)
+;
+;(define string-for-parse?
+;  (lambda (str)
+;    (cond
+;      ((string=? "_" str) #t)
+;      (... (string->strings-list str) ...)
+;      (else #f))))
 
 ; Funktion btree-parse
 ; akzeptiert einen String str und konstruiert einen Baum
