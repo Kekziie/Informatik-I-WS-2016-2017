@@ -149,6 +149,11 @@
 (check-expect (stream-take 3 (series (lambda (x) (- x 1)) 0)) (list -1 0 1))
 (check-expect (stream-take 10 (series (lambda (x) (* x 2)) 1)) (list 2 4 6 8 10 12 14 16 18 20))
 
+(define series
+  (lambda (f n)
+    (stream-map f
+                (from n))))
+
 
 
         
