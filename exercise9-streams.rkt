@@ -158,6 +158,14 @@
 ; pi-series erstellt einen Stream mit Funktion 1/i^2 für i={1,2,...}
 (: pi-series (stream-of real))
 
+(check-expect (stream-take 1 pi-series) (list 1))
+(check-expect (stream-take 5 pi-series) (list 1 1/4 1/9 1/16 1/25))
+
+(define pi-series
+  (series (lambda (x)
+            (/ 1 (expt x 2)))
+          1))
+
 
 
         
