@@ -347,8 +347,4 @@
         (else (make-node (node-left-branch t)
                          (btree-min (node-right-branch t))
                          (searchtree-delete (btree-min (node-right-branch t))
-                                            (node-right-branch t)))))))
-                         
-
-             
-                        
+                                            (node-right-branch t)))))))                        
