@@ -348,7 +348,7 @@
         ((> x (node-label t)) (make-node (node-left-branch t)
                                          (node-label t)
                                          (searchtree-delete x (node-right-branch t))))
-        ((> x (node-label t)) (make-node (searchtree-delete x (node-left-branch t))
+        ((< x (node-label t)) (make-node (searchtree-delete x (node-left-branch t))
                                          (node-label t)
                                          (node-right-branch t)))
         ((and (= x (node-label t)) (empty-tree? (node-left-branch t))) (node-right-branch t))
