@@ -166,6 +166,10 @@
             (/ 1 (expt x 2)))
           1))
 
-
-
+; (c)
+; Prozedur stream-sum
+; - akzeptiert einen Stream str
+; - erzeugt einen neuen Stream aus den Summen des geg. Stream,
+;   also x1, x1+x2, x1+x2+x3, ...
+(: stream-sum ((stream-of %a) -> (stream-of %a)))
         
