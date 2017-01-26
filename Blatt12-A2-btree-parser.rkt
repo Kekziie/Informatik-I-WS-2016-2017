@@ -62,6 +62,69 @@
              0
              (make-leaf 4)))
 
+; Falte Baum t bzgl. z und c
+(: btree-fold (%b (%b %a %b -> %b) (btree-of %a) -> %b))
+(define btree-fold
+  (lambda (z c t)
+    (cond ((empty-tree? t) z)
+          ((node? t)
+           (c (btree-fold z c (node-left-branch t))
+              (node-label t)
+              (btree-fold z c (node-right-branch t)))))))
+
+; Liste der Markierungen in t in Inorder-Reihenfolge
+(: inorder ((btree-of %a) -> (list-of %a)))
+(define inorder
+  (lambda (t)
+    (btree-fold empty
+                (lambda (xs1 x xs2)
+                  (append 
+                   xs1      
+                   (list x) 
+                   xs2      
+                   ))
+                t)))
+
+; (drop w xs)
+; - verwirft die ersten w Elemente der Liste xs und gibt den Rest zurück
+; - hat xs nur m < w Elemente, liefere die leere Liste zurück
+(: drop (natural (list-of %a) -> (list-of %a)))
+(check-expect (drop 0 empty) empty)
+(check-expect (drop 0 (list 3)) (list 3))
+(check-expect (drop 1 (list 1)) empty)
+(check-expect (drop 2 (list 1 2 3)) (list 3))
+(check-expect (drop 3 (list 1 2 3 4 5 6 7 8 9)) (list 4 5 6 7 8 9))
+(define drop
+  (lambda (w xs)
+    (cond
+      ((empty? xs) empty)
+      ((= w 0) xs)
+      ((pair? xs) (if (<= (length xs) w)
+                       empty
+                      (drop (- w 1) (rest xs)))))))
+
+; Prozeduren verwerfen erstes bzw. letztes Element aus Liste xs
+(define drop-first
+  (lambda (xs)
+    (drop 1 xs)))
+
+(define drop-last
+  (lambda (xs)
+    (reverse (drop 1 (reverse xs)))))
+
+; Prozedur "last" liefert letztes Element der Liste
+(: last ((list-of %a) -> %a))
+(check-expect (last empty) empty)
+(check-expect (last (list 1)) 1)
+(check-expect (last (list 1 2 3)) 3)
+(check-expect (last (list "a" "b")) "b")
+(define last
+  (lambda (xs)
+    (cond
+      ((empty? xs) empty)
+      ((empty? (rest xs)) (first xs))
+      (else (last (rest xs))))))
+
 ; Prozedur digit? gibt an, ob String ein einstellige Zahl ist
 (: digit? (string -> boolean))
 (check-expect (digit? "1") #t)
@@ -86,38 +149,52 @@
       ((string=? s "0") #t)
       (else #f))))
 
-; Prädikat string-for-parse?
-; soll überprüfen, ob übegebener String str geeignet, um Baum daraus zu konstruieren
-;(: string-for-parse? (string -> boolean))
-;
-;(check-expect (string-for-parse? "_") #t)
-;(check-expect (string-for-parse? "2") #f)
-;(check-expect (string-for-parse? "(_2_)") #t)
-;(check-expect (string-for-parse? "(_-2_)") #f)
-;(check-expect (string-for-parse? "(_42_)") #f)
-;(check-expect (string-for-parse? "(_4_)4(_4_)") #t)
-;(check-expect (string-for-parse? "((_)_)") #f)
-;(check-expect (string-for-parse? "(_2)9_2)2)") #f)
-;
-;(define string-for-parse?
-;  (lambda (str)
-;    (cond
-;      ((string=? "_" str) #t)
-;      (... (string->strings-list str) ...)
-;      (else #f))))
+; Prozedur löscht äußere Klammern in einer Liste
+; wenn es keine äußeren Klammern gibt, dann wird die Liste zurück gegeben
+(: delete-outer-bracket ((list-of string) -> (list-of string)))
+(check-expect (delete-outer-bracket empty) empty)
+(check-expect (delete-outer-bracket (list "1" "2" "3")) (list "1" "2" "3"))
+(check-expect (delete-outer-bracket (list "(" "1" "2" ")")) (list "1" "2"))
+(define delete-outer-bracket
+  (lambda (xs)
+    (cond
+      ((empty? xs) empty)
+      ((and (string=? (first xs) "(")
+            (string=? (last xs) ")")) (drop-first (drop-last xs)))
+      (else xs))))
+
+; Prädikat leaf?
+; ermittelt, ob string einem Blatt entspricht
+(: leaf? (string -> boolean))
+(define leaf?
+  (lambda (str)
+    (and (string=? (first (delete-outer-bracket (string->strings-list str))) "_")
+         (digit? (first (rest (delete-outer-bracket (string->strings-list str)))))
+         (string=? (last (delete-outer-bracket (string->strings-list str))) "_"))))
+
+;=================================================================================================
 
 ; Funktion btree-parse
 ; akzeptiert einen String str und konstruiert einen Baum
-;(: btree-parse (string -> (btree-of string)))
-;
-;(check-expect (btree-parse "_") empty-tree)
-;(check-expect (btree-parse "(_1_)") (make-node (make-leaf 1)))
-;(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1)
-;(check-expect (btree-parse "(_4_)0(_4_)") t2)
-;
-;(define btree-parse
-;  (lambda (str)
-;    (if (
+(: btree-parse (string -> (btree-of string)))
+
+(check-expect (btree-parse "_") empty-tree) ; (a)
+(check-expect (btree-parse "(_1_)") (make-node empty-tree
+                                               "1"
+                                               empty-tree)) ; (b)
+;(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1) ; (c)
+;(check-expect (btree-parse "(_4_)0(_4_)") t2)       ; (c)
+(check-error (btree-parse "((_))))_))5)") "String entspricht nicht der Regel")
+
+(define btree-parse
+  (lambda (str)
+    (cond
+      ((string=? str "_") empty-tree) ; (a)
+      ((leaf? str) (make-leaf (first (rest (rest (string->strings-list str)))))) ; (b)
+;      ((... (delete-outer-bracket (string->strings-list str))) (make-node (btree-parse str) ... (btree-parse str)))
+      (else (violation "String entspricht nicht der Regel")))))
+       
+    
     
               
 
