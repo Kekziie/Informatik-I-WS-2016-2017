@@ -128,6 +128,13 @@
 (check-expect (stream-take 5 (stream-cycle (list 1 2 3))) (list 1 2 3 1 2))
 (check-expect (stream-take 6 (stream-cycle (list "a" "b"))) (list "a" "b" "a" "b" "a" "b"))
 (check-expect (stream-take 3 (stream-cycle (list (list 1)))) (list (list 1) (list 1) (list 1)))
+(check-error (stream-cycle empty) "Liste ist leer")
+
+(define stream-cycle
+  (lambda (xs)
+    (if (empty? xs)
+        (violation "Liste ist leer")
+        (stream-cycle-worker xs xs))))
 
 
         
