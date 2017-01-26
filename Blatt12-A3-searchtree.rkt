@@ -176,7 +176,27 @@
       ((empty? xs) #t)
       ((< (first (reverse xs)) x) #f)
       ((= x (first (reverse xs))) #t)
-      (else (list-check-max x (reverse (rest (reverse xs))))))))    
+      (else (list-check-max x (reverse (rest (reverse xs))))))))
+
+; Prozedur btree-min
+; ermittelt minimalste Markierung eines Binärbaumes
+(: btree-min ((btree-of real) -> real))
+(check-within (btree-min t1) -10 0.01)
+(check-within (btree-min t2) 0 0.01)
+(check-within (btree-min t3) -20 0.01)
+(define btree-min
+  (lambda (btree)
+    (btree-fold +inf.0 min btree)))
+
+; Prädikat leaf?
+; ermittelt, ob geg. Knoten K ein Blatt ist
+(: leaf? ((btree-of %a) -> boolean))
+(check-expect (leaf? (node-left-branch t1)) #t)
+(check-expect (leaf? (node-right-branch t1)) #t)
+(check-expect (leaf? t1) #f)
+(define leaf?
+  (lambda (k)
+    (= 1 (length (inorder k)))))
  
 ; (a)
 ; Prädikat search-tree?
@@ -292,14 +312,14 @@
 ; entfernt eine Markierung x aus einem Suchbaum t
 (: searchtree-delete (integer (searchtree-of integer) -> (searchtree-of integer)))
 
-(check-expect (searchtree-delete 0 empty-tree) empty-tree)
-(check-expect (searchtree-delete -10 t1) (make-node empty-tree
+(check-within (searchtree-delete 0 empty-tree) empty-tree 0.01)
+(check-within (searchtree-delete -10 t1) (make-node empty-tree
                                                     0
-                                                    (make-leaf 10)))
-(check-expect (searchtree-delete 10 t1) (make-node (make-leaf -10)
+                                                    (make-leaf 10)) 0.01)
+(check-within (searchtree-delete 10 t1) (make-node (make-leaf -10)
                                                    0
-                                                   empty-tree))
-(check-expect (searchtree-delete 2 t5) (make-node (make-node (make-leaf -2)
+                                                   empty-tree) 0.01)
+(check-within (searchtree-delete 2 t5) (make-node (make-node (make-leaf -2)
                                                               -80
                                                               empty-tree)
                                                   1
@@ -307,11 +327,11 @@
                                                                         50
                                                                        (make-leaf 30))
                                                              33
-                                                             empty-tree)))
-(check-expect (searchtree-delete 0 t1) (make-node (make-leaf -10)
+                                                             empty-tree)) 0.01)
+(check-within (searchtree-delete 0 t1) (make-node (make-leaf -10)
                                                   10
-                                                  empty-tree))
-(check-expect (searchtree-delete 1 t5) (make-node (make-node (make-leaf -2)
+                                                  empty-tree) 0.01)
+(check-within (searchtree-delete 1 t5) (make-node (make-node (make-leaf -2)
                                                              -80
                                                              empty-tree)
                                                   33
@@ -319,13 +339,25 @@
                                                                         50
                                                                         (make-leaf 30))
                                                              2
-                                                             empty-tree)))
-(check-error (searchtree-delete 1000 t5) "Markierung x nicht im Binärbaum t vorhanden")
+                                                             empty-tree)) 0.01)
 
 (define searchtree-delete
   (lambda (x t)
-    (if (searchtree-member? x t)
-        (...)
-        (violation "Markierung x nicht im Binärbaum t vorhanden")
+     (cond
+        ((empty-tree? t) empty-tree)
+        ((> x (node-label t)) (make-node (node-left-branch t)
+                                         (node-label t)
+                                         (searchtree-delete x (node-right-branch t))))
+        ((> x (node-label t)) (make-node (searchtree-delete x (node-left-branch t))
+                                         (node-label t)
+                                         (node-right-branch t)))
+        ((and (= x (node-label t)) (empty-tree? (node-left-branch t))) (node-right-branch t))
+        ((and (= x (node-label t)) (empty-tree? (node-right-branch t))) (node-left-branch t))
+        (else (make-node (node-left-branch t)
+                         (btree-min (node-right-branch t))
+                         (searchtree-delete (btree-min (node-right-branch t))
+                                            (node-right-branch t)))))))
+                         
+
              
                         
