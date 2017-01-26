@@ -154,6 +154,10 @@
     (stream-map f
                 (from n))))
 
+; (b)
+; pi-series erstellt einen Stream mit Funktion 1/i^2 für i={1,2,...}
+(: pi-series (stream-of real))
+
 
 
         
