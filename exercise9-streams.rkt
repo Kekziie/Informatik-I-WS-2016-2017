@@ -90,4 +90,14 @@
     (if (= n 0)
         str
         (stream-drop (- n 1) (force (tail str))))))
+
+; 2.)
+; Prozedur stream-alternating
+; - akzeptiert zwei Elemente a und b mit Signatur %a
+; - erstellt einen alternierenden Stream von a und b
+(: stream-alternating (%a %a -> (stream-of %a)))
+
+(check-expect (stream-take 5 (stream-alternating "a" "b")) (list "a" "b" "a" "b" "a"))
+(check-expect (stream-take 10 (stream-alternating 1 2)) (list 1 2 1 2 1 2 1 2 1 2))
+(check-expect (stream-take 3 (stream-alternating #t #f)) (list #t #f #t))
         
