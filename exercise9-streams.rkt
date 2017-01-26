@@ -72,3 +72,22 @@
       ((empty? xs) empty)
       ((empty? (rest xs)) (first xs))
       (else (last (rest xs))))))
+
+; 1.)
+; Prozedur stream-drop
+; - akzeptiert eine natürliche Zahl n und einen Stream str
+; - erzeugt einen neuen Stream
+; - verwirft die n ersten Elemente aus geg. Stream
+(: stream-drop (natural (stream-of %a) -> (stream-of %a)))
+
+(check-expect (stream-take 5 (stream-drop 5 (from 0))) (list 5 6 7 8 9))
+(check-expect (stream-take 10 (stream-drop 1 (from 0))) (list 1 2 3 4 5 6 7 8 9 10))
+(check-expect (stream-take 3 (stream-drop 2 (from 3))) (list 5 6 7))
+(check-expect (stream-take 5 (stream-drop 0 (from 1))) (list 1 2 3 4 5))
+
+(define stream-drop
+  (lambda (n str)
+    (if (= n 0)
+        str
+        (stream-drop (- n 1) (force (tail str))))))
+        
