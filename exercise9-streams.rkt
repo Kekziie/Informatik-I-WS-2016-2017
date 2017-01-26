@@ -107,8 +107,27 @@
                (lambda () (stream-alternating b a)))))
 
 ; 3.)
+; Prozedur stream-cycle-worker
+; - akzeptiert eine Liste und einen Akku
+; - erzeugt einen Stream, der die Elemente der Liste wiederholt
+; - bei leerer Liste wird die Liste mit dem Akku "aufgefüllt"
+(: stream-cycle-worker ((list-of %a) (list-of %a) -> (stream-of %a)))
+(define stream-cycle-worker
+  (lambda (xs acc)
+    (if (empty? xs)
+        (stream-cycle-worker acc acc)
+        (make-cons (first xs)
+                   (lambda () (stream-cycle-worker (rest xs) acc))))))
+
 ; Prozedur stream-cycle
 ; - akzeptiert eine Liste xs
 ; - erzeugt einen Stream, die die Elemente der Liste immer wiederholt
+; - bei leerer Liste -> Fehlermeldung
 (: stream-cycle ((list-of %a) -> (stream-of %a)))
+
+(check-expect (stream-take 5 (stream-cycle (list 1 2 3))) (list 1 2 3 1 2))
+(check-expect (stream-take 6 (stream-cycle (list "a" "b"))) (list "a" "b" "a" "b" "a" "b"))
+(check-expect (stream-take 3 (stream-cycle (list (list 1)))) (list (list 1) (list 1) (list 1)))
+
+
         
