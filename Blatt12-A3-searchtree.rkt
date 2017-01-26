@@ -62,6 +62,11 @@
           ((pair? ts)  (append (roots ts) 
                                (traverse (subtrees ts)))))))
 
+(: flatten ((list-of (list-of %a)) -> (list-of %a)))
+(define flatten
+  (lambda (xss)
+    (fold empty append xss)))
+
 ; Liste der Wurzelmarkierungen der nicht-leeren Bäume in ts
 (: roots ((list-of (btree-of %a)) -> (list-of %a)))
 (define roots
@@ -81,7 +86,6 @@
 
 ; Breitendurchlauf für den Baum t
 (: levelorder ((btree-of %a) -> (list-of %a)))
-(check-expect (levelorder scheme) (list "s" "c" "h" "e" "m" "e"))
 (define levelorder
   (lambda (t)
     (traverse (list t))))
