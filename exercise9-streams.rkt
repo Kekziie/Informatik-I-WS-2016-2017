@@ -172,4 +172,8 @@
 ; - erzeugt einen neuen Stream aus den Summen des geg. Stream,
 ;   also x1, x1+x2, x1+x2+x3, ...
 (: stream-sum ((stream-of %a) -> (stream-of %a)))
+
+(check-expect (stream-take 5 (stream-sum (from 1))) (list 1 3 6 10 15))
+(check-expect (stream-take 4 (stream-sum (from 0))) (list 0 1 3 6))
+(check-expect (stream-take 3 (stream-sum (from 5))) (list 5 11 18))
         
