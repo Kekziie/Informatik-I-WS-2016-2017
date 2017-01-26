@@ -46,6 +46,38 @@
                x
                empty-tree)))
 
+; Breitendurchlauf für die Liste der Bäume ts
+(: traverse ((list-of (btree-of %a)) -> (list-of %a)))
+(define traverse
+  (lambda (ts)
+    (cond ((empty? ts) empty)
+          ((pair? ts)  (append (roots ts) 
+                               (traverse (subtrees ts)))))))
+
+; Liste der Wurzelmarkierungen der nicht-leeren Bäume in ts
+(: roots ((list-of (btree-of %a)) -> (list-of %a)))
+(define roots
+  (lambda (ts)
+    (map node-label 
+         (filter node? ts))))
+
+  
+; Liste der Teilbäume der nicht-leeren Bäume in ts
+(: subtrees ((list-of (btree-of %a)) -> (list-of (btree-of %a))))
+(define subtrees
+  (lambda (ts)
+    (flatten 
+     (map (lambda (t) (list (node-left-branch t)
+                            (node-right-branch t)))
+          (filter node? ts)))))
+
+; Breitendurchlauf für den Baum t
+(: levelorder ((btree-of %a) -> (list-of %a)))
+(check-expect (levelorder scheme) (list "s" "c" "h" "e" "m" "e"))
+(define levelorder
+  (lambda (t)
+    (traverse (list t))))
+
 ; Beispielbaum: t1
 (: t1 (btree-of real))
 (define t1
@@ -98,19 +130,23 @@
 ;                   - im linken Teilbaum kleiner sind als x
 ;                   - im rechten Teilbaum größer sind als x
 ;                   - nur einmal im Baum vorkommen)
-(: search-tree? ((btree-of real) -> boolean))
-
-(check-expect (search-tree? t1) #t)
-(check-expect (search-tree? t2) #f)
-(check-expect (search-tree? t3) #t)
-(check-expect (search-tree? t4) #f)
-(check-expect (search-tree? t5) #t)
-(check-expect (search-tree? empty-tree) #t)
-
-(define search-tree?
-  (lambda (btree)
+;(: search-tree? ((btree-of real) -> boolean))
+;
+;(check-expect (search-tree? t1) #t)
+;(check-expect (search-tree? t2) #f)
+;(check-expect (search-tree? t3) #t)
+;(check-expect (search-tree? t4) #f)
+;(check-expect (search-tree? t5) #t)
+;(check-expect (search-tree? empty-tree) #t)
+;
+;(define search-tree?
+;  (lambda (btree)
+;    (cond
+;      ((empty-tree? t) #t)
+;      ((empty-tree? (node-right-branch t)) (search-tree? (node-left-branch t)))
+;      ((empty-tree? (node-left-branch t)) (search-tree? (node-right-branch t)))
+;      (...)
     
-
 ; (b)
 ; Prädikat search-tree-member?
 ; entscheidet, ob sich eine Markirung x in einem Suchbaum t befindet
