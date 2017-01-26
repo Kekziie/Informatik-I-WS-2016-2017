@@ -46,6 +46,17 @@
                x
                empty-tree)))
 
+; Falte Baum t bzgl. z und c
+(: btree-fold (%b (%b %a %b -> %b) (btree-of %a) -> %b))
+(define btree-fold
+  (lambda (z c t)
+    (cond ((empty-tree? t) 
+           z)
+          ((node? t)
+           (c (btree-fold z c (node-left-branch t))
+              (node-label t)
+              (btree-fold z c (node-right-branch t)))))))
+
 ; Beispielbaum: t1
 (: t1 (btree-of real))
 (define t1
@@ -64,11 +75,14 @@
 
 ; Prozedur btree-min
 ; ermittelt minimalste Markierung eines Binärbaumes
-;(: btree-min ((btree-of real) -> real))
+(: btree-min ((btree-of real) -> real))
 
-;(check-expect (btree-min t1) 1)
-;(check-expect (btree-min t2) -30)
-;(check-expect (btree-min (make-node (make-leaf 3))) 3)
+(check-within (btree-min t1) 1 0.01)
+(check-within (btree-min t2) -30 0.01)
+
+(define btree-min
+  (lambda (btree)
+    (btree-fold +inf.0 min btree)))
 
 ; Prozedur btree-max
 ; ermittelt maximalste Markierung eines Binärbaumes
@@ -76,4 +90,3 @@
 
 ;(check-expect (btree-max t1) 3)
 ;(check-expect (btree-max t2) 42)
-;(check-expect (btree-max (make-node (make-leaf 3))) 3)
