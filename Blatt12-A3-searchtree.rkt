@@ -310,7 +310,7 @@
 ; (e)
 ; Prozedur searchtree-delete
 ; entfernt eine Markierung x aus einem Suchbaum t
-(: searchtree-delete (integer (searchtree-of integer) -> (searchtree-of integer)))
+(: searchtree-delete (integer (btree-of integer) -> (btree-of integer)))
 
 (check-within (searchtree-delete 0 empty-tree) empty-tree 0.01)
 (check-within (searchtree-delete -10 t1) (make-node empty-tree
@@ -319,28 +319,19 @@
 (check-within (searchtree-delete 10 t1) (make-node (make-leaf -10)
                                                    0
                                                    empty-tree) 0.01)
-(check-within (searchtree-delete 2 t5) (make-node (make-node (make-leaf -2)
-                                                              -80
-                                                              empty-tree)
-                                                  1
-                                                 (make-node (make-node (make-leaf 100)
-                                                                        50
-                                                                       (make-leaf 30))
-                                                             33
-                                                             empty-tree)) 0.01)
 (check-within (searchtree-delete 0 t1) (make-node (make-leaf -10)
                                                   10
                                                   empty-tree) 0.01)
 (check-within (searchtree-delete 1 t5) (make-node (make-node (make-leaf -2)
-                                                             -80
-                                                             empty-tree)
+                                                              -80
+                                                              empty-tree)
+                                        2
+                                       (make-node (make-node (make-leaf 100)
+                                                             50
+                                                             (make-leaf 30))
                                                   33
-                                                  (make-node (make-node (make-leaf 100)
-                                                                        50
-                                                                        (make-leaf 30))
-                                                             2
-                                                             empty-tree)) 0.01)
-
+                                                  (make-leaf 2))) 0.01)
+                                                                                                                                     
 (define searchtree-delete
   (lambda (x t)
      (cond
