@@ -231,7 +231,7 @@
                          (predicate search-tree?)))))
 
 ; Prozedur searchtree-insert
-; fügt eine Markierung y in einem Suchbaum t ein
+; fügt eine Markierung x in einem Suchbaum t ein
 (: searchtree-insert (integer (searchtree-of integer) -> (searchtree-of integer)))
 
 (check-expect (searchtree-insert 0 t1) t1)
@@ -289,7 +289,7 @@
 
 ; (e)
 ; Prozedur searchtree-delete
-; entfernt eine Markierung y aus einem Suchbaum t
+; entfernt eine Markierung x aus einem Suchbaum t
 (: searchtree-delete (integer (searchtree-of integer) -> (searchtree-of integer)))
 
 (check-expect (searchtree-delete 0 empty-tree) empty-tree)
@@ -320,7 +320,12 @@
                                                                         (make-leaf 30))
                                                              2
                                                              empty-tree)))
+(check-error (searchtree-delete 1000 t5) "Markierung x nicht im Binärbaum t vorhanden")
 
-
+(define searchtree-delete
+  (lambda (x t)
+    (if (searchtree-member? x t)
+        (...)
+        (violation "Markierung x nicht im Binärbaum t vorhanden")
              
                         
