@@ -227,6 +227,13 @@
 (check-expect (searchtree-member? 100 t3) #f)
 (check-expect (searchtree-member? 3 t3) #t)
 (check-expect (searchtree-member? -80 t5) #t)
+(check-error (searchtree-member? 0 t2) "Baum ist kein Suchbaum")
+
+(define searchtree-member?
+  (lambda (x t)
+    (if (search-tree? t)
+        (contains? x = (inorder t))
+        (violation "Baum ist kein Suchbaum"))))
 
 ; (c)
 ; Prozedur searchtree-insert
