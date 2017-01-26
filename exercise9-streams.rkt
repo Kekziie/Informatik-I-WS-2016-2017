@@ -105,4 +105,10 @@
   (lambda (a b)
     (make-cons a
                (lambda () (stream-alternating b a)))))
+
+; 3.)
+; Prozedur stream-cycle
+; - akzeptiert eine Liste xs
+; - erzeugt einen Stream, die die Elemente der Liste immer wiederholt
+(: stream-cycle ((list-of %a) -> (stream-of %a)))
         
