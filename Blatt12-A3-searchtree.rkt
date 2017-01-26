@@ -144,18 +144,6 @@
       ((contains? (first xs) c (rest xs)) #t)
       (else (distinct? c (rest xs))))))
 
-; Prozedur root
-; - akzpetiert einen Baum
-; - gibt die Wurzel zurück
-(: root ((btree-of %a) -> %a))
-(check-expect (root t1) 0)
-(check-expect (root t2) 0)
-(check-expect (root t4) -1)
-(check-expect (root t5) 1)
-(define root
-  (lambda (btree)
-    (node-label btree)))
-
 ; Prozedur list-check-min
 ; - akzeptiert ein Zahl x und eine Liste xs
 ; - kontrolliert, ob alle Elemente links von Zahl x kleiner als x sind
@@ -212,8 +200,8 @@
     (cond
       ((empty-tree? btree) #t)
       ((distinct? = list-btree) #f)
-      ((not (list-check-min (root btree) list-btree)) #f)
-      ((not (list-check-max (root btree) list-btree)) #f)
+      ((not (list-check-min (node-label btree) list-btree)) #f)
+      ((not (list-check-max (node-label btree) list-btree)) #f)
       (else #t)))))
     
 ; (b)
@@ -236,9 +224,38 @@
         (violation "Baum ist kein Suchbaum"))))
 
 ; (c)
+; Signatur searchtree-of
+(define searchtree-of
+  (lambda (t)
+    (signature (combined (btree-of t)
+                         (predicate search-tree?)))))
+
 ; Prozedur searchtree-insert
 ; fügt eine Markierung y in einem Suchbaum t ein
-;(: searchtree-insert (integer (searchtree-of integer) -> (btree-of integer)))
+(: searchtree-insert (integer (searchtree-of integer) -> (btree-of integer)))
+
+(check-expect (searchtree-insert 0 t1) t1)
+(check-expect (searchtree-insert -10 t1) t1)
+(check-expect (searchtree-insert 10 empty-tree) (make-leaf 10))
+(check-expect (searchtree-insert 10 t1) t1)
+(check-expect (searchtree-insert 100 t1) (make-node (make-leaf -10)
+                                                    0
+                                                    (make-node empty-tree
+                                                               10
+                                                               (make-leaf 100))))
+
+(define searchtree-insert
+  (lambda (x t)
+    (cond
+      ((empty-tree? t) (make-leaf x))
+      ((= (node-label t) x) t)
+      ((< x (node-label t)) (make-node (searchtree-insert x (node-left-branch t))
+                                       (node-label t)
+                                       (node-right-branch t)))
+      ((> x (node-label t)) (make-node (node-left-branch t)
+                                       (node-label t)
+                                       (searchtree-insert x (node-right-branch t)))))))
+
 
 ; (d)
 ; Prozedur list->searchtree
