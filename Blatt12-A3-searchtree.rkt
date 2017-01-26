@@ -219,7 +219,14 @@
 ; (b)
 ; Prädikat search-tree-member?
 ; entscheidet, ob sich eine Markirung x in einem Suchbaum t befindet
-;(: searchtree-member? (integer (btree-of integer) -> boolean))
+(: searchtree-member? (integer (btree-of integer) -> boolean))
+
+(check-expect (searchtree-member? -10 t1) #t)
+(check-expect (searchtree-member? 10 t1) #t)
+(check-expect (searchtree-member? 42 t1) #f)
+(check-expect (searchtree-member? 100 t3) #f)
+(check-expect (searchtree-member? 3 t3) #t)
+(check-expect (searchtree-member? -80 t5) #t)
 
 ; (c)
 ; Prozedur searchtree-insert
