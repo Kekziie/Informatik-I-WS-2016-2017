@@ -188,6 +188,10 @@
 ; - realisiert Annäherungsformel pi= Wurzel(6* Summenzeichen (1/i^2))
 (: approx-pi (natural -> real))
 
+(check-within (approx-pi 5) 2.963 0.01)
+(check-within (approx-pi 10) 3.0493 0.01)
+(check-within (approx-pi 15) 3.07938 0.01)
+
 (define approx-pi
   (lambda (n)
     (sqrt (* 6 (last (stream-take n (stream-sum pi-series)))))))
