@@ -182,4 +182,13 @@
     (make-cons (head str)
                (lambda () (stream-sum (make-cons (+ (head str) (head (force (tail str))))
                                                  (lambda () (force (tail (force (tail str)))))))))))
+
+; (d)
+; Prozedur approx-pi
+; - realisiert Annäherungsformel pi= Wurzel(6* Summenzeichen (1/i^2))
+(: approx-pi (natural -> real))
+
+(define approx-pi
+  (lambda (n)
+    (sqrt (* 6 (last (stream-take n (stream-sum pi-series)))))))
         
