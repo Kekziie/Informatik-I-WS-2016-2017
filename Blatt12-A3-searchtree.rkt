@@ -261,12 +261,31 @@
                                        (node-label t)
                                        (searchtree-insert x (node-right-branch t)))))))
 
-
 ; (d)
 ; Prozedur list->searchtree
 ; wandelt eine Liste von Elementen in einen Suchbaum
 ; (benutzen von fold)
-;(: list->searchtree ((list-of integer) -> (btree-of integer)))
+(: list->searchtree ((list-of integer) -> (btree-of integer)))
+
+(check-expect (list->searchtree (list 1 2 3)) (make-node empty-tree
+                                                         1
+                                                         (make-node empty-tree
+                                                                    2
+                                                                    (make-leaf 3))))
+(check-expect (list->searchtree (list 1 0 -1)) (make-node (make-node (make-leaf -1)
+                                                                     0
+                                                                     empty-tree)
+                                                          1
+                                                          empty-tree))
+(check-expect (list->searchtree (list 15 0 -3 42)) (make-node (make-node (make-leaf -3)
+                                                                         0
+                                                                         empty-tree)
+                                                              15
+                                                              (make-leaf 42)))
+
+(define list->searchtree
+  (lambda (xs)
+    (fold empty-tree searchtree-insert (reverse xs))))
 
 ; (e)
 ; Prozedur searchtree-delete
