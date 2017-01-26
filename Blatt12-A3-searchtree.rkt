@@ -3,15 +3,7 @@
 #reader(lib "DMdA-vanilla-reader.ss" "deinprogramm")((modname Blatt12-A3-searchtree) (read-case-sensitive #f) (teachpacks ()) (deinprogramm-settings #(#f write repeating-decimal #f #t none explicit #f ())))
 ; Aufgabe 3
 
-(: filter ((%a -> boolean) (list-of %a) -> (list-of %a)))
-(define filter
-  (lambda (p xs)
-    (cond ((empty? xs)    empty)
-          ((p (first xs)) (make-pair (first xs) (filter p (rest xs))))
-          (else           (filter p (rest xs))))))
-
-; Definition Binärbaum
-
+; Definitionen aus Skript
 ; Ein Knoten (node) besitzt
 ; - einen linken Zweig (left-branch),
 ; - eine Markierung (label) und
@@ -54,41 +46,31 @@
                x
                empty-tree)))
 
-; Breitendurchlauf für die Liste der Bäume ts
-(: traverse ((list-of (btree-of %a)) -> (list-of %a)))
-(define traverse
-  (lambda (ts)
-    (cond ((empty? ts) empty)
-          ((pair? ts)  (append (roots ts) 
-                               (traverse (subtrees ts)))))))
-
-(: flatten ((list-of (list-of %a)) -> (list-of %a)))
-(define flatten
-  (lambda (xss)
-    (fold empty append xss)))
-
-; Liste der Wurzelmarkierungen der nicht-leeren Bäume in ts
-(: roots ((list-of (btree-of %a)) -> (list-of %a)))
-(define roots
-  (lambda (ts)
-    (map node-label 
-         (filter node? ts))))
-
-  
-; Liste der Teilbäume der nicht-leeren Bäume in ts
-(: subtrees ((list-of (btree-of %a)) -> (list-of (btree-of %a))))
-(define subtrees
-  (lambda (ts)
-    (flatten 
-     (map (lambda (t) (list (node-left-branch t)
-                            (node-right-branch t)))
-          (filter node? ts)))))
-
-; Breitendurchlauf für den Baum t
-(: levelorder ((btree-of %a) -> (list-of %a)))
-(define levelorder
+; Liste der Markierungen in t in Inorder-Reihenfolge
+(: inorder ((btree-of %a) -> (list-of %a)))
+(define inorder
   (lambda (t)
-    (traverse (list t))))
+    (btree-fold empty
+                (lambda (xs1 x xs2)
+                  (append 
+                   xs1      
+                   (list x) 
+                   xs2      
+                   ))
+                t)))
+
+; Falte Baum t bzgl. z und c
+(: btree-fold (%b (%b %a %b -> %b) (btree-of %a) -> %b))
+(define btree-fold
+  (lambda (z c t)
+    (cond ((empty-tree? t) 
+           z)
+          ((node? t)
+           (c (btree-fold z c (node-left-branch t))
+              (node-label t)
+              (btree-fold z c (node-right-branch t)))))))
+
+; -------------------------------------------------------------------
 
 ; Beispielbaum: t1
 (: t1 (btree-of real))
@@ -127,13 +109,29 @@
 (define t5
   (make-node (make-node (make-leaf -2)
                         -80
-                        (make-leaf -35))
+                        empty-tree)
              1
              (make-node (make-node (make-leaf 100)
                                    50
                                    (make-leaf 30))
                         33
                         (make-leaf 2))))
+
+; -------------------------------------------------------------------
+; Hilfsporzeduren
+; Prozedur root
+; - akzpetiert einen Baum
+; - gibt die Wurzel zurück
+(: root ((btree-of %a) -> %a))
+
+(check-expect (root t1) 0)
+(check-expect (root t2) 0)
+(check-expect (root t4) -1)
+(check-expect (root t5) 1)
+
+(define root
+  (lambda (btree)
+    (node-label btree)))
 
 ; (a)
 ; Prädikat search-tree?
@@ -142,18 +140,18 @@
 ;                   - im linken Teilbaum kleiner sind als x
 ;                   - im rechten Teilbaum größer sind als x
 ;                   - nur einmal im Baum vorkommen)
-(: search-tree? ((btree-of real) -> boolean))
-
-(check-expect (search-tree? t1) #t)
-(check-expect (search-tree? t2) #f)
-(check-expect (search-tree? t3) #t)
-(check-expect (search-tree? t4) #f)
-(check-expect (search-tree? t5) #t)
-(check-expect (search-tree? empty-tree) #t)
-
-(define search-tree?
-  (lambda (btree)
-    (levelorder btree)))
+;(: search-tree? ((btree-of real) -> boolean))
+;
+;(check-expect (search-tree? t1) #t)
+;(check-expect (search-tree? t2) #f)
+;(check-expect (search-tree? t3) #t)
+;(check-expect (search-tree? t4) #f)
+;(check-expect (search-tree? t5) #t)
+;(check-expect (search-tree? empty-tree) #t)
+;
+;(define search-tree?
+;  (lambda (btree)
+;    (inorder btree)))
     
 ; (b)
 ; Prädikat search-tree-member?
