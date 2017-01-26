@@ -46,6 +46,51 @@
                x
                empty-tree)))
 
+; Beispielbaum: t1
+(: t1 (btree-of real))
+(define t1
+  (make-node (make-leaf -10)
+             0
+             (make-leaf 10)))
+
+; Beispielbaum: t2
+(: t2 (btree-of real))
+(define t2
+  (make-node (make-leaf 20)
+             0
+             (make-leaf 10)))
+
+; Beispielbaum: t3
+(: t3 (btree-of real))
+(define t3
+  (make-node (make-node (make-leaf -20)
+                        -10
+                        (make-leaf -1))
+             0
+             (make-node (make-leaf 1)
+                        2
+                        (make-leaf 3))))
+
+; Beispielbaum: t4
+(: t4 (btree-of real))
+(define t4
+  (make-node (make-leaf -1)
+             -1
+             (make-leaf 10)))
+
+; Beispielbaum: t5
+(: t5 (btree-of real))
+(define t5
+  (make-node (make-node (make-leaf -2)
+                        -80
+                        (make-leaf -35))
+             1
+             (make-node (make-node (make-leaf 100)
+                                   50
+                                   (make-leaf 30))
+                        33
+                        (make-leaf 2))))
+
 ; (a)
 ; Prädikat search-tree?
 ; stellt fest, ob Binärbaum t, ein Suchbaum ist
