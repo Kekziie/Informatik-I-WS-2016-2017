@@ -188,8 +188,7 @@
       ((empty? xs) #t)
       ((< (first (reverse xs)) x) #f)
       ((= x (first (reverse xs))) #t)
-      (else (list-check-max x (reverse (rest (reverse xs))))))))
-    
+      (else (list-check-max x (reverse (rest (reverse xs))))))))    
  
 ; (a)
 ; Prädikat search-tree?
@@ -198,22 +197,24 @@
 ;                   - im linken Teilbaum kleiner sind als x
 ;                   - im rechten Teilbaum größer sind als x
 ;                   - nur einmal im Baum vorkommen)
-;(: search-tree? ((btree-of real) -> boolean))
-;
-;(check-expect (search-tree? t1) #t)
-;(check-expect (search-tree? t2) #f)
-;(check-expect (search-tree? t3) #t)
-;(check-expect (search-tree? t4) #f)
-;(check-expect (search-tree? t5) #t)
-;(check-expect (search-tree? empty-tree) #t)
-;
-;(define search-tree?
-;  (lambda (btree)
-;    (cond
-;      ((empty-tree? btree) #t)
-;      ((distinct? (inorder btree)) #f)
-;      ((
+(: search-tree? ((btree-of real) -> boolean))
 
+(check-expect (search-tree? t1) #t)
+(check-expect (search-tree? t2) #f)
+(check-expect (search-tree? t3) #t)
+(check-expect (search-tree? t4) #f)
+(check-expect (search-tree? t5) #t)
+(check-expect (search-tree? empty-tree) #t)
+
+(define search-tree?
+  (lambda (btree)
+   (let ((list-btree (inorder btree))) 
+    (cond
+      ((empty-tree? btree) #t)
+      ((distinct? = list-btree) #f)
+      ((not (list-check-min (root btree) list-btree)) #f)
+      ((not (list-check-max (root btree) list-btree)) #f)
+      (else #t)))))
     
 ; (b)
 ; Prädikat search-tree-member?
