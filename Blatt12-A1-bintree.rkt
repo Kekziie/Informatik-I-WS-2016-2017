@@ -86,7 +86,11 @@
 
 ; Prozedur btree-max
 ; ermittelt maximalste Markierung eines Binärbaumes
-;(: btree-max ((btree-of real) -> real))
+(: btree-max ((btree-of real) -> real))
 
-;(check-expect (btree-max t1) 3)
-;(check-expect (btree-max t2) 42)
+(check-within (btree-max t1) 3 0.01)
+(check-within (btree-max t2) 42 0.01)
+
+(define btree-max
+  (lambda (btree)
+    (btree-fold -inf.0 max btree)))
