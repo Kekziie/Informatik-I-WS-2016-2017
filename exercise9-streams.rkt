@@ -100,4 +100,9 @@
 (check-expect (stream-take 5 (stream-alternating "a" "b")) (list "a" "b" "a" "b" "a"))
 (check-expect (stream-take 10 (stream-alternating 1 2)) (list 1 2 1 2 1 2 1 2 1 2))
 (check-expect (stream-take 3 (stream-alternating #t #f)) (list #t #f #t))
+
+(define stream-alternating
+  (lambda (a b)
+    (make-cons a
+               (lambda () (stream-alternating b a)))))
         
