@@ -136,5 +136,19 @@
         (violation "Liste ist leer")
         (stream-cycle-worker xs xs))))
 
+; 4.) Annäherung von pi
+(define pi 3.14159265359)
+
+; (a)
+; Prozedur series
+; - akzeptiert eine Prozedur f und eine natürliche Zahl n
+; - erstellt einen Stream aus f(z), f(z+1), f(z+2), ...
+(: series ((natural -> real) natural -> (stream-of real)))
+
+(check-expect (stream-take 5 (series (lambda (x) (+ x 1)) 1)) (list 2 3 4 5 6))
+(check-expect (stream-take 3 (series (lambda (x) (- x 1)) 0)) (list -1 0 1))
+(check-expect (stream-take 10 (series (lambda (x) (* x 2)) 1)) (list 2 4 6 8 10 12 14 16 18 20))
+
+
 
         
