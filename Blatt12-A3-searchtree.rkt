@@ -232,7 +232,7 @@
 
 ; Prozedur searchtree-insert
 ; fügt eine Markierung y in einem Suchbaum t ein
-(: searchtree-insert (integer (searchtree-of integer) -> (btree-of integer)))
+(: searchtree-insert (integer (searchtree-of integer) -> (searchtree-of integer)))
 
 (check-expect (searchtree-insert 0 t1) t1)
 (check-expect (searchtree-insert -10 t1) t1)
@@ -265,7 +265,7 @@
 ; Prozedur list->searchtree
 ; wandelt eine Liste von Elementen in einen Suchbaum
 ; (benutzen von fold)
-(: list->searchtree ((list-of integer) -> (btree-of integer)))
+(: list->searchtree ((list-of integer) -> (searchtree-of integer)))
 
 (check-expect (list->searchtree (list 1 2 3)) (make-node empty-tree
                                                          1
@@ -290,4 +290,37 @@
 ; (e)
 ; Prozedur searchtree-delete
 ; entfernt eine Markierung y aus einem Suchbaum t
-;(: searchtree-delete (integer (btree-of integer) -> (btree-of integer)))
+(: searchtree-delete (integer (searchtree-of integer) -> (searchtree-of integer)))
+
+(check-expect (searchtree-delete 0 empty-tree) empty-tree)
+(check-expect (searchtree-delete -10 t1) (make-node empty-tree
+                                                    0
+                                                    (make-leaf 10)))
+(check-expect (searchtree-delete 10 t1) (make-node (make-leaf -10)
+                                                   0
+                                                   empty-tree))
+(check-expect (searchtree-delete 2 t5) (make-node (make-node (make-leaf -2)
+                                                              -80
+                                                              empty-tree)
+                                                  1
+                                                 (make-node (make-node (make-leaf 100)
+                                                                        50
+                                                                       (make-leaf 30))
+                                                             33
+                                                             empty-tree)))
+(check-expect (searchtree-delete 0 t1) (make-node (make-leaf -10)
+                                                  10
+                                                  empty-tree))
+(check-expect (searchtree-delete 1 t5) (make-node (make-node (make-leaf -2)
+                                                             -80
+                                                             empty-tree)
+                                                  33
+                                                  (make-node (make-node (make-leaf 100)
+                                                                        50
+                                                                        (make-leaf 30))
+                                                             2
+                                                             empty-tree)))
+
+
+             
+                        
