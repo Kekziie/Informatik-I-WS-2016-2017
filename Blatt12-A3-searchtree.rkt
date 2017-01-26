@@ -243,6 +243,11 @@
                                                     (make-node empty-tree
                                                                10
                                                                (make-leaf 100))))
+(check-expect (searchtree-insert -100 t1) (make-node (make-node (make-leaf -100)
+                                                                -10
+                                                                empty-tree)
+                                                     0
+                                                     (make-leaf 10)))
 
 (define searchtree-insert
   (lambda (x t)
