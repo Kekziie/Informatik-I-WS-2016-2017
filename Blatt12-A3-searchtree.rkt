@@ -119,20 +119,78 @@
 
 ; -------------------------------------------------------------------
 ; Hilfsporzeduren
+; Prozedur contains? schaut, ob Element x in Liste xs mit einer Vergleichsprozedur f
+(: contains? (%a (%a %a -> boolean) (list-of %a) -> boolean))
+(check-expect (contains? "a" string=? (list "a" "b")) #t)
+(check-expect (contains? 2 = (list 1 2 3)) #t)
+(check-expect (contains? 3 = empty) #f)
+(check-expect (contains? 42 = (list 0 -1 1)) #f)
+(define contains?
+  (lambda (z c xs)
+    (fold #f (lambda (a b)
+               (or (c z a) b)) xs)))
+
+; Prozedur distinct? schaut, ob es Duplikate gibt
+(: distinct? ((%a %a -> boolean) (list-of %a) -> boolean))
+(check-expect (distinct? = (list 1 2 3)) #f)
+(check-expect (distinct? = (list 1 1 1)) #t)
+(check-expect (distinct? string=? (list "a" "b" "a")) #t)
+(check-expect (distinct? = empty) #f)
+(check-expect (distinct? = (list 1 2 3 3)) #t)
+(define distinct?
+  (lambda (c xs)
+    (cond
+      ((empty? xs) #f)
+      ((contains? (first xs) c (rest xs)) #t)
+      (else (distinct? c (rest xs))))))
+
 ; Prozedur root
 ; - akzpetiert einen Baum
 ; - gibt die Wurzel zurück
 (: root ((btree-of %a) -> %a))
-
 (check-expect (root t1) 0)
 (check-expect (root t2) 0)
 (check-expect (root t4) -1)
 (check-expect (root t5) 1)
-
 (define root
   (lambda (btree)
     (node-label btree)))
 
+; Prozedur list-check-min
+; - akzeptiert ein Zahl x und eine Liste xs
+; - kontrolliert, ob alle Elemente links von Zahl x kleiner als x sind
+; - bei leerer Liste wird #t ausgegeben
+(: list-check-min (real (list-of real) -> boolean))
+(check-expect (list-check-min 4 (list 1 2 3 4 5 6 7)) #t)
+(check-expect (list-check-min 3 (list 9 3 4)) #f)
+(check-expect (list-check-min 3 empty) #t)
+(check-expect (list-check-min 0 (list -1 3 0 5 6)) #f)
+(define list-check-min
+  (lambda (x xs)
+    (cond
+      ((empty? xs) #t)
+      ((> (first xs) x) #f)
+      ((= x (first xs)) #t)
+      (else (list-check-min x (rest xs))))))
+
+; Prozedur list-check-max
+; - akzeptiert ein Zahl x und eine Liste xs
+; - kontrolliert, ob alle Elemente rechts von Zahl x größer als x sind
+; - bei leerer Liste wird #t ausgegeben
+(: list-check-max (real (list-of real) -> boolean))
+(check-expect (list-check-max 4 (list 1 2 3 4 5 6 7)) #t)
+(check-expect (list-check-max 3 (list 9 3 4)) #t)
+(check-expect (list-check-max 3 empty) #t)
+(check-expect (list-check-max 0 (list -1 3 0 5 6)) #t)
+(define list-check-max
+  (lambda (x xs)
+    (cond
+      ((empty? xs) #t)
+      ((< (first (reverse xs)) x) #f)
+      ((= x (first (reverse xs))) #t)
+      (else (list-check-max x (reverse (rest (reverse xs))))))))
+    
+ 
 ; (a)
 ; Prädikat search-tree?
 ; stellt fest, ob Binärbaum t, ein Suchbaum ist
@@ -151,7 +209,11 @@
 ;
 ;(define search-tree?
 ;  (lambda (btree)
-;    (inorder btree)))
+;    (cond
+;      ((empty-tree? btree) #t)
+;      ((distinct? (inorder btree)) #f)
+;      ((
+
     
 ; (b)
 ; Prädikat search-tree-member?
