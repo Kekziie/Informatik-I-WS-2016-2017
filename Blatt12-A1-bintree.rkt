@@ -73,12 +73,22 @@
              -30
              (make-leaf 42)))
 
+; Beispielbaum: t3
+(: t3 (btree-of real))
+(define t3
+  (make-node (make-node (make-leaf 0)
+                        5
+                        (make-leaf 13))
+             6
+             (make-leaf 42)))
+                                  
 ; Prozedur btree-min
 ; ermittelt minimalste Markierung eines Binärbaumes
 (: btree-min ((btree-of real) -> real))
 
 (check-within (btree-min t1) 1 0.01)
 (check-within (btree-min t2) -30 0.01)
+(check-within (btree-min t3) 0 0.01)
 
 (define btree-min
   (lambda (btree)
@@ -90,6 +100,7 @@
 
 (check-within (btree-max t1) 3 0.01)
 (check-within (btree-max t2) 42 0.01)
+(check-within (btree-max t3) 42 0.01)
 
 (define btree-max
   (lambda (btree)
