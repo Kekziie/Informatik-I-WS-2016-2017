@@ -29,6 +29,7 @@ Sprache:
 - ex6: Record-Definition; Signaturen
 - ex7: H.O.P.: fold/foldr/foldl
 - ex8: Record-Definition
+- ex9: Streams
 
 ### example
 Beispiele für Wiki bzw. teils Script
