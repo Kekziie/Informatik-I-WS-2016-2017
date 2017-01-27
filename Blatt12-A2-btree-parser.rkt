@@ -99,6 +99,26 @@
                    ))
                 t)))
 
+; (take w xs):
+; - liefert die ersten w Elemente der Liste xs zurück
+; - hat xs nur m < w Elemente, liefere diese m Elemente zurück
+(: take (natural (list-of %a) -> (list-of %a)))
+(check-expect (take 0 empty) empty)
+(check-expect (take 0 (list 1)) empty)
+(check-expect (take 2 (list 1)) (list 1))
+(check-expect (take 2 (list 1 2)) (list 1 2))
+(check-expect (take 2 (list 1 2 3)) (list 1 2))
+(check-expect (take 3 (list 1 2 3 4 5 6 7 8 9)) (list 1 2 3))
+(define take
+  (lambda (w xs)
+    (cond
+      ((empty? xs) empty)
+      ((= 0 w) empty)
+      ((pair? xs) (if (<= (length xs) w)
+                      xs
+                      (make-pair (first xs)
+                                 (take (- w 1) (rest xs)))))))) 
+
 ; (drop w xs)
 ; - verwirft die ersten w Elemente der Liste xs und gibt den Rest zurück
 ; - hat xs nur m < w Elemente, liefere die leere Liste zurück
@@ -189,6 +209,43 @@
            (string=? (last (delete-outer-bracket (string->strings-list str))) "_")
            (= 5 (length (string->strings-list str)))))))
 
+
+(check-expect (root-searcher "((_1_)2_)3(_4_)" 0) "3")
+(check-expect (root-searcher "(_4_)0(_4_)" 0) "0")
+(define root-searcher
+  (lambda (str acc)
+    (cond
+      ((string=? (first (string->strings-list str)) "(") (root-searcher (strings-list->string (rest (string->strings-list str))) (+ acc 1)))
+      ((string=? (first (string->strings-list str)) ")") (root-searcher (strings-list->string (rest (string->strings-list str))) (- acc 1)))
+      ((= acc 0) (first (string->strings-list str)))
+      ((string=? "_" (first (string->strings-list str))) (root-searcher (strings-list->string (rest (string->strings-list str))) acc))
+      ((digit? (first (string->strings-list str))) (root-searcher (strings-list->string (rest (string->strings-list str))) acc))
+      (else (violation "String entspricht nicht der Regel")))))
+
+(check-expect (root? "((_1_)2_)3(_4_)" 0) #t)
+(check-expect (root? "(_4_)0(_4_)" 0) #t)
+(define root?
+  (lambda (str acc)
+    (cond
+      ((string=? (first (string->strings-list str)) "(") (root? (strings-list->string (rest (string->strings-list str))) (+ acc 1)))
+      ((string=? (first (string->strings-list str)) ")") (root? (strings-list->string (rest (string->strings-list str))) (- acc 1)))
+      ((= acc 0) #t)
+      ((string=? "_" (first (string->strings-list str))) (root? (strings-list->string (rest (string->strings-list str))) acc))
+      ((digit? (first (string->strings-list str))) (root? (strings-list->string (rest (string->strings-list str))) acc))
+      (else (violation "String entspricht nicht der Regel")))))
+
+(check-expect (root-position "((_1_)2_)3(_4_)" 0 1) 10)
+(check-expect (root-position "(_4_)0(_4_)" 0 1) 6)
+(define root-position
+  (lambda (str acc1 acc2)
+    (cond
+      ((string=? (first (string->strings-list str)) "(") (root-position (strings-list->string (rest (string->strings-list str))) (+ acc1 1) (+ acc2 1)))
+      ((string=? (first (string->strings-list str)) ")") (root-position (strings-list->string (rest (string->strings-list str))) (- acc1 1) (+ acc2 1)))
+      ((= acc1 0) acc2)
+      ((string=? "_" (first (string->strings-list str))) (root-position (strings-list->string (rest (string->strings-list str))) acc1 (+ acc2 1)))
+      ((digit? (first (string->strings-list str))) (root-position (strings-list->string (rest (string->strings-list str))) acc1 (+ acc2 1)))
+      (else (violation "String entspricht nicht der Regel")))))
+
 ;=================================================================================================
 
 ; Funktion btree-parse
@@ -202,22 +259,18 @@
 ;(check-expect (btree-parse "(_3(_8_)") t3)
 ;(check-expect (btree-parse "((_9_)1_)") t4)
 ;(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1) 
-;(check-expect (btree-parse "(_4_)0(_4_)") t2)       
-(check-error (btree-parse "((_))))_))5)") "String entspricht nicht der Regel")
+(check-expect (btree-parse "((_4_)0(_4_))") t2)       
+;(check-error (btree-parse "((_))))_))5)") "String entspricht nicht der Regel")
 
 (define btree-parse
-  (lambda (str)
-   (let ((del-bracket (delete-outer-bracket (string->strings-list str))))  
+  (lambda (str)  
     (cond
       ((string=? str "_") empty-tree) ; (a)
       ((leaf? str) (make-leaf (first (rest (rest (string->strings-list str)))))) ; (b)
-      ((string=? "_" (first del-bracket)) (make-node empty-tree
-                                                    (first (drop-first del-bracket))
-                                                    (btree-parse (strings-list->string (drop 2 del-bracket)))))
-      ((string=? "_" (last del-bracket)) (make-node (btree-parse (strings-list->string (reverse (drop 2 (reverse del-bracket)))))
-                                                    (first (drop-first (reverse del-bracket)))
-                                                    empty-tree))
-      (else (violation "String entspricht nicht der Regel"))))))
+      ((root? str 0) (make-node (btree-parse (take (root-position (strings-list->string (delete-outer-bracket (string->strings-list str)))) (string->strings-list str)))
+                                (root-searcher (strings-list->string (delete-outer-bracket (string->strings-list str))) 0)
+                                (btree-parse (drop (root-position (strings-list->string (delete-outer-bracket (string->strings-list str)))) (string->strings-list str)))))                     
+      (else (violation "String entspricht nicht der Regel")))))
        
     
     
