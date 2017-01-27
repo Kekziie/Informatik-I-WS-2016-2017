@@ -182,17 +182,23 @@
 (check-expect (btree-parse "(_1_)") (make-node empty-tree
                                                "1"
                                                empty-tree)) ; (b)
-;(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1) ; (c)
-;(check-expect (btree-parse "(_4_)0(_4_)") t2)       ; (c)
+;(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1) 
+;(check-expect (btree-parse "(_4_)0(_4_)") t2)       
 (check-error (btree-parse "((_))))_))5)") "String entspricht nicht der Regel")
 
 (define btree-parse
   (lambda (str)
+   (let ((del-bracket (delete-outer-bracket (string->strings-list str))))  
     (cond
       ((string=? str "_") empty-tree) ; (a)
       ((leaf? str) (make-leaf (first (rest (rest (string->strings-list str)))))) ; (b)
-;      ((... (delete-outer-bracket (string->strings-list str))) (make-node (btree-parse str) ... (btree-parse str)))
-      (else (violation "String entspricht nicht der Regel")))))
+      ((string=? "_" (first del-bracket)) (make-node empty-tree
+                                                    (first (drop-first del-bracket))
+                                                    (btree-parse (drop 2 del-bracket))))
+      ((string=? "_" (last del-bracket)) (make-node (btree-parse (reverse (drop 2 (reverse del-bracket)))
+                                                                 (first (drop-first (reverse del-bracket)))
+                                                                 empty-tree)))
+      (else (violation "String entspricht nicht der Regel"))))))
        
     
     
