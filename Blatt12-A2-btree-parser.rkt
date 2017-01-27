@@ -182,9 +182,12 @@
 (: leaf? (string -> boolean))
 (define leaf?
   (lambda (str)
-    (and (string=? (first (delete-outer-bracket (string->strings-list str))) "_")
-         (digit? (first (rest (delete-outer-bracket (string->strings-list str)))))
-         (string=? (last (delete-outer-bracket (string->strings-list str))) "_"))))
+   (if (empty? (string->strings-list str))
+       #f
+      (and (string=? (first (delete-outer-bracket (string->strings-list str))) "_")
+           (digit? (first (rest (delete-outer-bracket (string->strings-list str)))))
+           (string=? (last (delete-outer-bracket (string->strings-list str))) "_")
+           (= 5 (length (string->strings-list str)))))))
 
 ;=================================================================================================
 
@@ -196,6 +199,8 @@
 (check-expect (btree-parse "(_1_)") (make-node empty-tree
                                                "1"
                                                empty-tree)) ; (b)
+;(check-expect (btree-parse "(_3(_8_)") t3)
+;(check-expect (btree-parse "((_9_)1_)") t4)
 ;(check-expect (btree-parse "(((_1_)2_)3(_4_))") t1) 
 ;(check-expect (btree-parse "(_4_)0(_4_)") t2)       
 (check-error (btree-parse "((_))))_))5)") "String entspricht nicht der Regel")
@@ -208,10 +213,10 @@
       ((leaf? str) (make-leaf (first (rest (rest (string->strings-list str)))))) ; (b)
       ((string=? "_" (first del-bracket)) (make-node empty-tree
                                                     (first (drop-first del-bracket))
-                                                    (btree-parse (drop 2 del-bracket))))
-      ((string=? "_" (last del-bracket)) (make-node (btree-parse (reverse (drop 2 (reverse del-bracket)))
-                                                                 (first (drop-first (reverse del-bracket)))
-                                                                 empty-tree)))
+                                                    (btree-parse (strings-list->string (drop 2 del-bracket)))))
+      ((string=? "_" (last del-bracket)) (make-node (btree-parse (strings-list->string (reverse (drop 2 (reverse del-bracket)))))
+                                                    (first (drop-first (reverse del-bracket)))
+                                                    empty-tree))
       (else (violation "String entspricht nicht der Regel"))))))
        
     
