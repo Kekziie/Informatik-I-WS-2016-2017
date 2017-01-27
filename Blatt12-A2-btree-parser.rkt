@@ -62,6 +62,20 @@
              0
              (make-leaf 4)))
 
+; Beispielbaum: t3
+(: t3 (btree-of real))
+(define t3
+  (make-node empty-tree
+             3
+             (make-leaf 8)))
+
+; Beispielbaum: t4
+(: t4 (btree-of real))
+(define t4
+  (make-node (make-leaf 9)
+             1
+             empty-tree))
+
 ; Falte Baum t bzgl. z und c
 (: btree-fold (%b (%b %a %b -> %b) (btree-of %a) -> %b))
 (define btree-fold
