@@ -112,3 +112,10 @@
 
 (check-expect (ISBN-Check (list 9 7 8 3 1 2 7 3 2 3 2 9 7)) #t)
 (check-expect (ISBN-Check (list 9 7 8 3 1 2 7 3 2 3 2 9 8)) #f)
+
+(define ISBN-Check
+  (lambda (xs)
+    (= (modulo (+ (list-sum (mult 3 (every-nth 2 (drop 1 xs))))
+                  (list-sum (every-nth 2 xs)))
+               10)
+       0)))
