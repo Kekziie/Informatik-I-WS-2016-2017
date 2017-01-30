@@ -85,7 +85,12 @@
 (check-expect (every-nth 4 (list "a")) (list "a"))
 (check-expect (every-nth 3 (list 1 2 3 4 5 6 7 8)) (list 1 4 7))
 
-
+(define every-nth
+  (lambda (n xs)
+    (cond
+      ((empty? xs) empty)
+      ((pair? xs) (make-pair (first xs)
+                             (every-nth n (drop (- n 1) (rest xs))))))))
 
 ; (e)
 ; Signatur (list-of-13 t)
