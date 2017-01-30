@@ -18,7 +18,7 @@
 ; Prozedur list-sum
 ; - akzeptiert eine Liste von Zahlen
 ; - summiert alle Elemente der Liste zu einem Ergebnis
-(:list-sum ((list-of number) -> number))
+(: list-sum ((list-of number) -> number))
 
 (check-expect (list-sum (list 1 2 3 4 5)) 15)
 (check-expect (list-sum empty) 0)
@@ -98,7 +98,7 @@
 
 (define list-of-13
   (lambda (t)
-    (signature (combined t
+    (signature (combined (list-of t)
                          (predicate (lambda (xs) (<= (length xs) 13)))))))
 
 ;==========================================================================
@@ -110,8 +110,8 @@
 ; - bei #t -> ISBN-Nummer, sonst #f
 (: ISBN-Check ((list-of-13 natural) -> boolean))
 
-(check-expect (ISBN-Check (list 9 7 8 3 1 2 7 3 2 3 2 9 7)) #t)
-(check-expect (ISBN-Check (list 9 7 8 3 1 2 7 3 2 3 2 9 8)) #f)
+(check-expect (ISBN-Check (list 9 7 8 3 1 2 7 3 2 3 2 9 7)) #f)
+(check-expect (ISBN-Check (list 9 7 8 3 1 2 5 1 7 1 5 4 1)) #t)
 
 (define ISBN-Check
   (lambda (xs)
