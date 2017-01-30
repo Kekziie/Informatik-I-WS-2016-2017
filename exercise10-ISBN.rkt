@@ -58,6 +58,15 @@
 ; - verwirft n Elemente der Liste xs
 (: drop (natural (list-of %a) -> (list-of %a)))
 
+(check-expect (drop 2 (list 1 2 3)) (list 3))
+(check-expect (drop 0 empty) empty)
+(check-expect (drop 0 (list 1 2 3)) (list 1 2 3))
+(check-expect (drop 4 (list #t #f)) empty)
+(check-expect (drop 3 (list "a" "b" "c")) empty)
+(check-expect (drop 2 (list -1 1 -2 2 -3 3)) (list -2 2 -3 3))
+
+
+
 ; (d)
 ; Prozedur every-nth
 ; - akzeptiert eine natürliche Zahl n und eine beliebige Liste xs
