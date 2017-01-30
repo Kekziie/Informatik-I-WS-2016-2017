@@ -65,7 +65,13 @@
 (check-expect (drop 3 (list "a" "b" "c")) empty)
 (check-expect (drop 2 (list -1 1 -2 2 -3 3)) (list -2 2 -3 3))
 
-
+(define drop
+  (lambda (n xs)
+    (cond
+      ((empty? xs) empty)
+      ((= n 0) xs)
+      ((>= n (length xs)) empty)
+      (else (drop (- n 1) (rest xs))))))
 
 ; (d)
 ; Prozedur every-nth
