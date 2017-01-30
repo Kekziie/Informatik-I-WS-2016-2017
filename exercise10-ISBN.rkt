@@ -45,6 +45,12 @@
 (check-expect (mult 0 (list 1 2 3 4 5 6 7 8 9)) (list 0 0 0 0 0 0 0 0 0))
 (check-within (mult 1 (list 2.5 -2.5)) (list 2.5 -2.5) 0.01)
 
+(define mult
+  (lambda (x xs)
+    (cond
+      ((empty? xs) empty)
+      ((pair? xs) (make-pair (* (first xs) x)
+                             (mult x (rest xs)))))))
 
 ; (c)
 ; Prozedur drop
