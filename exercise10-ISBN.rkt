@@ -20,6 +20,12 @@
 ; - summiert alle Elemente der Liste zu einem Ergebnis
 (:list-sum ((list-of number) -> number))
 
+(check-expect (list-sum (list 1 2 3 4 5)) 15)
+(check-expect (list-sum empty) 0)
+(check-expect (list-sum (list 1 2 3)) 6)
+(check-expect (list-sum (list -1 0 1)) 0)
+(check-within (list-sum (list -2.5 2.5 1/2 -1/2 42)) 42 0.01)
+
 ; (b)
 ; Prozedur mult
 ; - akzeptiert eine natürliche Zahl x und eine Liste von Zahlen
@@ -41,6 +47,10 @@
 ; (e)
 ; Signatur (list-of-13 t)
 ; - überprüft, ob Liste 13 Elemente besitzt, die alle Sigantur t haben
+
+
+;==========================================================================
+; Teilaufgabe (f) soll obiges Verfahren realisieren
 
 ; (f)
 ; Prozedur ISBN-Check
