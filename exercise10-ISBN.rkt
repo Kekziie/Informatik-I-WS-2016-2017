@@ -26,6 +26,13 @@
 (check-expect (list-sum (list -1 0 1)) 0)
 (check-within (list-sum (list -2.5 2.5 1/2 -1/2 42)) 42 0.01)
 
+(define list-sum
+  (lambda (xs)
+    (cond
+      ((empty? xs) 0)
+      ((pair? xs) (+ (first xs)
+                     (list-sum (rest xs)))))))
+
 ; (b)
 ; Prozedur mult
 ; - akzeptiert eine natürliche Zahl x und eine Liste von Zahlen
