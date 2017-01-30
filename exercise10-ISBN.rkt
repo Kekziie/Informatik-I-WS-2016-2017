@@ -39,6 +39,13 @@
 ; - multipliziert jedes Listenelement mit übergebenen Zahl x
 (: mult (natural (list-of number) -> (list-of number)))
 
+(check-expect (mult 2 (list 1 2 3)) (list 2 4 6))
+(check-expect (mult 2 empty) empty)
+(check-expect (mult 3 (list 0 -1 1)) (list 0 -3 3))
+(check-expect (mult 0 (list 1 2 3 4 5 6 7 8 9)) (list 0 0 0 0 0 0 0 0 0))
+(check-within (mult 1 (list 2.5 -2.5)) (list 2.5 -2.5) 0.01)
+
+
 ; (c)
 ; Prozedur drop
 ; - akezeptiert eine natürliche Zahl n und eine beliebige Liste xs
