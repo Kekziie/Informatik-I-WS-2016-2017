@@ -10,3 +10,40 @@
 ; 3.) Summe aus 1.) und 2.)
 ; 4.) Division durch 10
 ; 5.) wenn Rest 0 -> ISBN #t
+
+;==========================================================================
+; Hilfsfunktionen:
+
+; (a)
+; Prozedur list-sum
+; - akzeptiert eine Liste von Zahlen
+; - summiert alle Elemente der Liste zu einem Ergebnis
+(:list-sum ((list-of number) -> number))
+
+; (b)
+; Prozedur mult
+; - akzeptiert eine natürliche Zahl x und eine Liste von Zahlen
+; - multipliziert jedes Listenelement mit übergebenen Zahl x
+(: mult (natural (list-of number) -> (list-of number)))
+
+; (c)
+; Prozedur drop
+; - akezeptiert eine natürliche Zahl n und eine beliebige Liste xs
+; - verwirft n Elemente der Liste xs
+(: drop (natural (list-of %a) -> (list-of %a)))
+
+; (d)
+; Prozedur every-nth
+; - akzeptiert eine natürliche Zahl n und eine beliebige Liste xs
+; - nimmt jedes n-te Element der Liste xs und erstell daraus eine neue Liste
+(: every-nth (natural (list-of %a) -> (list-of %a)))
+
+; (e)
+; Signatur (list-of-13 t)
+; - überprüft, ob Liste 13 Elemente besitzt, die alle Sigantur t haben
+
+; (f)
+; Prozedur ISBN-Check
+; - akzeptiert eine Liste mit 13 ELementen, die alle Signatur natural haben
+; - bei #t -> ISBN-Nummer, sonst #f
+(: ISBN-Check ((list-of-13 natural) -> boolean))
