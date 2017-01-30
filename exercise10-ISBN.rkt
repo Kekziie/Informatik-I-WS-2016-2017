@@ -109,3 +109,6 @@
 ; - akzeptiert eine Liste mit 13 ELementen, die alle Signatur natural haben
 ; - bei #t -> ISBN-Nummer, sonst #f
 (: ISBN-Check ((list-of-13 natural) -> boolean))
+
+(check-expect (ISBN-Check (list 9 7 8 3 1 2 7 3 2 3 2 9 7)) #t)
+(check-expect (ISBN-Check (list 9 7 8 3 1 2 7 3 2 3 2 9 8)) #f)
