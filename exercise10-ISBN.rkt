@@ -96,6 +96,10 @@
 ; Signatur (list-of-13 t)
 ; - überprüft, ob Liste 13 Elemente besitzt, die alle Sigantur t haben
 
+(define list-of-13
+  (lambda (t)
+    (signature (combined t
+                         (predicate (lambda (xs) (<= (length xs) 13)))))))
 
 ;==========================================================================
 ; Teilaufgabe (f) soll obiges Verfahren realisieren
