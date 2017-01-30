@@ -79,6 +79,14 @@
 ; - nimmt jedes n-te Element der Liste xs und erstell daraus eine neue Liste
 (: every-nth (natural (list-of %a) -> (list-of %a)))
 
+(check-expect (every-nth 2 (list 1 2 3 4 5 6 7)) (list 1 3 5 7))
+(check-expect (every-nth 3 (list 1 2 3)) (list 1))
+(check-expect (every-nth 4 empty) empty)
+(check-expect (every-nth 4 (list "a")) (list "a"))
+(check-expect (every-nth 3 (list 1 2 3 4 5 6 7 8)) (list 1 4 7))
+
+
+
 ; (e)
 ; Signatur (list-of-13 t)
 ; - überprüft, ob Liste 13 Elemente besitzt, die alle Sigantur t haben
