@@ -31,6 +31,7 @@ Sprache:
 - ex7: H.O.P.: fold/foldr/foldl
 - ex8: Record-Definition
 - ex9: Streams
+- ex10: polymorphe Paare und Listen; Rekursion; Signaturen
 
 ### example
 Beispiele für Wiki bzw. teils Script
