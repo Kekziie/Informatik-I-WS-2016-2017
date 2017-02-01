@@ -33,6 +33,36 @@
 (: plate-col (plate -> string))
 (: plate? (any -> boolean))
 
+;--------------------------------------------------------
+
+(define cup1
+  (make-cup 10 "blue"))
+
+(define cup2
+  (make-cup 15 "blue"))
+
+(define cup3
+  (make-cup 20 "red"))
+
+(define plate1
+  (make-plate 10 "blue"))
+
+(defin plate2
+  (make-plate 15 "blue"))
+
+(define plate3
+  (make-plate 20 "red"))
+
+(define plate4
+  (make-plate 30 "green"))
+
 ; Signatur dishes beinhaltet eine Tasse und Teller
 (define dishes
   (signature (mixed cup plate)))
+
+; Prozedur same-dish-color
+; - akzeptiert eine Liste von dishes
+; - gibt #t wenn alle dishes dieselbe Farbe haben
+(: same-dish-color ((list-of dishes) -> boolean))
+
+(check-expect (same-dish-color (list-of
