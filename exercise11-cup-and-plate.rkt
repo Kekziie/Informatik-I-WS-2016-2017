@@ -28,7 +28,7 @@
   (plate-dia
    plate-col))
 
-(: make-col (real string -> plate))
+(: make-plate (real string -> plate))
 (: plate-dia (plate -> real))
 (: plate-col (plate -> string))
 (: plate? (any -> boolean))
@@ -47,7 +47,7 @@
 (define plate1
   (make-plate 10 "blue"))
 
-(defin plate2
+(define plate2
   (make-plate 15 "blue"))
 
 (define plate3
@@ -70,3 +70,30 @@
 (check-expect (same-dish-color (list cup1 cup3)) #f)
 (check-expect (same-dish-color (list cup3 plate3)) #t)
 (check-expect (same-dish-color (list cup1 plate4 plate3)) #f)
+(check-expect (same-dish-color (list cup1)) #t)
+
+(define same-dish-color
+  (lambda (xs)
+    (cond
+      ((empty? xs) #t)
+      ((empty? (rest xs)) #t)
+      ((pair? xs) (cond
+                    ((cup? (first xs)) (if (plate? (first (rest xs)))
+                                           (if (string=? (cup-col (first xs))
+                                                         (plate-col (first (rest xs))))
+                                               (same-dish-color (rest xs))
+                                               #f)
+                                           (if (string=? (cup-col (first xs))
+                                                         (cup-col (first (rest xs))))
+                                               (same-dish-color (rest xs))
+                                               #f)))
+                    (else (if (plate? (first (rest xs)))
+                              (if (string=? (plate-col (first xs))
+                                            (plate-col (first (rest xs))))
+                                  (same-dish-color (rest xs))
+                                  #f)
+                              (if (string=? (plate-col (first xs))
+                                            (cup-col (first (rest xs))))
+                                  (same-dish-color (rest xs))
+                                  #f))))))))
+                              
