@@ -32,6 +32,8 @@ Sprache:
 - ex8: Record-Definition
 - ex9: Streams
 - ex10: polymorphe Paare und Listen; Rekursion; Signaturen
+- ex11: Record-Definition; polymorphe Paare und Listen; Rekursion; Signaturen
+- ex12: polymorphe Paare und Listen; Rekursion
 
 ### example
 Beispiele für Wiki bzw. teils Script
