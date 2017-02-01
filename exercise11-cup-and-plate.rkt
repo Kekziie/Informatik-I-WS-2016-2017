@@ -65,4 +65,8 @@
 ; - gibt #t wenn alle dishes dieselbe Farbe haben
 (: same-dish-color ((list-of dishes) -> boolean))
 
-(check-expect (same-dish-color (list-of
+(check-expect (same-dish-color empty) #t)
+(check-expect (same-dish-color (list cup1 cup2 plate1 plate2)) #t)
+(check-expect (same-dish-color (list cup1 cup3)) #f)
+(check-expect (same-dish-color (list cup3 plate3)) #t)
+(check-expect (same-dish-color (list cup1 plate4 plate3)) #f)
