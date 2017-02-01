@@ -33,3 +33,6 @@
 (: plate-col (plate -> string))
 (: plate? (any -> boolean))
 
+; Signatur dishes beinhaltet eine Tasse und Teller
+(define dishes
+  (signature (mixed cup plate)))
