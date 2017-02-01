@@ -95,5 +95,4 @@
                               (if (string=? (plate-col (first xs))
                                             (cup-col (first (rest xs))))
                                   (same-dish-color (rest xs))
-                                  #f))))))))
-                              
+                                  #f))))))))                              
