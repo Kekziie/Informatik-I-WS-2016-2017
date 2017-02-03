@@ -99,6 +99,14 @@
     (cond ((= n 0) "")
           ((> n 0) (string-append s (duplicate (- n 1) s))))))
 
+; Hilfsprozedur: curry wendet Funktion auf ihr erstes Argument an und
+;                liefert eine Funktion der restlichen Argumente
+(: curry ((%a %b -> %c) -> (%a -> (%b -> %c))))
+(define curry
+  (lambda (f)
+    (lambda (x)
+      (lambda (y)
+        (f x y)))))
 
 ; Erzeuge Liste von Zeilen-Strings der Textrepräsentation des Baums t
 (: pp ((btree-of (mixed number string)) -> (list-of string)))
@@ -127,8 +135,47 @@
   (lambda (t)
     (write-string (strings-list->string (pp t))))) 
 
-; "Missbrauche" check-property, um einige Testbäume auszudrucken...
+; "Missbrauche" check-property, um einige Testbäume auszudrucken
 ; (check-property
 ;  (for-all ((t (btree-of natural)))
 ;     (==> (< (btree-size t) 10)
 ;          (expect (print t) (write-string "\n")))))
+
+;----------------------------------------------------------------------------
+; Baumdurchläufe
+;----------------------------------------------------------------------------
+
+; 1) Tiefendurchlauf
+
+; Liste der Markierungen in t in Inorder-Reihenfolge
+(: inorder ((btree-of %a) -> (list-of %a)))
+(define inorder
+  (lambda (t)
+    (btree-fold empty
+                (lambda (xs1 x xs2)
+                  (append xs1      
+                         (list x) 
+                         xs2))
+                t)))
+
+; Liste der Markierungen in t in Preorder-Reihenfolge
+(: preorder ((btree-of %a) -> (list-of %a)))
+(define preorder
+  (lambda (t)
+    (btree-fold empty
+                (lambda (xs1 x xs2)
+                  (append (list x) 
+                          xs1      
+                          xs2))
+                t)))
+
+; Liste der Markierungen in t in Postorder-Reihenfolge
+(: postorder ((btree-of %a) -> (list-of %a)))
+(define postorder
+  (lambda (t)
+    (btree-fold empty
+                (lambda (xs1 x xs2)
+                  (append xs1      
+                          xs2      
+                         (list x)))
+                t)))
