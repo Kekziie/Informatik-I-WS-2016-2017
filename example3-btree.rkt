@@ -48,3 +48,20 @@
     (make-node empty-tree
                x
                empty-tree)))
+
+;----------------------------------------------------------------------------
+; H.O.P. mit Binärbäumen
+;----------------------------------------------------------------------------
+
+; Falte Baum t bzgl. z und c
+(: btree-fold (%b (%b %a %b -> %b) (btree-of %a) -> %b))
+(define btree-fold
+  (lambda (z c t)
+    (cond ((empty-tree? t) 
+           z)
+          ((node? t)
+           (c (btree-fold z c (node-left-branch t))
+              (node-label t)
+              (btree-fold z c (node-right-branch t)))))))
+
+
