@@ -65,12 +65,47 @@
               (btree-fold z c (node-right-branch t)))))))
 
 ;----------------------------------------------------------------------------
+; Testbäume
+;----------------------------------------------------------------------------
+
+; Testbaum T1
+(: T1 (btree-of integer))
+(define T1
+  (make-node (make-leaf -42)
+             0
+             (make-leaf 42)))
+
+; Testbaum T2
+(: T2 (btree-of string))
+(define T2
+  (make-node empty-tree
+             "A"
+             (make-node empty-tree
+                        "B"
+                        (make-leaf "C"))))
+
+; Testbaum T3
+(: T3 (btree-of natural))
+(define T3
+  (make-node (make-node (make-leaf 7)
+                        5
+                        (make-leaf 6))
+             4
+             (make-node (make-leaf 3)
+                        2
+                        (make-leaf 1))))
+
+;----------------------------------------------------------------------------
 ; Größe und Tiefe eines Binärbaumes
 ;----------------------------------------------------------------------------
 
 ; Tiefe eines Binärbaumes t
 ; (Länge des längsten Weges in Baum t von der Wurzel bis zu einem Blatt)
 (: btree-depth ((btree-of %a) -> natural))
+(check-expect (btree-depth T1) 2)
+(check-expect (btree-depth T2) 3)
+(check-expect (btree-depth T3) 3)
+(check-expect (btree-depth empty-tree) 0)
 (define btree-depth
   (lambda (t)
     (btree-fold 0
@@ -80,6 +115,10 @@
 ; Größe eines Binärbaumes t
 ; (Anzahl der Knoten in t)
 (: btree-size ((btree-of %a) -> natural))
+(check-expect (btree-size T1) 3)
+(check-expect (btree-size T2) 3)
+(check-expect (btree-size T3) 7)
+(check-expect (btree-size empty-tree) 0)
 (define btree-size
   (lambda (t)
     (cond
@@ -149,6 +188,10 @@
 
 ; Liste der Markierungen in t in Inorder-Reihenfolge
 (: inorder ((btree-of %a) -> (list-of %a)))
+(check-expect (inorder T1) (list -42 0 42))
+(check-expect (inorder T2) (list "A" "B" "C"))
+(check-expect (inorder T3) (list 7 5 6 4 3 2 1))
+(check-expect (inorder empty-tree) empty)
 (define inorder
   (lambda (t)
     (btree-fold empty
@@ -160,6 +203,10 @@
 
 ; Liste der Markierungen in t in Preorder-Reihenfolge
 (: preorder ((btree-of %a) -> (list-of %a)))
+(check-expect (preorder T1) (list 0 -42 42))
+(check-expect (preorder T2) (list "A" "B" "C"))
+(check-expect (preorder T3) (list 4 5 7 6 2 3 1))
+(check-expect (preorder empty-tree) empty)
 (define preorder
   (lambda (t)
     (btree-fold empty
@@ -171,6 +218,10 @@
 
 ; Liste der Markierungen in t in Postorder-Reihenfolge
 (: postorder ((btree-of %a) -> (list-of %a)))
+(check-expect (postorder T1) (list -42 42 0))
+(check-expect (postorder T2) (list "C" "B" "A"))
+(check-expect (postorder T3) (list 7 6 5 3 1 2 4))
+(check-expect (postorder empty-tree) empty)
 (define postorder
   (lambda (t)
     (btree-fold empty
@@ -223,6 +274,10 @@
 
 ; Breitendurchlauf für den Baum t
 (: levelorder ((btree-of %a) -> (list-of %a)))
+(check-expect (levelorder T1) (list 0 -42 42))
+(check-expect (levelorder T2) (list "A" "B" "C"))
+(check-expect (levelorder T3) (list 4 5 2 7 6 3 1))
+(check-expect (levelorder empty-tree) empty)
 (define levelorder
   (lambda (t)
     (traverse (list t))))
