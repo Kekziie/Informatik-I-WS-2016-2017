@@ -64,4 +64,26 @@
               (node-label t)
               (btree-fold z c (node-right-branch t)))))))
 
+;----------------------------------------------------------------------------
+; Größe und Tiefe eines Binärbaumes
+;----------------------------------------------------------------------------
 
+; Tiefe eines Binärbaumes t
+; (Länge des längsten Weges in Baum t von der Wurzel bis zu einem Blatt)
+(: btree-depth ((btree-of %a) -> natural))
+(define btree-depth
+  (lambda (t)
+    (btree-fold 0
+                (lambda (d1 x d2) (+ 1 (max d1 d2)))
+                t)))
+
+; Größe eines Binärbaumes t
+; (Anzahl der Knoten in t)
+(: btree-size ((btree-of %a) -> natural))
+(define btree-size
+  (lambda (t)
+    (cond
+      ((empty-tree? t) 0)
+      ((node? t) (+ (btree-size (node-left-branch t))
+                    1
+                    (btree-size (node-right-branch t)))))))
