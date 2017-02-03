@@ -39,3 +39,4 @@ Sprache:
 Beispiele für Wiki bzw. teils Script
 - exa1: Konstruktionsanleitung
 - exa2: Fallunterscheidung; Funktion: or, and 
+- exa3: Binärbäume; H.O.P.: fold, filter; Currying
