@@ -179,3 +179,50 @@
                           xs2      
                          (list x)))
                 t)))
+
+; 2) Breitendurchlauf
+
+; Hilfsprozedur: filter extrahiert Elemente einer Liste xs, die das Prädikat p? erfüllen
+(: filter ((%a -> boolean) (list-of %a) -> (list-of %a)))
+(define filter
+  (lambda (p? xs)
+    (cond ((empty? xs) empty)
+          ((p? (first xs)) (make-pair (first xs) (filter p? (rest xs))))
+          (else (filter p? (rest xs))))))
+
+; Hilfsprozedur: flatten macht aus einer Liste von Listen eine Liste
+(: flatten ((list-of (list-of %a)) -> (list-of %a)))
+(define flatten
+  (lambda (xss)
+    (fold empty append xss)))
+
+; Breitendurchlauf für die Liste der Bäume ts
+(: traverse ((list-of (btree-of %a)) -> (list-of %a)))
+(define traverse
+  (lambda (ts)
+    (cond ((empty? ts) empty)
+          ((pair? ts)  (append (roots ts) 
+                               (traverse (subtrees ts)))))))
+
+; Liste der Wurzelmarkierungen der nicht-leeren Bäume in ts
+(: roots ((list-of (btree-of %a)) -> (list-of %a)))
+(define roots
+  (lambda (ts)
+    (map node-label 
+         (filter node? ts))))
+
+  
+; Liste der Teilbäume der nicht-leeren Bäume in ts
+(: subtrees ((list-of (btree-of %a)) -> (list-of (btree-of %a))))
+(define subtrees
+  (lambda (ts)
+    (flatten 
+     (map (lambda (t) (list (node-left-branch t)
+                            (node-right-branch t)))
+          (filter node? ts)))))
+
+; Breitendurchlauf für den Baum t
+(: levelorder ((btree-of %a) -> (list-of %a)))
+(define levelorder
+  (lambda (t)
+    (traverse (list t))))
