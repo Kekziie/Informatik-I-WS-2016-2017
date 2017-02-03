@@ -87,3 +87,48 @@
       ((node? t) (+ (btree-size (node-left-branch t))
                     1
                     (btree-size (node-right-branch t)))))))
+
+;----------------------------------------------------------------------------
+; "Darstellung" eines Binärbaumes
+;----------------------------------------------------------------------------
+
+; Hilfsfunktion: konkateniere String s genau n mal
+(: duplicate (natural string -> string))
+(define duplicate
+  (lambda (n s)
+    (cond ((= n 0) "")
+          ((> n 0) (string-append s (duplicate (- n 1) s))))))
+
+
+; Erzeuge Liste von Zeilen-Strings der Textrepräsentation des Baums t
+(: pp ((btree-of (mixed number string)) -> (list-of string)))
+(define pp
+  (lambda (t)
+    (cond 
+      ((empty-tree? t) (list "▢\n"))
+      ((node? t)
+       (letrec ((lbl (node-label t))
+                (x   (if (string? lbl) lbl (number->string lbl)))
+                (wx  (string-length x))
+                (ppl (pp (node-left-branch t)))
+                (ppr (pp (node-right-branch t))))
+         (append (list (string-append x "--"                         (first ppr)))
+                 (map ((curry string-append) 
+                       (string-append "|" (duplicate (+ 1 wx) " "))) (rest ppr))
+                 (list                "│\n")
+                 (list (string-append "╰" (duplicate (+ 1 wx) "-")   (first ppl)))
+                 (map ((curry string-append) 
+                       (string-append " " (duplicate (+ 1 wx) " "))) (rest ppl))))))))
+
+;                                          Prozedur hat keinen Rückgabewert
+; Drucke Textrepräsentation des Baums t         ↓
+(: print ((btree-of (mixed number string)) -> %void))
+(define print                               
+  (lambda (t)
+    (write-string (strings-list->string (pp t))))) 
+
+; "Missbrauche" check-property, um einige Testbäume auszudrucken...
+; (check-property
+;  (for-all ((t (btree-of natural)))
+;     (==> (< (btree-size t) 10)
+;          (expect (print t) (write-string "\n")))))
