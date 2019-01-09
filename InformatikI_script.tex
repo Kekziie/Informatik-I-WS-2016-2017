@@ -4,20 +4,15 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \author{Kim Thuong Ngo}
-
-
 \usepackage[T1]{fontenc} 
 \usepackage{fourier} 
-
 \usepackage{lipsum} 
-
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{tabularx}
-
 \usepackage{sectsty}
+\usepackage{xcolor}
 \allsectionsfont{\centering \normalfont\scshape} 
-
 \usepackage{fancyhdr} 
 \pagestyle{fancyplain} 
 \fancyhead{}
@@ -32,7 +27,7 @@
 \numberwithin{figure}{section} 
 \numberwithin{table}{section}
 
-\setlength\parindent{0pt} 
+\setlength\parindent{0pt}  
 
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
 
@@ -45,24 +40,68 @@
 }
 
 \author{Kim Thuong Ngo} 
-
 \date{\normalsize\today} 
 
-%----------------------------------------------------------------------------------------
+\usepackage{color}
 
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.83,0.83,0.83}
+
+\lstset{
+   language={Scheme},
+   basicstyle=\small,
+   keywordstyle=\color{blue},
+   identifierstyle=,
+   commentstyle=\color{mygreen},
+   stringstyle=\ttfamily,
+   breaklines=true,
+   numbers=left,
+   numberstyle=\small,
+   frame=single,
+   backgroundcolor=\color{mygray}
+}
+
+%----------------------------------------------------------------------------------------
 \begin{document}
-
 \maketitle 
-
 \newpage
-
 \tableofcontents
-
+%----------------------------------------------------------------------------------------
 \newpage
+\section{Scheme: Ausdrücke, Auswertung und Abstraktion}
+Programm: DrRacket \\
+
+Bild \\
+
+Die Anwendung von Funktionen wird in Scheme \textcolor{orange}{ausschließlich} in \textcolor{orange}{Präfixnotation} durchgeführt:
+\begin{tabular}{c|c}
+Mathematik & Scheme \\\hline
+$44-2$ & (- 44 2) \\
+$f(x,y)$ & (f x y)\\
+$\sqrt{81}$ & (sqrt 81)\\
+$\lfloor x \rfloor$ & (floor x)\\
+$9^{2}$  & (expt 9 2) \\
+3! & (! 3) \\
+\end{tabular}
+
+Allgemein:
+\begin{lstlisting}
+(<function> <argument> ... <argument> )
+\end{lstlisting}
+
+(+ 40 2) und (odd? 42) sind Beispiele für \textcolor{orange}{Ausdrücke}, die bei der \textcolor{orange}{Auswertung} einen Wert liefern.
+
+Notation: $\rightsquigarrow$
+\begin{tabular}{cc}
+(+ 40 2) $\rightsquigarrow$ 42 & Auswertung/ Evaluation \\
+(odd? 42) $\rightsquigarrow$ Reduktion \\
+\end{tabular}
+
+Interaktionsfenster : Read $\rightarrow$ Evaluation $\rightarrow$ Print $\rightarrow$ Read (REPL) \\
+
+\textcolor{orange}{Literale}
+
 
 %----------------------------------------------------------------------------------------
-
-\section{eins}
-
 
 \end{document}
