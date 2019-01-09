@@ -7,36 +7,19 @@ Sprache:
 - Die Macht der Abstraktion
 - Die Macht der Abstraktion - Fortgeschritten
 
+Skript: 
+- Vorlesung 16/17 mit Notizen (siehe auch Wiki)
+- INF1110 Informatik I bei Grust, Dietrich, Butterstein
+- Eberhard Karls Universität Tübingen
+
 ### homework
-- Blatt01: Racket runterladen und Sprachlevel einstellen
-- Blatt02: nach Konstruktionsanleitung arbeiten, erste Prozeduren
-- Blatt03: Animation mit Teachpack: universe und image2; Reduktionsregeln anwenden
-- Blatt04: Reduktionsregeln anwenden; Fallunterscheidung; Record-Definition; check-property
-- Blatt05: Record-Definition; Signaturen; syntaktischer Zucker
-- Blatt06: let; polymorphe Paare und Listen; Rekursion
-- Blatt07: polymorphe Paare und Listen; Rekursion
-- Blatt08: polymorphe Paare und Listen; Rekursion/Endrekursion; Bilder
-- Blatt09: polymorphe Paare und Listen; Rekursion/Endrekursion;  vollständige Induktion; H.O.P.: filter
-- Blatt10: Record-Definition; Higher Order Procedures; polymorphe Paare und Listen; Programmabbruch; Animation
-- Blatt11: Streams; polymorphe Paare und Listen; H.O.P.: map
-- Blatt12: Binärbäume; polymorphe Paare und Listen
+Aufgaben der Vorlesung
 
 ### exercise
-- ex1: cond, Fallunterscheidung
-- ex2: Bilder und Animation mit Teachpack: universe und image2
-- ex3: Record-Definition
-- ex4: Bilder und Animation einer Uhr mit Teachpack: universe und image2
-- ex5: Record-Definition
-- ex6: Record-Definition; Signaturen
-- ex7: H.O.P.: fold/foldr/foldl
-- ex8: Record-Definition
-- ex9: Streams
-- ex10: polymorphe Paare und Listen; Rekursion; Signaturen
-- ex11: Record-Definition; polymorphe Paare und Listen; Rekursion; Signaturen
-- ex12: polymorphe Paare und Listen; Rekursion
+Aufgaben aus Tutorium
 
 ### example
 Beispiele für Wiki bzw. teils Script
-- exa1: Konstruktionsanleitung
-- exa2: Fallunterscheidung; Funktion: or, and 
-- exa3: Binärbäume; H.O.P.: fold, filter; Currying
+
+### tutorium
+eigene Aufgaben bzw. Lösungen für Übungen
