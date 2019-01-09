@@ -8,9 +8,9 @@ Sprache:
 - Die Macht der Abstraktion - Fortgeschritten
 
 Skript: 
-Vorlesung 16/17 mit Notizen (siehe auch Wiki)
-INF1110 Informatik I bei Grust, Dietrich, Butterstein
-Eberhard Karls Universität Tübingen
+- Vorlesung 16/17 mit Notizen (siehe auch Wiki)
+- INF1110 Informatik I bei Grust, Dietrich, Butterstein
+- Eberhard Karls Universität Tübingen
 
 ### homework
 Aufgaben der Vorlesung
