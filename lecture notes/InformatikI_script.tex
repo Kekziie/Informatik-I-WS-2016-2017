@@ -72,6 +72,10 @@
 \subsection{Scheme: Ausdrücke, Auswertung und Abstraktion}
 Programm: DrRacket \\
 
+\includegraphics[width=5cm,height=5cm]{Racketlogo.png}
+
+\includegraphics[width=10cm,height=8cm]{Racketfenster2.png}
+
 Die Anwendung von Funktionen wird in Scheme \textcolor{orange}{ausschließlich} in \textcolor{orange}{Präfixnotation} durchgeführt: \\
 
 \begin{tabular}{c|c}
@@ -202,6 +206,12 @@ Zeichne Tatooine Sunset zu Zeitpunkt t
                        (sun t)
                        (sky t))))
 \end{lstlisting}
+
+t=0: \\
+\includegraphics[width=15cm,height=7cm]{tatooine0.png}
+
+t=100: \\
+\includegraphics[width=15cm,height=7cm]{tatooine100.png}
 %---------------------------------------------------------------------------------------
 \subsection{Reduktionsregeln für Scheme}
 Fallunterscheidungen: je nach Ausdruck 
@@ -602,9 +612,11 @@ ebenfalls vordefiniert
                                 empty))
 \end{lstlisting}
 
-% TODO - Bilder von Spines
+$\lightning$ Notation skaliert schlecht \\
+\includegraphics[width=8cm,height=5cm]{Listen.png}
 
-\textcolor{orange}{Spines} (Rückgrat)
+\textcolor{orange}{Spines} (Rückgrat) \\
+\includegraphics[width=10cm,height=7cm]{spine1.png}
 % ----------------------------------------------------------------------
 \subsubsection{Prozeduren über Listen}
 Schablonen für gemischte und zusammengesetzte Daten \\
@@ -853,6 +865,7 @@ P5 & $\mathbb{N}$ enthält nicht mehr als 0 und die durch die succ() generierte 
      & für jede Menge $M \subseteq \mathbb{N}$: \\
      & Falls $0 \in M $ und $\forall n : (n \in M \Rightarrow succ(n) \in M)$, dann ist $M= \mathbb{N}$\\\hline
 \end{tabular}
+\includegraphics[width=5cm,height=5cm]{NatürlicheZahlen.png}
 %------------------------------------------------------------
 \subsubsection{Beweisschema der vollständigen Induktion}
 Sie P(n) ist eine Eigenschaft einer Zahl $n \in \mathbb{N}$ (Prädikat) \\
@@ -1057,11 +1070,10 @@ Verwende einfache Lambda-Abstraktion direkt als \textcolor{orange}{anonyme} Funk
 
 %------------------------------------------------------------------
 \subsubsection{Listenfaltung (fold)}
-
 Allgemeine Transformation von Listen \textcolor{orange}{Listenfaltung (list folding)} \\
 Idee: die Listenkonstruktoren und empty werden systematisch ersetzt: \\
 
-%todo spine von fold
+\includegraphics[width=15cm,height=8cm]{foldr.png}
 
 (foldr z c xs) wirkt als Spine Transformer \\
 \begin{itemize}
@@ -1083,9 +1095,33 @@ Ausgabe: im allgemeinen \textcolor{orange}{keine} Liste (etwa $\%b$)
                                (foldr z c (rest xs)))))))
 \end{lstlisting}
 
-Beispiel: Reduktion von xs
+Beispiel: Reduktion von xs \\
+Multiplikation \\
+\begin{lstlisting}
+(: foldr-mult ((list-of number) -> number)))
+(define foldr-mult
+    (lambda (xs)
+         (foldr 1 * xs)))
+\end{lstlisting}
+\includegraphics[width=15cm,height=8cm]{foldr_Multiplikation.png}
 
-%todo pic
+Summe \\
+\begin{lstlisting}
+(: sum ((list-of number) -> number)))
+(define sum
+    (lambda (xs)
+         (foldr 0 + xs)))
+\end{lstlisting}
+\includegraphics[width=15cm,height=8cm]{foldr_Summe.png}
+
+Listenlänge \\
+\begin{lstlisting}
+(: list-length ((list-of %a) -> number)))
+(define list-length
+    (lambda (xs)
+         (foldr 0 (lambda (y ys) (+ 1 ys)) xs)))
+\end{lstlisting}
+\includegraphics[width=15cm,height=8cm]{foldr_Listenlänge.png}
 
 Spine Transformation \\
 \begin{itemize}
@@ -1157,7 +1193,7 @@ $\rightsquigarrow^{apply \lambda (\lambda x)}$ ((lambda (y) (+ 1 y)) 41) \\
 $\rightsquigarrow^{apply \lambda (\lambda y)}$ (+ 1 41) \\
 $\rightsquigarrow^{apply, prim(\lambda)}$ 42
 
-% todo curry graphik 
+\includegraphics[width=15cm,height=8cm]{currying.png}
 
 \begin{itemize}
 \item Currying (Haskell B. Curry, Moses Schönfinkel) \\
@@ -1198,7 +1234,13 @@ $\Rightarrow$ ' ist higher order \\
 \textcolor{orange}{unendliche} Ströme von Elementen x, der Signatur $\%a$ \\
 Ein Stream ist ein Paar \\
 
-% todo garphik
+\includegraphics[width=15cm,height=8cm]{streams.png}
+
+Vergleiche: \\
+\begin{tabular}{cc}
+\includegraphics[width=7cm,height=5cm]{Listendarstellung.png} & 
+\includegraphics[width=7cm,height=5cm]{Streamdarstellung.png}
+\end{tabular}
 
 Verzögerte Auswertung eines Ausdrucks (delayed evaluation):
 \begin{lstlisting}
@@ -1372,13 +1414,13 @@ Induktionsschritt: $P(l) \wedge P(r) \Rightarrow$ P((make-node l x r))
 \subsubsection{Tree-Transformer}
 Erinnerung: fold ist Spine-Transformer üfr Liste xs
 
-%todo graph
+\includegraphics[width=15cm,height=8cm]{foldr.png}
 
 Wie müsste btree-fold, eine fold-Operation für Binärbäume, verhalten? \\
 
 Tree-Transformer für Bäume t:
 
-% todo graph
+\includegraphics[width=15cm,height=8cm]{btree-fold.png}
 
 \begin{lstlisting}
 ; falte Baum bzgl. z und c
@@ -1450,7 +1492,7 @@ Daher:
 
 Ein \textcolor{orange}{Breitendurchlauf} (breath-first-traversal) eines Baumes t sammelt die Markierungen der Knoten \textcolor{orange}{ebenenweise}  vo der Wurzel ausgehend auf: \\
 
-% todo graph
+\includegraphics[width=10cm,height=8cm]{levelorder.png}
 
 (levelorder t) $\rightsquigarrow$ (list "s" "c" "h" "e" "m" "e") \\
 
@@ -1506,9 +1548,73 @@ Mögliche Operanden von Symbolen:
 \end{lstlisting}
 %--------------------------------------------------------
 \subsection{Natürliche Repräsentation/ Auswertung arithmetischer Ausdrücke (Terme)}
+Beispiel: $e \equiv $'(* (! (+ 1 2)) x) \\
+Hierbei sind *,!,+,x symbols und 1,2 numbers \\
+\begin{lstlisting}
+(define term
+     (signature (mixed number symbol (list-of term))))
+\end{lstlisting}
+\begin{itemize}
+\item kein Paar benötigt
+\item kein Prettyprinter benötigt
+\end{itemize}
+
+Auswertung möglich, wenn Bindungen für Symbole (Variablen und Operatoren) an Werte gegeben sind. Dictionary (Environment): \\
+% todo
 
 %-------------------------------------------------------
 \subsection{Auswertung eines arithmetischen Ausdrucks e in Environment d}
+Wir betrachten eval in curry-Version ((eval d) e) \\
+\begin{tabular}{cc}
+$E_{1}$ & \\
+$E_{2}$ & \\
+$E_{3}$ & \\
+\end{tabular}
+
+Lesbare Form mit 
+%todo
+
+Eval-Definition 
+\begin{lstlisting}
+(: eval ((dict-of symbol value) -> (term -> value)))
+(define eval
+     (lambda (d)
+          (lambda (e)
+               (cond
+                   ((constant? e) e)
+                   ((variable? e) lookup-dict e d))
+                   ((compound? e) (let ((es (map (eval d) e)))
+                                                  (foldl (first es) @ (rest es))))))
+                                                  
+(: @ ((%a -> %b) %a -> %b))
+(define @
+     (lambda (f x)
+           (f x)))                                                  
+\end{lstlisting}
+
+Lambda-Kalkül \\
+Der $\lambda$-Kalkül ist eine Notation für beliebige Funktionen. Entwickelt in den 1930er-Jahren von Alonzo Church (* 1903, $\dagger$ 1995) (aber die Mathematiker bevorzugten die axiomatische Mengenlehre). \\
+Seither verwendet als theoretischer Unterbau für Programmiersprachen \\
+
+Syntax des $\lambda$-Kalküls \\
+Die Menge der Ausdrücke (expressions) E des $\lambda$-Kalküls ist induktiv definiert. \\
+(Sei V unendliche Menge von Variablennamen) \\
+\begin{itemize}
+\item $\forall \lambda  \in V: v \in E$ \\
+        (Variablen) 
+\item $\forall \lambda e_{1},e_{2} \in E: (e_{1} e_{2}) \in E$ \\
+        (Applikation $e_{1}$ ist Funktion, $e_{2}$ ist Argument)
+\item $\forall v \in V, e_{1} \in E: (\lambda v.e_{1}) \in E$ \\
+        (Abstraktion v ist Parameter, $e_{1}$ ist Rumpf)
+\end{itemize}
+
+Beispiele: \\
+
+$\lambda$-Kalkül \\
+v-Variablen \\
+($\lambda v.e_{1}$) Abstraktion (v Parameter, $e_{1}$ Funktionskörper) \\
+($e_{1} e_{2}$) Applikation ($e_{1}$ Funktion, $e_{2}$ Argument) \\
+(($e_{1}$ $e_{2}$)$ e_{3}$) $\equiv$ ($e_{1}$ $e_{2}$ $e_{3}$)
 
 %-------------------------------------------------------
 \subsection{Freie/ Gebundene Variablen}

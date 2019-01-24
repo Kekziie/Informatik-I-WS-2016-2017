@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.23)  24 JAN 2019 11:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.23)  24 JAN 2019 14:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1360,20 +1360,7 @@ Class scrartcl Warning: incompatible usage of \@ssect detected.
 (scrartcl)              This could result in several error messages on input li
 ne 68.
 
-(./InformatikI_script.toc
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 2.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 2.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 2.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 2.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 2.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 2.
-)
+(./InformatikI_script.toc)
 \tf@toc=\write4
 \openout4 = `InformatikI_script.toc'.
 
@@ -1382,23 +1369,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--74
 
  []
 
+<Racketlogo.png, id=13, 225.84375pt x 225.84375pt>
+File: Racketlogo.png Graphic file (type png)
+ <use Racketlogo.png>
+Package pdftex.def Info: Racketlogo.png used on input line 75.
+(pdftex.def)             Requested size: 142.27196pt x 142.27196pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 75--76
+<Racketfenster2.png, id=14, 719.68875pt x 603.0028pt>
+File: Racketfenster2.png Graphic file (type png)
+ <use Racketfenster2.png>
+Package pdftex.def Info: Racketfenster2.png used on input line 77.
+(pdftex.def)             Requested size: 284.53201pt x 227.61606pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 100--101
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 114--115
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 116--117
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 10.07397pt on input line 81.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 7.63599pt on input line 81.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 81.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 10.07397pt on input line 81.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 7.63599pt on input line 81.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 81.
+[3 <./Racketlogo.png> <./Racketfenster2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 104--105
 
  []
 
@@ -1407,172 +1407,137 @@ Underfull \hbox (badness 10000) in paragraph at lines 118--119
 
  []
 
-[3]
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 129
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--121
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
+
+ []
+
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 133
 .
- (/usr/local/texlive/2017/texmf-dist/tex/latex/fourier/ts1futs.fd
+(/usr/local/texlive/2017/texmf-dist/tex/latex/fourier/ts1futs.fd
 File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
-)
-Underfull \hbox (badness 10000) in paragraph at lines 140--142
+) [4]
+Underfull \hbox (badness 10000) in paragraph at lines 144--146
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 143--144
-
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 162--163
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
 
  []
 
 
-Overfull \hbox (1.28548pt too wide) in paragraph at lines 164--165
+Underfull \hbox (badness 10000) in paragraph at lines 166--167
+
+ []
+
+
+Overfull \hbox (1.28548pt too wide) in paragraph at lines 168--169
 [][]\T1/futs/m/n/10.95 Prozedur-Signaturen[] spez-i-fizieren Sig-na-turen sowoh
 l f�r die Pa-ram-e-ter <p1>,<p2>,... als auch
  []
 
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 166.
+(Font)              scaled to size 6.99199pt on input line 170.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 166.
+(Font)              scaled to size 6.99199pt on input line 170.
 
-Underfull \hbox (badness 10000) in paragraph at lines 168--169
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 175--177
+Underfull \hbox (badness 10000) in paragraph at lines 172--173
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
+Underfull \hbox (badness 10000) in paragraph at lines 179--181
 
  []
 
 [5]
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 220.
+Underfull \hbox (badness 10000) in paragraph at lines 191--192
 
-Overfull \hbox (11.76488pt too wide) in paragraph at lines 221--222
+ []
+
+<tatooine0.png, id=29, 601.4972pt x 246.1697pt>
+File: tatooine0.png Graphic file (type png)
+ <use tatooine0.png>
+Package pdftex.def Info: tatooine0.png used on input line 211.
+(pdftex.def)             Requested size: 426.809pt x 199.17848pt.
+
+Overfull \hbox (8.55345pt too wide) in paragraph at lines 210--212
+[] 
+ []
+
+[6] <tatooine100.png, id=33, 601.4972pt x 246.9225pt>
+File: tatooine100.png Graphic file (type png)
+ <use tatooine100.png>
+Package pdftex.def Info: tatooine100.png used on input line 214.
+(pdftex.def)             Requested size: 426.809pt x 199.16591pt.
+
+Overfull \hbox (8.55345pt too wide) in paragraph at lines 213--216
+[] 
+ []
+
+[7 <./tatooine0.png> <./tatooine100.png>]
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 230.
+
+Overfull \hbox (11.76488pt too wide) in paragraph at lines 231--232
 []\T1/futs/m/n/10.95 Argumentwerte e1',e2',... in Rumpf ein-set-zen, dann Rumpf
  mit-tels $\U/msa/m/n/10.95  $ \T1/futs/m/n/10.95 re-duzieren
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 225--226
+Underfull \hbox (badness 10000) in paragraph at lines 235--236
 
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 248--250
+
+Underfull \hbox (badness 10000) in paragraph at lines 258--260
 
  []
 
+[8]
 ! You can't use `macro parameter character #' in horizontal mode.
-l.277 ...lge <t1>,<t2>,... durch. Sobald <ti> zu #
+l.287 ...lge <t1>,<t2>,... durch. Sobald <ti> zu #
                                                   t ausgewertet, werte Zweig...
 
 ? 
 ! You can't use `macro parameter character #' in horizontal mode.
-l.277 ...ebnis der Fallunterscheidung. Wenn <tn> #
+l.287 ...ebnis der Fallunterscheidung. Wenn <tn> #
                                                   f liefert, dann liefere $\...
 
 ? 
 ! You can't use `macro parameter character #' in restricted horizontal mode.
-l.277 ...ehlermeldung: "cond. alle Tests ergaben #
+l.287 ...ehlermeldung: "cond. alle Tests ergaben #
                                                   f" $\end{cases}$
 ? 
 
-Underfull \hbox (badness 10000) in paragraph at lines 284--285
+Underfull \hbox (badness 10000) in paragraph at lines 294--295
 
  []
 
 ! You can't use `macro parameter character #' in restricted horizontal mode.
-l.290          <e1> falls <t1'> #
+l.300          <e1> falls <t1'> #
                                  t &  <t2>,<e2>,... werden \textcolor{orange...
 
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.290          <e1> falls <t1'> #t &
+l.300          <e1> falls <t1'> #t &
                                       <t2>,<e2>,... werden \textcolor{orange...
 
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.292          $\end{cases}
+l.302          $\end{cases}
                            $
 ? 
-[7]
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.317 ; - Stärke 
-                  der Macht (force)
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.317 ; - Stärke 
-                  der Macht (force)
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 326--330
-
- []
-
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 356--360
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 361--362
-
- []
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.370       ; Prädikat,
-                         dass sich auf <id1> ... <idn> bezieht
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.370       ; Prädikat,
-                         dass sich auf <id1> ... <idn> bezieht
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 390--392
-
- []
-
 [9]
 
 ! Package inputenc Error: Unicode char �\expandafter (U+4F1)
@@ -1582,7 +1547,73 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.421 ; Breitengrad - latitude? ist ein Prädikat
+l.327 ; - Stärke 
+                  der Macht (force)
+? 
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.327 ; - Stärke 
+                  der Macht (force)
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--340
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--370
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 371--372
+
+ []
+
+[10]
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.380       ; Prädikat,
+                         dass sich auf <id1> ... <idn> bezieht
+? 
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.380       ; Prädikat,
+                         dass sich auf <id1> ... <idn> bezieht
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--402
+
+ []
+
+[11]
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.431 ; Breitengrad - latitude? ist ein Prädikat
                                                  
 ? 
 
@@ -1593,19 +1624,20 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.421 ; Breitengrad - latitude? ist ein Prädikat
+l.431 ; Breitengrad - latitude? ist ein Prädikat
                                                  
 ? 
 
-Underfull \hbox (badness 10000) in paragraph at lines 444--447
+Underfull \hbox (badness 10000) in paragraph at lines 454--457
 
  []
 
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 465--466
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--476
 
  []
 
+[12]
 
 ! LaTeX Error: Environment lstlistig undefined.
 
@@ -1613,14 +1645,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.488 \begin{lstlistig}
+l.498 \begin{lstlistig}
                        
 ? 
 
 ! Undefined control sequence.
 \lstlisting ->\def \lstenv@name 
                                 {lstlisting}\begingroup \lst@setcatcodes \ca...
-l.493 \end{lstlisting}
+l.503 \end{lstlisting}
                       
 ? 
 ! Package Listings Error: Extra \endlstlisting.
@@ -1629,7 +1661,7 @@ See the Listings package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.493 \end{lstlisting}
+l.503 \end{lstlisting}
                       
 ? 
 
@@ -1639,11 +1671,11 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.493 \end{lstlisting}
+l.503 \end{lstlisting}
                       
 ? 
-[11]
-Overfull \hbox (1.1942pt too wide) in paragraph at lines 520--523
+[13]
+Overfull \hbox (1.1942pt too wide) in paragraph at lines 530--533
 \T1/futs/m/n/10.95 Beobachtung: Manche Proze-duren ar-beiten un-ab-h�ngig von d
 en Sig-na-turen ihrer Ar-gu-mente
  []
@@ -1656,7 +1688,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.524 ; Identität
+l.534 ; Identität
                   
 ? 
 
@@ -1667,7 +1699,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.524 ; Identität
+l.534 ; Identität
                   
 ? 
 
@@ -1678,7 +1710,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.532 ; Projektion (ein Argument auswählen)
+l.542 ; Projektion (ein Argument auswählen)
                                             
 ? 
 
@@ -1689,58 +1721,69 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.532 ; Projektion (ein Argument auswählen)
+l.542 ; Projektion (ein Argument auswählen)
                                             
 ? 
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 573--574
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 583--584
 
  []
 
-[13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 655--657
+<Listen.png, id=63, 662.475pt x 140.77594pt>
+File: Listen.png Graphic file (type png)
+ <use Listen.png>
+Package pdftex.def Info: Listen.png used on input line 616.
+(pdftex.def)             Requested size: 227.61403pt x 142.27277pt.
+ [15]
+<spine1.png, id=68, 398.99063pt x 237.88875pt>
+File: spine1.png Graphic file (type png)
+ <use spine1.png>
+Package pdftex.def Info: spine1.png used on input line 619.
+(pdftex.def)             Requested size: 284.53947pt x 199.17905pt.
+ [16 <./Listen.png> <./spine1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 667--669
 
  []
 
 ! Extra alignment tab has been changed to \cr.
 <recently read> \endtemplate 
                              
-l.662 2) &
+l.674 2) &
             $x_{1} x_{2} ... x_{n}$ & $y_{1} y_{2} ... y_{m}$ & $\underbrace...
 
 ? 
 ! Missing } inserted.
 <inserted text> 
                 }
-l.662 ...\underbrace{y_{1} y_{2} ... y_{m}}_{ys} }
+l.674 ...\underbrace{y_{1} y_{2} ... y_{m}}_{ys} }
                                                   _{(cat (rest xs) ys)} $
 ? 
 ! Extra }, or forgotten $.
 \underbrace ... {##\crcr $\hfil \displaystyle {#1}
                                                   \hfil $\crcr \noalign {\ke...
-l.662 ...\underbrace{y_{1} y_{2} ... y_{m}}_{ys} }
+l.674 ...\underbrace{y_{1} y_{2} ... y_{m}}_{ys} }
                                                   _{(cat (rest xs) ys)} $
 ? 
 
-Underfull \hbox (badness 10000) in paragraph at lines 665--666
+Underfull \hbox (badness 10000) in paragraph at lines 677--678
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 683--684
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 695--696
 
  []
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.687 \item Don't Care _
+l.699 \item Don't Care _
                          \\
 ? 
 ! Missing { inserted.
 <to be read again> 
                    \let 
-l.687 \item Don't Care _ \\
+l.699 \item Don't Care _ \\
                            
 ? 
 
@@ -1750,7 +1793,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.689 \item
+l.701 \item
             Variable <v> \\
 ? 
 
@@ -1760,7 +1803,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.689 \item V
+l.701 \item V
              ariable <v> \\
 ? 
 
@@ -1770,7 +1813,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.689 \item V
+l.701 \item V
              ariable <v> \\
 ? 
 
@@ -1780,117 +1823,116 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.691 \item
+l.703 \item
             Record Konstruktor (<c> <pat1> ... <patk>) $k \geq 0$ \\
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.691 \item R
+l.703 \item R
              ecord Konstruktor (<c> <pat1> ... <patk>) $k \geq 0$ \\
 ? 
 ! Missing } inserted.
 <inserted text> 
                 }
-l.691 \item R
+l.703 \item R
              ecord Konstruktor (<c> <pat1> ... <patk>) $k \geq 0$ \\
 ? 
 ! Missing } inserted.
 <inserted text> 
                 }
-l.691 \item R
+l.703 \item R
              ecord Konstruktor (<c> <pat1> ... <patk>) $k \geq 0$ \\
 ? 
 
-Overfull \hbox (55.69225pt too wide) in paragraph at lines 687--691
+Overfull \hbox (55.69225pt too wide) in paragraph at lines 699--703
 []\T1/futs/m/n/10.95 Don't Care $[]$ 
  []
 
 ! Extra }, or forgotten \endgroup.
 \par ...m \@noitemerr {\@@par }\fi \else {\@@par }
                                                   \fi 
-l.691 \item R
+l.703 \item R
              ecord Konstruktor (<c> <pat1> ... <patk>) $k \geq 0$ \\
 ? 
-[15]
-Underfull \hbox (badness 10000) in paragraph at lines 697--699
+
+Underfull \hbox (badness 10000) in paragraph at lines 709--711
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 703--704
+Underfull \hbox (badness 10000) in paragraph at lines 715--716
 
  []
 
 
-LaTeX Warning: Command \" invalid in math mode on input line 715.
+LaTeX Warning: Command \" invalid in math mode on input line 727.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 714--720
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 721--722
-
- []
-
-[16]
-Underfull \hbox (badness 10000) in paragraph at lines 748--750
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 751--752
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 753--754
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 755--761
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 762--766
-
- []
-
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 794--796
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 797--800
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 805--808
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 809--811
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 812--815
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 816--818
+Underfull \hbox (badness 10000) in paragraph at lines 726--732
 
  []
 
 [18]
+Underfull \hbox (badness 10000) in paragraph at lines 733--734
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 760--762
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 763--764
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 765--766
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 767--773
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 774--778
+
+ []
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 806--808
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 809--812
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 817--820
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 821--823
+
+ []
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 824--827
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 828--830
+
+ []
+
 
 ! LaTeX Error: \math@bb allowed only in math mode.
 
@@ -1898,661 +1940,97 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.842 ...efinition der natürlichen Zahlen \mathbb
+l.854 ...efinition der natürlichen Zahlen \mathbb
                                                   {N} \\
 ? 
 ! Extra alignment tab has been changed to \cr.
 <recently read> \endtemplate 
                              
-l.852      &
+l.864      &
              \textcolor{orange}{Induktsionsaxiom} \\
 ? 
-
-Overfull \hbox (13.92868pt too wide) in paragraph at lines 842--857
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 858--859
-
- []
-
-Missing character: There is no n in font fourier-bb!
-! Argument of \underbrace has an extra }.
-<inserted text> 
-                \par 
-l.873  $ [ \underbrace}
-                       \sum^{n}_{i=0}(2i+1)}_{$Summer der ersten n+1 ungerad...
-
+! Undefined control sequence.
+\GenericError  ...                                
+                                                    #4  \errhelp \@err@     ...
+l.868 ...h=5cm,height=5cm]{NatürlicheZahlen.png}
+                                                  
 ? 
-Runaway argument?
-! Paragraph ended before \underbrace was complete.
+! Undefined control sequence.
+\GenericError  ...                                
+                                                  \let \@err@               ...
+l.868 ...h=5cm,height=5cm]{NatürlicheZahlen.png}
+                                                  
+? 
+! Undefined control sequence.
+\GenericError  ...                                
+                                                  \@empty \def \MessageBreak...
+l.868 ...h=5cm,height=5cm]{NatürlicheZahlen.png}
+                                                  
+? 
+! Undefined control sequence.
+\GenericError  ...                                
+                                                     \endgroup 
+l.868 ...h=5cm,height=5cm]{NatürlicheZahlen.png}
+                                                  
+? 
+
+! Missing { inserted.
 <to be read again> 
-                   \par 
-l.873  $ [ \underbrace}
-                       \sum^{n}_{i=0}(2i+1)}_{$Summer der ersten n+1 ungerad...
-
+                   \let 
+l.868 ...h=5cm,height=5cm]{NatürlicheZahlen.png}
+                                                  
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.873  $ [ \underbrace}
-                       \sum^{n}_{i=0}(2i+1)}_{$Summer der ersten n+1 ungerad...
-
-? 
-[19]
-! Too many }'s.
-<recently read> }
-                 
-l.873  $ [ \underbrace}
-                       \sum^{n}_{i=0}(2i+1)}_{$Summer der ersten n+1 ungerad...
-
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.873  $ [ \underbrace}\sum
+l.886  $ [ \underbrace}\sum
                            ^{n}_{i=0}(2i+1)}_{$Summer der ersten n+1 ungerad...
 
 ? 
 ! Extra }, or forgotten $.
-l.873  $ [ \underbrace}\sum^{n}_{i=0}(2i+1)}
+l.886  $ [ \underbrace}\sum^{n}_{i=0}(2i+1)}
                                             _{$Summer der ersten n+1 ungerad...
 
 ? 
 ! Missing } inserted.
 <inserted text> 
                 }
-l.873  $ [ \underbrace}\sum^{n}_{i=0}(2i+1)}_{$
+l.886  $ [ \underbrace}\sum^{n}_{i=0}(2i+1)}_{$
                                                Summer der ersten n+1 ungerad...
 
 ? 
-! Too many }'s.
-l.873 ...ersten n+1 ungeraden natürlichen Zahlen}
+! Extra }, or forgotten \endgroup.
+l.886 ...ersten n+1 ungeraden natürlichen Zahlen}
                                                   =(n+1)^{2}$ ] \equiv P(n)$ \\
 
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.873 ...n+1 ungeraden natürlichen Zahlen}=(n+1)^
+l.886 ...n+1 ungeraden natürlichen Zahlen}=(n+1)^
                                                   {2}$ ] \equiv P(n)$ \\
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.873 ... natürlichen Zahlen}=(n+1)^{2}$ ] \equiv
+l.886 ... natürlichen Zahlen}=(n+1)^{2}$ ] \equiv
                                                    P(n)$ \\
 ? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 873--874
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 875--881
-
- []
-
-! Missing number, treated as zero.
-<to be read again> 
-                   \par 
-l.883 
-      
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 884--885
-
- []
-
-! You can't use `macro parameter character #' in horizontal mode.
-l.904  $\rightsquigarrow$ (if #
-                               f ... (* ...)) \\
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \par 
-l.910 
-      
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 911--912
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 913--915
-
- []
-
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 929--930
-
- []
-
-! You can't use `macro parameter character #' in horizontal mode.
-l.935  $\rightsquigarrow$ (if #
-                               t basis ...) \\
-? 
-! You can't use `macro parameter character #' in horizontal mode.
-l.940  $\rightsquigarrow$ (if #
-                               f ... (step ... )) \\
-? 
-! Missing } inserted.
-<inserted text> 
-                }
-l.942 ...tsquigarrow$ (step $\underbrace{(f n)}_{$
-                                                  terminiert mit EIgenschaft...
-
-? 
-! Extra }, or forgotten $.
-<recently read> }
-                 
-l.942 ...e{(f n)}_{$terminiert mit EIgenschaft R$}
-                                                  $ (n+1))\\
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \par 
-l.946 
-      
-? 
-! Undefined control sequence.
-l.953  L3 & \nichts
-                    sonst ist in M*\\
-? 
-
-Overfull \hbox (8.09113pt too wide) in paragraph at lines 961--962
-[]\T1/futs/m/n/10.95 Falls P(empty) In-duk-tion-san-fang bzw. In-duk-tions-ba-s
-is ud $\FMS/futm/m/n/10.95 8\FML/futmi/m/it/10.95 x \FMS/futm/m/n/10.95 2 \FML/
-futmi/m/it/10.95 M; xs \FMS/futm/m/n/10.95 2 \FML/futmi/m/it/10.95 M\FMS/futm/m
-/n/10.95 ^^C \T1/futs/m/n/10.95 : (\FML/futmi/m/it/10.95 P\T1/futs/m/n/10.95 (\
-FML/futmi/m/it/10.95 xs\T1/futs/m/n/10.95 ) \FMS/futm/m/n/10.95 )$ \T1/futs/m/n
-/10.95 P((make-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 961--962
-
- []
-
-[21]
-Underfull \hbox (badness 10000) in paragraph at lines 979--980
-
- []
-
-! Missing number, treated as zero.
-<to be read again> 
-                   \par 
-l.984 
-      
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 981--984
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 994--996
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 997--999
-
- []
-
-! Missing number, treated as zero.
-<to be read again> 
-                   \par 
-l.1006 \subsection
-                  {Prozeduren höherer Ordnung (Higher Order Procedures HOP)}
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1007--1008
-
- []
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
+! TeX capacity exceeded, sorry [main memory size=5000000].
+\@x@protect #1\fi #2#3->\fi \protect 
+                                     #1
+l.886 ...chen Zahlen}=(n+1)^{2}$ ] \equiv P(n)$ \\
                                                   
-l.1009 ...iere die Elemente xs, die das Prädikat 
-                                                  p? erfüllen
-? 
+If you really absolutely need more capacity,
+you can ask a wizard to enlarge me.
 
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1009 ...iere die Elemente xs, die das Prädikat 
-                                                  p? erfüllen
-? 
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1009 ...mente xs, die das Prädikat p? erfüllen
-                                                  
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1009 ...mente xs, die das Prädikat p? erfüllen
-                                                  
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1022--1023
-
- []
-
-[22]
-Underfull \hbox (badness 10000) in paragraph at lines 1028--1029
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1030--1031
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1055--1057
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1061--1063
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1066--1067
-
- []
-
-[23]
-Underfull \hbox (badness 10000) in paragraph at lines 1090--1091
-
- []
-
-
-Overfull \hbox (20.26903pt too wide) in paragraph at lines 1096--1097
-[]\T1/futs/m/n/10.95 Teachpack "uni-verse" nutzt HOP, um An-i-ma-tion (= Se-que
-n-zen von Szenen / Bildern) zu definieren 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1096--1097
-
- []
-
-
-Overfull \hbox (0.87674pt too wide) in paragraph at lines 1108--1110
-\T1/futs/m/n/10.95 Funktion, die aus ak-tuellen Zu-s-tand eine Szene berech-net
- (wird in Fen-ster mit <w>x<h>
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1115--1118
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1128--1130
-
- []
-
-[24] [25]
-Underfull \hbox (badness 10000) in paragraph at lines 1187--1188
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1189--1190
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1191--1194
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1198--1200
-
- []
-
-
-Overfull \hbox (1.9387pt too wide) in paragraph at lines 1208--1212
-[]\T1/futs/m/n/10.95 (delay <e>): verz�gere die Auswer-tung des Aus-drucks <e> 
-und lief-ere "Ver-sprechen" (promise)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1208--1212
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1221--1222
-
- []
-
-[26]
-Underfull \hbox (badness 10000) in paragraph at lines 1249--1250
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1257--1258
-
- []
-
-! Missing number, treated as zero.
-<to be read again> 
-                   \relax 
-l.1260 \item
-             (make-node l x r):
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1266--1268
-
- []
-
-
-! Package tikz Error: Giving up on this path. Did you forget a semicolon?.
-
-See the tikz package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1285 \end{tikzpicture}
-                        
-? 
-[27]
-Underfull \hbox (badness 10000) in paragraph at lines 1287--1288
-
- []
-
-
-! Package tikz Error: Giving up on this path. Did you forget a semicolon?.
-
-See the tikz package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1303 \end{tikzpicture}
-                        
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1305--1306
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1313--1314
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1326--1327
-
- []
-
-[28]
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1343
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1346--1347
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1359--1360
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1361--1362
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1363--1364
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1377--1378
-
- []
-
-[29]
-Underfull \hbox (badness 10000) in paragraph at lines 1396--1397
-
- []
-
-
-LaTeX Warning: Command \" invalid in math mode on input line 1431.
-
-[30]
-! Undefined control sequence.
-\tikz@invoke@collected@onpath ...mmand \tikz@temp 
-                                                  \pgf@stop \tikz@node@is@a@...
-l.1448 }
-        
-? 
-
-! Package tikz Error: Giving up on this path. Did you forget a semicolon?.
-
-See the tikz package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1449 \end{tikzpicture}
-                        
-? 
-! Undefined control sequence.
-\@next ...bal \pgflinewidth =\tikzscope@linewidth 
-                                                  \tikz@path@do@at@end 
-l.1449 \end{tikzpicture}
-                        
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \let 
-l.1449 \end{tikzpicture}
-                        
-? 
-! Illegal unit of measure (pt inserted).
-<to be read again> 
-                   \let 
-l.1449 \end{tikzpicture}
-                        
-? 
-! Undefined control sequence.
-\endpgfscope ...pgflinewidth =\pgfscope@linewidth 
-                                                  \global \let \pgf@strokeco...
-l.1449 \end{tikzpicture}
-                        
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \global 
-l.1449 \end{tikzpicture}
-                        
-? 
-! Illegal unit of measure (pt inserted).
-<to be read again> 
-                   \global 
-l.1449 \end{tikzpicture}
-                        
-? 
-! Missing } inserted.
-<inserted text> 
-                }
-l.1449 \end{tikzpicture}
-                        
-? 
-! Extra }, or forgotten \endgroup.
-\endpgfpicture ...globally \endgroup \hss \egroup 
-                                                  \pgf@restore@layerlist@fro...
-l.1449 \end{tikzpicture}
-                        
-? 
-! Missing } inserted.
-<inserted text> 
-                }
-l.1449 \end{tikzpicture}
-                        
-? 
-! Extra }, or forgotten \endgroup.
-\endpgfpicture ...dpicture \endgroup \hss \egroup 
-                                                  \pgfsys@typesetpicturebox ...
-l.1449 \end{tikzpicture}
-                        
-? 
-
-! LaTeX Error: \begin{document} ended by \end{tikzpicture}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1449 \end{tikzpicture}
-                        
-? 
-! Extra \endgroup.
-<recently read> \endgroup 
-                          
-l.1449 \end{tikzpicture}
-                        
-? 
-! Infinite glue shrinkage found in a paragraph.
-l.1450 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1451--1452
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1455--1456
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1457--1458
-
- []
-
-[31]
-! You can't use `macro parameter character #' in horizontal mode.
-l.1491 \item (quote #
-                     t) $\rightsquigarrow$ #t
-? 
-! You can't use `macro parameter character #' in horizontal mode.
-l.1491 \item (quote #t) $\rightsquigarrow$ #
-                                            t
-? 
-
-! LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1494 \textcolor
-                 {orange}{Abkürzung}: (quote <e>) $\equiv$ '<e>
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1527--1531
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1532--1535
-
- []
-
-[32]
-Underfull \hbox (badness 10000) in paragraph at lines 1540--1541
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1554--1560
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1561--1565
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1568--1570
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1571--1580
-
- []
-
-[33]
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1593
-
- []
-
-[34] (./InformatikI_script.aux) ) 
+ 
 Here is how much of TeX's memory you used:
- 18366 strings out of 492995
- 337263 string characters out of 6132703
- 645603 words of memory out of 5000000
- 21501 multiletter control sequences out of 15000+600000
- 107671 words of font info for 138 fonts, out of 8000000 for 9000
+ 18258 strings out of 492995
+ 334978 string characters out of 6132703
+ 5000001 words of memory out of 5000000
+ 21390 multiletter control sequences out of 15000+600000
+ 107216 words of font info for 135 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  64i,22n,60p,8856b,1689s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/
-dvips/base/8r.enc}{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/
-cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/fourier/
-fourier-bb.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/fourier/f
-ourier-mex.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/fourier/f
-ourier-mlit.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/fourier/
-fourier-ms.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/
-latxfont/line10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
-onts/symbols/msam10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/
-amsfonts/symbols/msbm10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/ado
-be/utopia/putb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/adobe/utop
-ia/putr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/adobe/utopia/putr
-i8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfsx109
-5.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/stmaryrd/stmary10.
-pfb>
-Output written on InformatikI_script.pdf (34 pages, 184371 bytes).
-PDF statistics:
- 167 PDF objects out of 1000 (max. 8388607)
- 117 compressed objects within 2 object streams
- 0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+!  ==> Fatal error occurred, no output PDF file produced!
