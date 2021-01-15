@@ -1,0 +1,95 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} 
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Kim Thuong Ngo}
+
+
+\usepackage[T1]{fontenc} 
+\usepackage{fourier} 
+
+\usepackage{lipsum} 
+
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tabularx}
+
+\usepackage{sectsty}
+\allsectionsfont{\centering \normalfont\scshape} 
+
+\usepackage{fancyhdr} 
+\pagestyle{fancyplain} 
+\fancyhead{}
+\fancyfoot[L]{} 
+\fancyfoot[C]{} 
+\fancyfoot[R]{\thepage} 
+\renewcommand{\headrulewidth}{0pt} 
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{13.6pt}
+
+\numberwithin{equation}{section} 
+\numberwithin{figure}{section} 
+\numberwithin{table}{section}
+
+\setlength\parindent{0pt} 
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
+
+\title{	
+\normalfont \normalsize 
+\textsc{InformatikI} \\ [25pt] 
+\horrule{0.5pt} \\[0.4cm] 
+\huge eigenes Skript \\ 
+\horrule{2pt} \\[0.5cm] 
+}
+
+\author{Kim Thuong Ngo} 
+
+\date{\normalsize\today} 
+
+%----------------------------------------------------------------------------------------
+\begin{document}
+\maketitle 
+\newpage
+\tableofcontents
+\newpage
+%----------------------------------------------------------------------------------------
+\section{Konstruktionsanleitung}
+\begin{enumerate}
+\item Kurzbeschreibung \\
+         ein- bis zweizeiliger Kommentar über bspw. Eingabe, Ausgabe, Funktion der Prozedur, Parameter \\
+         Einleitung durch Semikolon ;
+ \item Signatur \\
+          überprüft ob Name an eine "Sorte" gebunden \\
+ \item Testfälle \\
+          Abdeckung aller Randfälle
+ \item Definition 
+          bindet Wert/ Prozedur an einen Namen \\
+          lambda-Abstraktion erlaubt Abstraktion von Parametern
+\end{enumerate}
+\begin{lstlisting}
+; Beispiel 1
+; berechnet Quadratwurzel einer Zahl x 
+(: square (real -> real))
+(check-expect (square 0) 0)
+(check-expect (square 1) 1)
+(check-expect (square -1) 1)
+(check-within (square 0.5) 0.25 0.01)
+(define square
+   (lambda (x)
+     (* x x)))
+\end{lstlisting}
+\begin{lstlisting}
+; Allgemein
+; Parameter x,y,z 
+(:  <id> (%a %b %c -> %d))
+(check-expect (<id> x1 y1 z1) e1)
+(check-within (<id> x2 y2 z2) e2 0.01)
+(define <id>
+   (lambda (x y z)
+     <expression>))
+\end{lstlisting}
+
+%----------------------------------------------------------------------------------------
+\end{document}
